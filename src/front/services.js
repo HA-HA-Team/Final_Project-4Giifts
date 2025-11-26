@@ -1,7 +1,9 @@
+const base_url= import.meta.env.VITE_BACKEND_URL
+
 export const createUser = async (newUser) => {
   try {
     const request = await fetch(
-      `https://supreme-winner-r4x5j79jqwv5fpp7j-3001.app.github.dev/api/signup`,
+      `${base_url}/api/signup`,
       {
         method: "POST",
         headers: {
@@ -24,7 +26,7 @@ export const createUser = async (newUser) => {
 export const checkLogin = async (user) => {
   try {
     const request = await fetch(
-      `https://supreme-winner-r4x5j79jqwv5fpp7j-3001.app.github.dev/api/login`,
+      `${base_url}/api/login`,
       {
         method: "POST",
         headers: {
@@ -48,7 +50,7 @@ export const getPrivateData = async () => {
   const token = sessionStorage.getItem("token");
 
   const response = await fetch(
-    "https://supreme-winner-r4x5j79jqwv5fpp7j-3001.app.github.dev/api/private",
+    `${base_url}/api/private`,
     {
       method: "GET",
       headers: {
