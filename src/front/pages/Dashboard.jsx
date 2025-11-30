@@ -7,17 +7,39 @@ const Dashboard = () => {
   const intervalRef = useRef(null);
   const trackRef = useRef(null);
 
-  // --- Verificación Token ---
+  // --- Verificación Token y recogida datos---
   useEffect(() => {
-    const verifyToken = async () => {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        // navigate("/login");
-        return;
-      }
-    };
-    verifyToken();
-  }, []);
+          const verifyToken = async () => {
+              const token = sessionStorage.getItem("token");
+  
+              if (!token) {
+  
+                  alert("No tienes acceso, inicia sesión!")
+                  //Quitar este comentario para que redirija a login
+                  //navigate("/login");
+                  return;
+              }
+
+  // --- Peticiones fetch y almacenamiento datos---
+              /* try {
+                  const resp = await getPrivateData();
+                  if (resp.ok) {
+                      const data = await resp.json();
+                      setUserInfo(data);
+                      setLoading(false);
+                  } else {
+                      sessionStorage.removeItem("token");
+                      navigate("/login");
+                  }
+              } catch (error) {
+                  console.error(error);
+                  sessionStorage.removeItem("token");
+                  navigate("/login");
+              }
+          }; */
+  
+          verifyToken();
+      }, []);
 
   // --- DATOS PROVISIONALES ---
   const initialContacts = [
