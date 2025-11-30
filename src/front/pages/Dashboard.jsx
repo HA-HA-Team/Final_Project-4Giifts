@@ -21,7 +21,7 @@ const Dashboard = () => {
               }
 
   // --- Peticiones fetch y almacenamiento datos---
-              /* try {
+              try {
                   const resp = await getPrivateData();
                   if (resp.ok) {
                       const data = await resp.json();
@@ -36,7 +36,7 @@ const Dashboard = () => {
                   sessionStorage.removeItem("token");
                   navigate("/login");
               }
-          }; */
+          }; 
   
           verifyToken();
       }, []);
