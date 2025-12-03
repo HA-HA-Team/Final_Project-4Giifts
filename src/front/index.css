@@ -1,3 +1,365 @@
+:root {
+  --color-crimson: #DC143C;
+  --color-rose: #F75270;
+  --color-pink: #F7CAC9;
+  --color-beige: #FDEBD0;
+}
+
+/* APLICAR AL BODY PARA EVITAR SCROLL HORIZONTAL SIN ROMPER STICKY */
+body {
+  overflow-x: hidden;
+}
+
+.dashboard-wrapper {
+  background-color: #fff;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* IMPORTANTE: Eliminado overflow-x: hidden de aquí */
+}
+
+/* --- SIDEBAR STICKY CENTRADO --- */
+.sidebar-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  z-index: 10;
+  padding: 1rem 0;
+}
+
+.sidebar-custom {
+  background-color: var(--color-crimson);
+  color: white;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+  max-height: 90vh; /* Evita que se salga en pantallas pequeñas */
+  overflow-y: auto; 
+}
+
+.sidebar-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 1.2rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.sidebar-link:hover {
+  color: #fff;
+  transform: translateX(8px);
+}
+
+.custom-select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-pink);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 5px;
+}
+.custom-select option {
+  color: #333;
+}
+
+/* --- TÍTULOS --- */
+.section-title {
+  color: #333;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- BUSCADOR --- */
+.search-input-container {
+  max-width: 300px;
+}
+
+.search-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-pink);
+  border-radius: 0;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #555;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom-color: var(--color-crimson);
+  background-color: transparent;
+}
+.search-input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* --- BOTONES --- */
+.btn-add-contact {
+  background-color: var(--color-rose);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.btn-add-contact:hover {
+  transform: scale(1.1);
+  background-color: var(--color-crimson);
+  color: white;
+}
+
+.btn-ideas {
+  background-color: var(--color-rose) !important;
+  color: white !important;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-ideas:hover {
+  background-color: var(--color-crimson) !important;
+  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-buy {
+  background-color: var(--color-rose) !important;
+  color: white !important;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 100%;
+  border: none;
+  padding: 8px;
+  transition: background 0.3s, transform 0.2s;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-buy:hover {
+  background-color: var(--color-crimson) !important;
+  box-shadow: 0 4px 8px rgba(220, 20, 60, 0.2);
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-delete-contact {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-rose);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+}
+.btn-delete-contact:hover {
+  background-color: var(--color-crimson);
+}
+
+/* --- TARJETAS --- */
+.contact-card {
+  background-color: white;
+  border: 2px solid var(--color-beige);
+  border-radius: 20px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  border-color: var(--color-pink);
+}
+
+.contact-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--color-beige);
+}
+
+/* --- RECORDATORIOS --- */
+.reminder-viewport {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  padding: 10px 0;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.reminder-viewport:active {
+  cursor: grabbing;
+}
+
+.reminder-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  gap: 20px;
+  will-change: transform;
+}
+
+.reminder-track.dragging {
+  transition: none !important;
+}
+
+.reminder-card {
+  min-width: calc(33.333% - 14px);
+  background-color: var(--color-pink);
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #5d2a2a;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* --- REGALOS GUARDADOS --- */
+.saved-gifts-section {
+  background-color: var(--color-crimson);
+  border-radius: 25px;
+  padding: 15px;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  animation: fadeIn 0.5s ease-out;
+  scroll-margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.saved-gifts-inner {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+}
+
+.btn-close-gifts {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: white;
+  color: var(--color-crimson);
+  border: none;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  z-index: 20;
+  transition: transform 0.2s;
+}
+.btn-close-gifts:hover {
+  transform: scale(1.1);
+}
+
+.gift-item-card {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  height: 100%;
+  transition: transform 0.2s;
+  position: relative;
+}
+.gift-item-card:hover {
+  transform: translateY(-3px);
+}
+
+.gift-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.btn-delete-gift {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--color-crimson);
+  border: 1px solid var(--color-pink);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s;
+}
+.btn-delete-gift:hover {
+  background-color: var(--color-crimson);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  .reminder-card {
+    min-width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .reminder-card {
+    min-width: 100%;
+  }
+  
+  .sidebar-wrapper {
+    position: relative;
+    height: auto;
+    margin-bottom: 2rem;
+    top: 0;
+    display: block;
+  }
+  
+  .sidebar-custom {
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+  }
 .pers-primary-btn-color {
     background: #DC143C;
 }
