@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from "./dashboard.module.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -9,37 +10,38 @@ const Dashboard = () => {
 
   // --- Verificación Token y recogida datos---
   useEffect(() => {
-          const verifyToken = async () => {
-              const token = sessionStorage.getItem("token");
-  
-              if (!token) {
-  
-                  alert("No tienes acceso, inicia sesión!")
-                  //Quitar este comentario para que redirija a login
-                  //navigate("/login");
-                  return;
-              }
+    const verifyToken = async () => {
+      const token = sessionStorage.getItem("token");
 
-  // --- Peticiones fetch y almacenamiento datos---
-              try {
-                  const resp = await getPrivateData();
-                  if (resp.ok) {
-                      const data = await resp.json();
-                      setUserInfo(data);
-                      setLoading(false);
-                  } else {
-                      sessionStorage.removeItem("token");
-                      navigate("/login");
-                  }
-              } catch (error) {
-                  console.error(error);
-                  sessionStorage.removeItem("token");
-                  navigate("/login");
-              }
-          }; 
-  
-          verifyToken();
-      }, []);
+      if (!token) {
+        alert("No tienes acceso, inicia sesión!");
+        //Quitar este comentario para que redirija a login
+        //navigate("/login");
+        return;
+      }
+
+      // --- Peticiones fetch y almacenamiento datos---
+      try {
+        // NOTA: Asegúrate de que getPrivateData, setUserInfo y setLoading estén definidos 
+        // o importados, ya que no venían en el snippet original.
+        const resp = await getPrivateData();
+        if (resp.ok) {
+          const data = await resp.json();
+          setUserInfo(data);
+          setLoading(false);
+        } else {
+          sessionStorage.removeItem("token");
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error(error);
+        sessionStorage.removeItem("token");
+        navigate("/login");
+      }
+    };
+
+    verifyToken();
+  }, []);
 
   // --- DATOS PROVISIONALES ---
   const initialContacts = [
@@ -77,7 +79,7 @@ const Dashboard = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedContactId, setSelectedContactId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   // Drag & Drop
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -118,15 +120,15 @@ const Dashboard = () => {
     const currentX = e.clientX || e.touches[0].clientX;
     const diff = currentX - startX;
     if (trackRef.current) {
-        const width = trackRef.current.offsetWidth;
-        const movePercent = (diff / width) * 100; 
-        setDragTranslate(movePercent);
+      const width = trackRef.current.offsetWidth;
+      const movePercent = (diff / width) * 100;
+      setDragTranslate(movePercent);
     }
   };
 
   const handleDragEnd = () => {
     setIsDragging(false);
-    const threshold = 5; 
+    const threshold = 5;
     if (dragTranslate < -threshold) {
       setCurrentSlide(prev => (prev + 1) % reminders.length);
     } else if (dragTranslate > threshold) {
@@ -156,8 +158,8 @@ const Dashboard = () => {
       .toLowerCase();
   };
 
-  const filteredContacts = contacts.filter(contact => 
-    normalizeText(contact.name).includes(normalizeText(searchTerm)) || 
+  const filteredContacts = contacts.filter(contact =>
+    normalizeText(contact.name).includes(normalizeText(searchTerm)) ||
     normalizeText(contact.relation).includes(normalizeText(searchTerm))
   );
 
@@ -192,22 +194,22 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-wrapper container-fluid p-0">
+    <div className={`${styles["dashboard-wrapper"]} container-fluid p-0`}>
       <div className="row g-0">
-        
+
         {/* --- SIDEBAR IZQUIERDA --- */}
-        <aside className="col-md-3 col-lg-2 sidebar-wrapper">
-          <div className="sidebar-custom d-flex flex-column">
-             <nav className="flex-grow-1">
-              <a href="#contactos-section" className="sidebar-link">Contactos</a>
-              <a href="/ideas" className="sidebar-link">Generar ideas para mí</a>
-              <a href="/favoritos" className="sidebar-link">Mis favoritos</a>
-              <a href="#recordatorios-section" className="sidebar-link">Recordatorios</a>
-              
+        <aside className={`col-md-3 col-lg-2 ${styles["sidebar-wrapper"]}`}>
+          <div className={`${styles["sidebar-custom"]} d-flex flex-column`}>
+            <nav className="flex-grow-1">
+              <a href="#contactos-section" className={styles["sidebar-link"]}>Contactos</a>
+              <a href="/ideas" className={styles["sidebar-link"]}>Generar ideas para mí</a>
+              <a href="/favoritos" className={styles["sidebar-link"]}>Mis favoritos</a>
+              <a href="#recordatorios-section" className={styles["sidebar-link"]}>Recordatorios</a>
+
               <div className="mt-4">
                 <label className="text-white mb-2 small">Regalos guardados</label>
-                <select 
-                  className="form-select custom-select" 
+                <select
+                  className={`form-select ${styles["custom-select"]}`}
                   value={selectedContactId}
                   onChange={handleContactSelect}
                 >
@@ -225,19 +227,19 @@ const Dashboard = () => {
 
         {/* --- CONTENIDO PRINCIPAL --- */}
         <main className="col-md-9 col-lg-10 p-4 p-md-5">
-          
+
           {/* SECCIÓN CONTACTOS Y BUSCADOR */}
           <div id="contactos-section" className="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 pt-3">
             <div className="d-flex align-items-center mb-3 mb-md-0">
-              <h2 className="section-title mb-0 me-3">CONTACTOS</h2>
-              <button className="btn-add-contact shadow-sm" onClick={() => setShowAddModal(true)}>+</button>
+              <h2 className={`${styles["section-title"]} mb-0 me-3`}>CONTACTOS</h2>
+              <button className={`${styles["btn-add-contact"]} shadow-sm`} onClick={() => setShowAddModal(true)}>+</button>
             </div>
-            
-            <div className="search-input-container w-100 w-md-auto">
-              <input 
-                type="text" 
-                className="form-control form-control-plaintext search-input" 
-                placeholder="Buscar por nombre o parentesco..." 
+
+            <div className={`${styles["search-input-container"]} w-100 w-md-auto`}>
+              <input
+                type="text"
+                className={`form-control form-control-plaintext ${styles["search-input"]}`}
+                placeholder="Buscar por nombre o parentesco..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -248,29 +250,29 @@ const Dashboard = () => {
             {filteredContacts.length > 0 ? (
               filteredContacts.map((contact) => (
                 <div key={contact.id} className="col-12 col-sm-6 col-lg-4">
-                  <div 
-                    className="card contact-card h-100 text-center p-3"
+                  <div
+                    className={`card ${styles["contact-card"]} h-100 text-center p-3`}
                     onClick={() => handleCardClick(contact.id)}
                   >
-                    <button 
-                      className="btn-delete-contact shadow-sm"
+                    <button
+                      className={`${styles["btn-delete-contact"]} shadow-sm`}
                       onClick={(e) => {
-                        e.stopPropagation(); 
+                        e.stopPropagation();
                         handleDeleteClick(contact);
                       }}
                     >
                       X
                     </button>
-                    
+
                     <div className="card-body d-flex flex-column align-items-center">
-                      <img src={contact.img} alt={contact.name} className="contact-img mb-3 shadow-sm" />
+                      <img src={contact.img} alt={contact.name} className={`${styles["contact-img"]} mb-3 shadow-sm`} />
                       <h5 className="fw-bold mb-0">{contact.name}</h5>
                       <small className="text-muted mb-2">{contact.relation}</small>
-                      
-                      <a 
-                        href={`/generar-ideas/${contact.id}`} 
-                        className="btn btn-ideas mt-auto"
-                        onClick={(e) => e.stopPropagation()} 
+
+                      <a
+                        href={`/generar-ideas/${contact.id}`}
+                        className={`btn ${styles["btn-ideas"]} mt-auto`}
+                        onClick={(e) => e.stopPropagation()}
                       >
                         Generar ideas
                       </a>
@@ -285,10 +287,10 @@ const Dashboard = () => {
 
           {/* SECCIÓN RECORDATORIOS */}
           <div id="recordatorios-section" className="mb-2 pt-3">
-            <h5 className="section-title text-center mb-4">RECORDATORIOS</h5>
-            
-            <div 
-              className="reminder-viewport"
+            <h5 className={`${styles["section-title"]} text-center mb-4`}>RECORDATORIOS</h5>
+
+            <div
+              className={styles["reminder-viewport"]}
               ref={trackRef}
               onMouseDown={handleDragStart}
               onMouseMove={handleDragMove}
@@ -298,14 +300,14 @@ const Dashboard = () => {
               onTouchMove={handleDragMove}
               onTouchEnd={handleDragEnd}
             >
-              <div 
-                className={`reminder-track ${isDragging ? 'dragging' : ''}`} 
-                style={{ 
-                    transform: `translateX(calc(-${currentSlide * (100 / 3)}% + ${dragTranslate}%))` 
+              <div
+                className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`}
+                style={{
+                  transform: `translateX(calc(-${currentSlide * (100 / 3)}% + ${dragTranslate}%))`
                 }}
               >
                 {reminders.concat(reminders).map((reminder, index) => (
-                  <div key={`${reminder.id}-${index}`} className="reminder-card">
+                  <div key={`${reminder.id}-${index}`} className={styles["reminder-card"]}>
                     <div className="display-4 mb-2">{reminder.icon}</div>
                     <h6 className="fw-bold">{reminder.title}</h6>
                     <small>{reminder.subtitle}</small>
@@ -317,70 +319,70 @@ const Dashboard = () => {
 
           {/* SECCIÓN REGALOS GUARDADOS */}
           {activeContact && (
-            <div ref={giftsSectionRef} className="saved-gifts-section shadow">
-               <button 
-                 className="btn-close-gifts shadow-sm" 
-                 onClick={() => setSelectedContactId('')}
-               >
-                 X
-               </button>
+            <div ref={giftsSectionRef} className={`${styles["saved-gifts-section"]} shadow`}>
+              <button
+                className={`${styles["btn-close-gifts"]} shadow-sm`}
+                onClick={() => setSelectedContactId('')}
+              >
+                X
+              </button>
 
-               <div className="saved-gifts-inner">
-                 <div className="row mb-4 align-items-center">
-                    <div className="col-auto">
-                      <img src={activeContact.img} alt={activeContact.name} className="contact-img" style={{width: '60px', height: '60px'}} />
-                    </div>
-                    <div className="col">
-                       <h4 className="fw-bold mb-0 text-dark">Regalos guardados de {activeContact.name}</h4>
-                       <small className="text-muted d-block mb-2">Relación: {activeContact.relation}</small>
-                       <a 
-                         href={`/generar-ideas/${activeContact.id}`} 
-                         className="btn btn-ideas btn-sm"
-                         style={{marginTop: '0'}} 
-                       >
-                         Generar ideas
-                       </a>
-                    </div>
-                 </div>
+              <div className={styles["saved-gifts-inner"]}>
+                <div className="row mb-4 align-items-center">
+                  <div className="col-auto">
+                    <img src={activeContact.img} alt={activeContact.name} className={styles["contact-img"]} style={{ width: '60px', height: '60px' }} />
+                  </div>
+                  <div className="col">
+                    <h4 className="fw-bold mb-0 text-dark">Regalos guardados de {activeContact.name}</h4>
+                    <small className="text-muted d-block mb-2">Relación: {activeContact.relation}</small>
+                    <a
+                      href={`/generar-ideas/${activeContact.id}`}
+                      className={`btn ${styles["btn-ideas"]} btn-sm`}
+                      style={{ marginTop: '0' }}
+                    >
+                      Generar ideas
+                    </a>
+                  </div>
+                </div>
 
-                 <div className="row g-3">
-                    {gifts.length > 0 ? (
-                      gifts.map((gift) => (
-                        <div key={gift.id} className="col-12 col-sm-6 col-lg-3">
-                          <div className="gift-item-card d-flex flex-column h-100">
-                            <button 
-                              className="btn-delete-gift shadow-sm"
-                              onClick={() => handleDeleteGift(gift.id)}
-                              title="Eliminar regalo"
-                            >
-                              X
-                            </button>
+                <div className="row g-3">
+                  {gifts.length > 0 ? (
+                    gifts.map((gift) => (
+                      <div key={gift.id} className="col-12 col-sm-6 col-lg-3">
+                        <div className={`${styles["gift-item-card"]} d-flex flex-column h-100`}>
+                          <button
+                            className={`${styles["btn-delete-gift"]} shadow-sm`}
+                            onClick={() => handleDeleteGift(gift.id)}
+                            title="Eliminar regalo"
+                          >
+                            X
+                          </button>
 
-                            <img src={gift.img} alt={gift.name} className="gift-img" />
-                            <div className="p-3 d-flex flex-column flex-grow-1">
-                              <h6 className="small fw-bold mb-1 text-truncate text-dark">{gift.name}</h6>
-                              <p className="small mb-3 fw-bold text-muted">{gift.price}</p>
-                              <a href={gift.link} className="btn btn-buy mt-auto">
-                                Comprar
-                              </a>
-                            </div>
+                          <img src={gift.img} alt={gift.name} className={styles["gift-img"]} />
+                          <div className="p-3 d-flex flex-column flex-grow-1">
+                            <h6 className="small fw-bold mb-1 text-truncate text-dark">{gift.name}</h6>
+                            <p className="small mb-3 fw-bold text-muted">{gift.price}</p>
+                            <a href={gift.link} className={`btn ${styles["btn-buy"]} mt-auto`}>
+                              Comprar
+                            </a>
                           </div>
                         </div>
-                      ))
-                    ) : (
-                      <p className="text-center text-muted w-100">No hay regalos guardados para este contacto.</p>
-                    )}
-                 </div>
-               </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-muted w-100">No hay regalos guardados para este contacto.</p>
+                  )}
+                </div>
+              </div>
             </div>
           )}
 
         </main>
       </div>
 
-      {/* --- MODAL: AÑADIR CONTACTO --- */}
+      {/* --- MODAL: AÑADIR CONTACTO (Usa Clases de Bootstrap, no Modules, excepto si personalizas) --- */}
       {showAddModal && (
-        <div className="modal show d-block" style={{backgroundColor: 'rgba(0,0,0,0.5)'}} tabIndex="-1">
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
@@ -397,7 +399,7 @@ const Dashboard = () => {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancelar</button>
-                <button type="button" className="btn btn-primary" style={{backgroundColor: 'var(--color-rose)', border:'none'}}>Guardar</button>
+                <button type="button" className="btn btn-primary" style={{ backgroundColor: 'var(--color-rose)', border: 'none' }}>Guardar</button>
               </div>
             </div>
           </div>
@@ -406,7 +408,7 @@ const Dashboard = () => {
 
       {/* --- MODAL: ELIMINAR CONTACTO --- */}
       {showDeleteModal && (
-        <div className="modal show d-block" style={{backgroundColor: 'rgba(0,0,0,0.5)'}} tabIndex="-1">
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header border-0 pb-0">
@@ -416,7 +418,7 @@ const Dashboard = () => {
               <div className="modal-body">
                 <p>Vas a eliminar a <strong>{contactToDelete?.name}</strong>.</p>
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" checked={deleteConfirmed} onChange={(e) => setDeleteConfirmed(e.target.checked)} id="delCheck"/>
+                  <input className="form-check-input" type="checkbox" checked={deleteConfirmed} onChange={(e) => setDeleteConfirmed(e.target.checked)} id="delCheck" />
                   <label className="form-check-label" htmlFor="delCheck">¿Estás seguro que deseas borrar este contacto?</label>
                 </div>
               </div>
