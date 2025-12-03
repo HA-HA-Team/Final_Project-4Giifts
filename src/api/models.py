@@ -45,7 +45,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}>"
-
+#kwargs recibe todos los argumentos del endpoint- asi si añadimos algo mas no hay que modificar el metodo de clase
     @classmethod
     def create_new_user(self, **kwargs):
         raw_password = kwargs.get("password")

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../services";
+import "./Signup.css";
+
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ export const Signup = () => {
   };
 
   return (
+   
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
       <div className="card shadow p-4" style={{ width: "420px" }}>
 
@@ -93,5 +96,6 @@ export const Signup = () => {
 
       </div>
     </div>
+    
   );
 };
