@@ -360,4 +360,45 @@ body {
     width: 100%;
     border-radius: 0 0 20px 20px;
   }
+.pers-primary-btn-color {
+    background: #DC143C;
+}
+
+.pers-secondary-btn-color {
+    background: #F75270;;
+}
+
+.pers-tertiary-btn-color {
+    background: #F7CAC9;
+}
+
+.pers-quaternary-btn-color {
+    background: #FDEBD0;
+}
+
+.pers-bg-color {
+    background: #F7CAC9;
+}
+
+.pers-obj-cover {
+    object-fit: cover;
+}
+
+.pers-bg-img-jumbotron {
+  background-image: url('src/front/assets/img/imagen-fondo-jumbotron1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  box-shadow: #6C757D 0px 4px 8px;
+  text-shadow: 1px 1px 3px black
+}
+
+.pers-shadow {
+    box-shadow: #6C757D 0px 4px 8px;
+}
+
+.navbar{
+    position: sticky;
+    width: 100%;
+    top: 0;
 }
