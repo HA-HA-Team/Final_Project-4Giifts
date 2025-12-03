@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Jumbotron } from "../components/Jumbotron.jsx";
 import Card from "../components/Card.jsx";
+import { Instrucciones } from "../components/Instrucciones.jsx";
 
 const imageUrl1 = "src/front/assets/img/regalo.jpg";
 const button = "¡Ver producto!";
@@ -42,8 +43,10 @@ export const Home = () => {
 
 			<Jumbotron />
 
+			<Instrucciones />
+
 			<div className='ms-5 me-5 mb-5 d-flex row gap-4 justify-content-center'>
-				<h3>Otros usuarios han seleccionado estos regalos como favorito...</h3>
+				<h3 className="d-flex justify-content-center fw-bold mt-4">Otros usuarios han seleccionado estos regalos como favorito...</h3>
 				<Card
 					imageUrl={imageUrl1}
 					title="Título imagen"
