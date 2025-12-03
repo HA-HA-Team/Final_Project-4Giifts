@@ -52,7 +52,7 @@ export const Login = () => {
         <div className="card-body p-4">
 
 
-          {/* Logo + Frase */}
+          {/* Logo */}
           <div className="text-center mb-3">
             <img src="public/Logo4giift.jpeg" alt="4giift" width="90" />
             <h5 className="mt-2" style={{ color: "#DC143C" }}>
@@ -97,26 +97,18 @@ export const Login = () => {
                   borderRadius: "12px",
                 }}
               >
-                Entrar a mis regalos
+                Entrar
               </button>
             </div>
           </form>
 
           <div className="text-center mt-3">
-            <Link to="/register" className="text-decoration-none" style={{ color: "#F75270" }}>
+            <Link to="/signup" className="text-decoration-none" style={{ color: "#F75270" }}>
               ¿Primera vez? Crea tu cuenta
             </Link>
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer
-        className="position-absolute bottom-0 start-50 translate-middle-x text-center py-3"
-        style={{ fontSize: "12px", color: "#888" }}
-      >
-        4giift • Recordatorios que emocionan
-      </footer>
     </div>
   );
 };
