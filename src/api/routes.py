@@ -86,6 +86,25 @@ def msg_privado():
         "user": user.to_dict()
     }), 200
 
+# Agregado 3/12
+
+
+@api.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user(user_id):
+    current_user_id = int(get_jwt_identity())
+
+    # permitir que un usuario vea su propio perfil
+    if current_user_id != user_id:
+        return jsonify({"msg": "No autorizado"}), 403
+
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    return jsonify(user.to_dict()), 200
+
 
 # AGREGADOS 29-30/11
 
