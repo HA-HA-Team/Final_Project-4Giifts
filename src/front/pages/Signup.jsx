@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../services";
-import "./Signup.css";
-
+import styles from "./Signup.module.css";
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -38,64 +37,54 @@ export const Signup = () => {
   };
 
   return (
-   
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-      <div className="card shadow p-4" style={{ width: "420px" }}>
+    <div className={styles.signupWrapper}>
+      <div className={styles.card}>
 
-        <h2 className="text-center mb-3">Crear Cuenta</h2>
-        <p className="text-center text-muted mb-4">Regístrate para comenzar</p>
+        <h2 className={`${styles.title} text-center mb-3`}>Crear Cuenta</h2>
+        <p className={`${styles.subtitle} text-center mb-4`}>
+          Regístrate para comenzar
+        </p>
 
         <form onSubmit={handleSubmit}>
 
-          <label className="form-label">Email</label>
-          <input type="email" id="inputEmail" className="form-control mb-3" required />
+          <label className={styles.label}>Email</label>
+          <input type="email" id="inputEmail" className={`form-control mb-3 ${styles.input}`} required />
 
-          <label className="form-label">Contraseña</label>
-          <input type="password" id="inputPassword" className="form-control mb-3" required />
+          <label className={styles.label}>Contraseña</label>
+          <input type="password" id="inputPassword" className={`form-control mb-3 ${styles.input}`} required />
 
-          <label className="form-label">Nombre</label>
-          <input type="text" id="firstName" className="form-control mb-3" />
+          <label className={styles.label}>Nombre</label>
+          <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className="form-label">Apellidos</label>
-          <input type="text" id="lastName" className="form-control mb-3" />
+          <label className={styles.label}>Apellidos</label>
+          <input type="text" id="lastName" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className="form-label">Fecha de nacimiento</label>
-          <input type="date" id="birthDate" className="form-control mb-3" />
+          <label className={styles.label}>Fecha de nacimiento</label>
+          <input type="date" id="birthDate" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className="form-label">Hobbies</label>
-          <input type="text" id="hobbies" className="form-control mb-3" />
+          <label className={styles.label}>Hobbies</label>
+          <input type="text" id="hobbies" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className="form-label">Ocupación</label>
-          <input type="text" id="ocupacion" className="form-control mb-3" />
+          <label className={styles.label}>Ocupación</label>
+          <input type="text" id="ocupacion" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className="form-label">Tipo de personalidad</label>
-          <input type="text" id="tipoPersonalidad" className="form-control mb-4" />
+          <label className={styles.label}>Tipo de personalidad</label>
+          <input type="text" id="tipoPersonalidad" className={`form-control mb-4 ${styles.input}`} />
 
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              fontSize: "16px",
-              cursor: "pointer",
-              marginTop: "10px"
-            }}
-          >
+          <button type="submit" className={styles.submitBtn}>
             Crear Cuenta
           </button>
 
         </form>
 
         <div className="text-center mt-3">
-          <small>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></small>
+          <small>
+            ¿Ya tienes una cuenta?{" "}
+            <a href="/login" className={styles.link}>Inicia sesión</a>
+          </small>
         </div>
 
       </div>
     </div>
-    
   );
 };
