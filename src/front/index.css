@@ -35,3 +35,8 @@
     box-shadow: #6C757D 0px 4px 8px;
 }
 
+.navbar{
+    position: sticky;
+    width: 100%;
+    top: 0;
+}

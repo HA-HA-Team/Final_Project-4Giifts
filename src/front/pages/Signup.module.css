@@ -1,0 +1,79 @@
+/* Fondo general SOLO para esta vista */
+.signupWrapper {
+  background: linear-gradient(135deg, #ffc0cb, #e28aa8);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* Contenedor del formulario */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px;
+  border: none;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  width: 420px;
+}
+
+/* Títulos */
+.title {
+  color: #b14466;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #555;
+}
+
+/* Inputs */
+.input {
+  border-radius: 10px;
+  border: 1px solid #e5b4c3;
+  background-color: #fff;
+  transition: 0.3s;
+}
+
+.input:focus {
+  border-color: #b14466;
+  box-shadow: 0 0 6px rgba(177, 68, 102, 0.4);
+}
+
+/* Labels */
+.label {
+  font-weight: 600;
+  color: #b14466;
+}
+
+/* Botón */
+.submitBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #b14466;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.submitBtn:hover {
+  background-color: #8f2f4c;
+  transform: scale(1.02);
+}
+
+/* Enlaces */
+.link {
+  color: #b14466;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

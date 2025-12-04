@@ -1,58 +1,90 @@
-// Import necessary components from react-router-dom and other parts of the application.
-import { Link, useNavigate } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
+import { useNavigate } from "react-router-dom";
 import { createUser } from "../services";
+import styles from "./Signup.module.css";
 
 export const Signup = () => {
-  // Access the global state and dispatch function using the useGlobalReducer hook.
-  const { store, dispatch } = useGlobalReducer()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+
+    const newUser = {
+      email: form.inputEmail.value,
+      password: form.inputPassword.value,
+      first_name: form.firstName.value,
+      last_name: form.lastName.value,
+      birth_date: form.birthDate.value,
+      hobbies: form.hobbies.value,
+      ocupacion: form.ocupacion.value,
+      tipo_personalidad: form.tipoPersonalidad.value
+    };
+
     try {
-      const newUser = {
-        email: e.target.elements.inputEmail.value,
-        password: e.target.elements.inputPassword.value
+      const resp = await createUser(newUser);
+
+      if (resp.ok) {
+        alert("Usuario creado");
+        navigate("/login");
+      } else {
+        alert("Error al crear usuario");
       }
-      const createNewUser = await createUser(newUser)
-
-      createNewUser.ok
-        ? alert("Usuario creado")
-        : alert("¡Ups! algo salió mal");
-
-      navigate("/")
 
     } catch (err) {
-      console.error(err);
-      alert("Error desconocido: " + err.message);
+      alert("Error: " + err.message);
     }
-
-
-
-  }
-
-
-
+  };
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="inputEmail" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" required />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    <div className={styles.signupWrapper}>
+      <div className={styles.card}>
+
+        <h2 className={`${styles.title} text-center mb-3`}>Crear Cuenta</h2>
+        <p className={`${styles.subtitle} text-center mb-4`}>
+          Regístrate para comenzar
+        </p>
+
+        <form onSubmit={handleSubmit}>
+
+          <label className={styles.label}>Email</label>
+          <input type="email" id="inputEmail" className={`form-control mb-3 ${styles.input}`} required />
+
+          <label className={styles.label}>Contraseña</label>
+          <input type="password" id="inputPassword" className={`form-control mb-3 ${styles.input}`} required />
+
+          <label className={styles.label}>Nombre</label>
+          <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} />
+
+          <label className={styles.label}>Apellidos</label>
+          <input type="text" id="lastName" className={`form-control mb-3 ${styles.input}`} />
+
+          <label className={styles.label}>Fecha de nacimiento</label>
+          <input type="date" id="birthDate" className={`form-control mb-3 ${styles.input}`} />
+
+          <label className={styles.label}>Hobbies</label>
+          <input type="text" id="hobbies" className={`form-control mb-3 ${styles.input}`} />
+
+          <label className={styles.label}>Ocupación</label>
+          <input type="text" id="ocupacion" className={`form-control mb-3 ${styles.input}`} />
+
+          <label className={styles.label}>Tipo de personalidad</label>
+          <input type="text" id="tipoPersonalidad" className={`form-control mb-4 ${styles.input}`} />
+
+          <button type="submit" className={styles.submitBtn}>
+            Crear Cuenta
+          </button>
+
+        </form>
+
+        <div className="text-center mt-3">
+          <small>
+            ¿Ya tienes una cuenta?{" "}
+            <a href="/login" className={styles.link}>Inicia sesión</a>
+          </small>
         </div>
-        <div className="mb-3">
-          <label htmlFor="inputPassword" className="form-label">Password</label>
-          <input type="password" className="form-control" id="inputPassword" required />
-        </div>
-        <div className="mb-3 form-check">
-          <input type="checkbox" className="form-check-input" id="exampleCheck1" required />
-          <label className="form-check-label" htmlFor="exampleCheck1">Acepto crear usuario</label>
-        </div>
-        <button type="submit" className="btn btn-primary">Crear usuario</button>
-      </form>
+
+      </div>
     </div>
   );
 };
