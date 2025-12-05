@@ -21,7 +21,7 @@ export const Login = () => {
       if (checkUser.ok) {
         const token = data.token;
         sessionStorage.setItem("token", token);
-        navigate("/private")
+        navigate("/dashboard")
       }
       else {
         alert("Error en el login: " + data.message);

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
+import { getPrivateData } from '../services';
 
 const Dashboard = () => {
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const giftsSectionRef = useRef(null);
   const intervalRef = useRef(null);
@@ -22,8 +25,6 @@ const Dashboard = () => {
 
       // --- Peticiones fetch y almacenamiento datos---
       try {
-        // NOTA: Asegúrate de que getPrivateData, setUserInfo y setLoading estén definidos 
-        // o importados, ya que no venían en el snippet original.
         const resp = await getPrivateData();
         if (resp.ok) {
           const data = await resp.json();
@@ -193,6 +194,12 @@ const Dashboard = () => {
     setGifts(gifts.filter(gift => gift.id !== giftId));
   };
 
+  const handleLogout = () => {
+        sessionStorage.removeItem("token");
+
+        navigate("/");
+    };
+
   return (
     <div className={`${styles["dashboard-wrapper"]} container-fluid p-0`}>
       <div className="row g-0">
@@ -221,6 +228,12 @@ const Dashboard = () => {
                   ))}
                 </select>
               </div>
+              <button
+                         className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`}
+                        onClick={handleLogout}
+                    >
+                        Cerrar Sesión
+                    </button>
             </nav>
           </div>
         </aside>

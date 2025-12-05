@@ -25,7 +25,7 @@ export const createUser = async (newUser) => {
 
 export const checkLogin = async (user) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/login`, {
+    const response = await fetch(`${base_url}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const checkLogin = async (user) => {
 
 export const getPrivateData = async () => {
   const token = sessionStorage.getItem("token");
-  const response = await fetch(`${BASE_URL}/api/private`, {
+  const response = await fetch(`${base_url}/api/private`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

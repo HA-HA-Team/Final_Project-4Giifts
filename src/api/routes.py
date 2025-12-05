@@ -57,7 +57,7 @@ def login():
             "message": "usuario no encontrado"
         }), 400
     if userbyemail.check_psw(data.get("password")):
-        access_token = create_access_token(identity=str(userbyemail.id))
+        access_token = create_access_token(identity=str(userbyemail.user_id))
         return jsonify({
             "user": userbyemail.to_dict(),
             "token": access_token}), 200

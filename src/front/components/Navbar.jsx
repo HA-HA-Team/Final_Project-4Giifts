@@ -6,7 +6,7 @@ export const Navbar = () => {
 		<nav className="navbar pers-bg-color">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1"><img src="src/front/assets/img/logo4giifts.jpg" width="10%" height="10%" alt="" /></span>
+					<span className="navbar-brand mb-0 h1"><img src="public/Logo_solo_4giifts-removebg-preview (1).png" width="10%" height="10%" alt="" /></span>
 				</Link>
 				<div className="ml-auto d-flex gap-2">
 					<Link to="/signup">
