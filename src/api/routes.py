@@ -37,23 +37,22 @@ def create_user():
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    user = User.find_by_email(data.get("email"))
-
-    if not user:
+    userbyemail = User.find_by_email(data.get("email"))
+    print(not userbyemail)
+    if not userbyemail:
         return jsonify({
             "error": True,
-            "msg": "usuario no encontrado"
+            "message": "usuario no encontrado"
         }), 400
-
-    if user and user.check_psw(data.get("password")):
-        access_token = create_access_token(identity=str(user.id))
+    if userbyemail.check_psw(data.get("password")):
+        access_token = create_access_token(identity=str(userbyemail.id))
         return jsonify({
-            "user": user.to_dict(),
+            "user": userbyemail.to_dict(),
             "token": access_token}), 200
 
     return jsonify({
         "error": True,
-        "msg": "verifica los datos ingresados"
+        "message": "verifica los datos ingresados"
     }), 400
 
 

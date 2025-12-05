@@ -11,7 +11,6 @@ export const Private = () => {
     useEffect(() => {
         const verifyToken = async () => {
             const token = sessionStorage.getItem("token");
-
             if (!token) {
 
                 alert("No tienes acceso, inicia sesión!")
@@ -19,10 +18,11 @@ export const Private = () => {
                 return;
             }
 
+
             try {
                 const resp = await getPrivateData();
+                const data = await resp.json();
                 if (resp.ok) {
-                    const data = await resp.json();
                     setUserInfo(data);
                     setLoading(false);
                 } else {
@@ -30,7 +30,6 @@ export const Private = () => {
                     navigate("/login");
                 }
             } catch (error) {
-                console.error(error);
                 sessionStorage.removeItem("token");
                 navigate("/login");
             }

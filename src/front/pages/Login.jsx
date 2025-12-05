@@ -12,22 +12,20 @@ export const Login = () => {
     e.preventDefault();
     try {
       const user = {
-        email: e.target.elements.inputEmail.value,
-        password: e.target.elements.inputPassword.value
+        email: e.target.elements.email.value,
+        password: e.target.elements.password.value
       }
       const checkUser = await checkLogin(user)
-
-
+      const data = await checkUser.json()
+      console.log(data);
       if (checkUser.ok) {
-        const data = await checkUser.json()
-        console.log(data)
         const token = data.token;
         sessionStorage.setItem("token", token);
-        alert("Login correcto")
+        navigate("/private")
       }
-      else alert("credenciales incorrectos");
-
-      navigate("/private")
+      else {
+        alert("Error en el login: " + data.message);
+      }
 
     } catch (err) {
       console.error(err);
@@ -41,19 +39,74 @@ export const Login = () => {
 
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="inputEmail" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" required />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    <div
+      className="min-vh-100 d-flex align-items-center justify-content-center"
+      style={{ background: "linear-gradient(135deg, #FDEBD0 0%, #F7CAC9 100%)" }}
+    >
+      <div
+        className="card shadow-lg border-0"
+        style={{ width: "100%", maxWidth: "420px", borderRadius: "20px" }}
+      >
+        <div className="card-body p-4">
+
+
+          {/* Logo */}
+          <div className="text-center mb-3">
+            <img src="public/Logo4giift.jpeg" alt="4giift" width="90" />
+            <h5 className="mt-2" style={{ color: "#DC143C" }}>
+              Nunca olvides un regalo importante
+            </h5>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label fw-semibold" style={{ color: "#DC143C" }}>
+                Correo
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                placeholder="tucorreo@ejemplo.com"
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-semibold" style={{ color: "#DC143C" }}>
+                Contraseña
+              </label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div className="d-grid">
+              <button
+                type="submit"
+                className="btn btn-lg fw-bold"
+                style={{
+                  backgroundColor: "#DC143C",
+                  color: "#fff",
+                  borderRadius: "12px",
+                }}
+              >
+                Entrar
+              </button>
+            </div>
+          </form>
+
+          <div className="text-center mt-3">
+            <Link to="/signup" className="text-decoration-none" style={{ color: "#F75270" }}>
+              ¿Primera vez? Crea tu cuenta
+            </Link>
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="inputPassword" className="form-label">Password</label>
-          <input type="password" className="form-control" id="inputPassword" required />
-        </div>
-        <button type="submit" className="btn btn-primary">Logear</button>
-      </form>
+      </div>
     </div>
   );
 };
