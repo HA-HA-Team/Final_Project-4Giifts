@@ -3,8 +3,8 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 import os
-import google.generativeai as genai
-import requests
+""" import google.generativeai as genai
+import requests """
 import json
 from api.models import Contactos
 from flask import Flask, request, jsonify, url_for, Blueprint
@@ -248,3 +248,116 @@ def get_user_contacts():
         })
 
     return jsonify(result), 200
+
+
+
+#  LÓGICA IA + OBTENER UN CONTACTO
+
+# Función para buscar imágenes en Google (Backend)
+def get_google_image(query):
+    api_key = os.getenv("GOOGLE_SEARCH_API_KEY")
+    cx = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
+    
+    if not api_key or not cx:
+        return "https://via.placeholder.com/400x300?text=Configura+API+Keys"
+
+    url = "https://www.googleapis.com/customsearch/v1"
+    params = {
+        "q": query,
+        "cx": cx,
+        "key": api_key,
+        "searchType": "image",
+        "num": 1, 
+        "imgSize": "medium", 
+        "safe": "active"
+    }
+
+    try:
+        response = requests.get(url, params=params)
+        data = response.json()
+        if "items" in data and len(data["items"]) > 0:
+            return data["items"][0]["link"]
+    except Exception as e:
+        print(f"Error buscando imagen: {e}")
+    
+    return "https://via.placeholder.com/400x300?text=Imagen+No+Disponible"
+
+
+# Endpoint para obtener UN contacto específico para rellenar el formulario
+@api.route('/contacto/<int:contact_id>', methods=['GET'])
+@jwt_required()
+def get_single_contact(contact_id):
+    current_user_id = int(get_jwt_identity())
+    
+    contacto = db.session.execute(
+        db.select(Contactos).where(Contactos.contactos_id == contact_id, Contactos.user_id == current_user_id)
+    ).scalar_one_or_none()
+
+    if not contacto:
+        return jsonify({"msg": "Contacto no encontrado"}), 404
+
+    return jsonify({
+        "name": contacto.name,
+        "birth_date": contacto.birth_date,
+        "gender": contacto.gender,
+        "hobbies": contacto.hobbies,
+        "ocupacion": contacto.ocupacion,
+        "tipo_personalidad": contacto.tipo_personalidad,
+        "relation": contacto.relation,  
+        "imagen": contacto.url_img       
+    }), 200
+
+
+# 3. Endpoint para generar Regalos con IA (Gemini)
+@api.route('/generate_gift_ideas', methods=['POST'])
+@jwt_required()
+def generate_gift_ideas():
+    data = request.get_json()
+    
+    api_key_gemini = os.getenv("GOOGLE_API_KEY")
+    if not api_key_gemini:
+        return jsonify({"msg": "Falta API Key de Google"}), 500
+
+    genai.configure(api_key=api_key_gemini)
+    model = genai.GenerativeModel('gemini-1.5-flash') 
+
+    perfil = data.get('perfil', {})
+    evitar = data.get('evitar', '')
+    presupuesto = data.get('presupuesto', '')
+    
+    prompt = f"""
+    Actúa como un experto en regalos. Genera 6 ideas de regalos ÚNICAS para:
+    - Edad: {perfil.get('edad')}
+    - Género: {perfil.get('sexo')}
+    - Hobbies: {perfil.get('hobbies')}
+    - Ocupación: {perfil.get('ocupacion')}
+    - Ocasión: {perfil.get('ocasion')}
+    - Relación: {perfil.get('parentesco')}
+    - Personalidad: {perfil.get('personalidad')}
+    - Presupuesto: {presupuesto}
+    
+    EVITAR: {evitar}
+    
+    Responde SOLO con un JSON válido (lista de objetos). Sin markdown.
+    Claves obligatorias por objeto:
+    "nombre_regalo", "descripcion" (max 15 palabras), "precio_estimado", "termino_busqueda" (para buscar la foto).
+    """
+
+    try:
+        response = model.generate_content(prompt)
+        text = response.text.replace("```json", "").replace("```", "").strip()
+        ideas = json.loads(text)
+        
+        for idea in ideas:
+            term = idea['termino_busqueda']
+            search_url = term.replace(" ", "+")
+            
+            idea['link_compra'] = f"https://www.amazon.es/s?k={search_url}&tag=4giifts-21"
+            
+            idea['imagen'] = get_google_image(f"{term} producto")
+
+        return jsonify(ideas), 200
+
+    except Exception as e:
+        print(f"Error IA: {e}")
+        return jsonify({"msg": "Error generando ideas"}), 500
