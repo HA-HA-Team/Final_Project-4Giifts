@@ -25,9 +25,8 @@ class User(db.Model):
     birth_date: Mapped[str] = mapped_column(
         String(10), nullable=True) 
     gender: Mapped[str] = mapped_column(String(20), nullable=True)
-    hobbies: Mapped[str] = mapped_column(String(255), nullable=True)
+    hobbies: Mapped[str] = mapped_column(String(999), nullable=True)
     ocupacion: Mapped[str] = mapped_column(String(120), nullable=True)
-    url_img: Mapped[str] = mapped_column(String(899), nullable=True)
     tipo_personalidad: Mapped[str] = mapped_column(String(120), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
@@ -76,7 +75,6 @@ class User(db.Model):
             "hobbies": self.hobbies,
             "gender":self.gender,
             "ocupacion": self.ocupacion,
-            "imagen": self.url_img,
             "tipo_personalidad": self.tipo_personalidad,
             "created_at": self.created_at
         }
@@ -96,7 +94,7 @@ class Contactos(db.Model):
     gender: Mapped[str] = mapped_column(String(20), nullable=True)
     relation: Mapped[str] = mapped_column(String(20), nullable=True)
     birth_date: Mapped[str] = mapped_column(String(10), nullable=True)
-    hobbies: Mapped[str] = mapped_column(String(255), nullable=True)
+    hobbies: Mapped[str] = mapped_column(String(999), nullable=True)
     url_img: Mapped[str] = mapped_column(String(899), nullable=True)
     ocupacion: Mapped[str] = mapped_column(String(120), nullable=True)
     tipo_personalidad: Mapped[str] = mapped_column(String(120), nullable=True)

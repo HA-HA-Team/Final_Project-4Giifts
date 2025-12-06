@@ -61,7 +61,9 @@ def create_user():
         birth_date=data.get("birth_date"),
         hobbies=data.get("hobbies"),
         ocupacion=data.get("ocupacion"),
-        tipo_personalidad=data.get("tipo_personalidad")
+        tipo_personalidad=data.get("tipo_personalidad"),
+        gender=data.get("gender"),
+        profile_pic=data.get("profile_pic")
     )
     return jsonify(user.to_dict()), 201
 
@@ -212,8 +214,8 @@ def generate_gift_ideas():
     history_str = ", ".join(historial) if historial else "Ninguno"
 
     prompt = f"""
-    Rol: Personal Shopper experto en España.
-    Tarea: Genera 6 regalos FÍSICOS, ORIGINALES y ESPECÍFICOS.
+    Rol: Eres un Personal Shopper experto internacionalmente y en España.
+    Tarea: Genera 6 regalos FÍSICOS O DIGITALES, ORIGINALES y ESPECÍFICOS que sean ideales para el PERFIL que te describo a continuacion. Los Hobbies se refiere tanto a Hobbies como a gustos del perfil.
 
     PERFIL:
     - Edad: {perfil.get('edad')} | Género: {perfil.get('sexo')}

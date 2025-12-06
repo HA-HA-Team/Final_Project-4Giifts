@@ -18,7 +18,9 @@ export const Signup = () => {
       birth_date: form.birthDate.value,
       hobbies: form.hobbies.value,
       ocupacion: form.ocupacion.value,
-      tipo_personalidad: form.tipoPersonalidad.value
+      tipo_personalidad: form.tipoPersonalidad.value,
+      profile_pic: form.profile_pic.value,
+      gender: form.gender.value
     };
 
     try {
@@ -59,10 +61,13 @@ export const Signup = () => {
           <label className={styles.label}>Apellidos</label>
           <input type="text" id="lastName" className={`form-control mb-3 ${styles.input}`} />
 
+          <label className={styles.label}>Género</label>
+          <input type="text" id="gender" className={`form-control mb-3 ${styles.input}`} />
+
           <label className={styles.label}>Fecha de nacimiento</label>
           <input type="date" id="birthDate" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Hobbies</label>
+          <label className={styles.label}>Hobbies y Gustos Personales</label>
           <input type="text" id="hobbies" className={`form-control mb-3 ${styles.input}`} />
 
           <label className={styles.label}>Ocupación</label>
@@ -70,6 +75,9 @@ export const Signup = () => {
 
           <label className={styles.label}>Tipo de personalidad</label>
           <input type="text" id="tipoPersonalidad" className={`form-control mb-4 ${styles.input}`} />
+
+          <label className={styles.label}>Link para imagen de perfil</label>
+          <input type="text" id="profile_pic" className={`form-control mb-4 ${styles.input}`} />
 
           <button type="submit" className={styles.submitBtn}>
             Crear Cuenta
