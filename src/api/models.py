@@ -23,8 +23,8 @@ class User(db.Model):
     first_name: Mapped[str] = mapped_column(String(80), nullable=True)
     last_name: Mapped[str] = mapped_column(String(80), nullable=True)
     birth_date: Mapped[str] = mapped_column(
-        String(10), nullable=True)   # <-- ARREGLADO
-
+        String(10), nullable=True) 
+    gender: Mapped[str] = mapped_column(String(20), nullable=True)
     hobbies: Mapped[str] = mapped_column(String(255), nullable=True)
     ocupacion: Mapped[str] = mapped_column(String(120), nullable=True)
     url_img: Mapped[str] = mapped_column(String(899), nullable=True)
@@ -46,7 +46,8 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}>"
-#kwargs recibe todos los argumentos del endpoint- asi si añadimos algo mas no hay que modificar el metodo de clase
+# kwargs recibe todos los argumentos del endpoint- asi si añadimos algo mas no hay que modificar el metodo de clase
+
     @classmethod
     def create_new_user(self, **kwargs):
         raw_password = kwargs.get("password")
@@ -73,6 +74,7 @@ class User(db.Model):
             "last_name": self.last_name,
             "birth_date": self.birth_date,
             "hobbies": self.hobbies,
+            "gender":self.gender,
             "ocupacion": self.ocupacion,
             "imagen": self.url_img,
             "tipo_personalidad": self.tipo_personalidad,
