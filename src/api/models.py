@@ -180,3 +180,19 @@ class Favorite(db.Model):
 
     def __repr__(self):
         return f"<Favorite {self.favorite_id}>"
+    
+
+
+# almacenar la url de imagen para evitar consultas repetidas a api google search
+class ImagenProducto(db.Model):
+    __tablename__ = "imagen_producto"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    termino_busqueda: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    img_url: Mapped[str] = mapped_column(String(500), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
+
+    def __repr__(self):
+        return f"<Imagen {self.termino_busqueda}>"

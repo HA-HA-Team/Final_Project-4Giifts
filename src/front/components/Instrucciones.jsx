@@ -19,7 +19,7 @@ export const Instrucciones = () => {
 
                 <div className="card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
                     <div className="ratio ratio-21x9">
-                        <i class="fa-solid fa-door-open display-5 d-flex justify-content-center align-items-center"></i>
+                        <i className="fa-solid fa-door-open display-5 d-flex justify-content-center align-items-center"></i>
                     </div>
                     <div className="card-body d-flex justify-content-between flex-column">
                         <div>
@@ -32,7 +32,7 @@ export const Instrucciones = () => {
 
                 <div className="card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
                     <div className="ratio ratio-21x9">
-                        <i class="fa-solid fa-wand-magic-sparkles display-5 d-flex justify-content-center align-items-center"></i>
+                        <i className="fa-solid fa-wand-magic-sparkles display-5 d-flex justify-content-center align-items-center"></i>
                     </div>
                     <div className="card-body d-flex justify-content-between flex-column">
                         <div>
