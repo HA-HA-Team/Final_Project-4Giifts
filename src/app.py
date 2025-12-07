@@ -31,7 +31,7 @@ else:
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'vmoehrpmcvfpojoanveifsfef4354t3e6efg5y54defgve45546b44hg45brbrtbrtyu656y5yrthhtrhfdh'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=30)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=180)
 
 jwt = JWTManager(app)
 

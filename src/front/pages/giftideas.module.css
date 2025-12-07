@@ -169,3 +169,11 @@
 .buyBtn:hover {
   background: var(--color-crimson);
 }
+
+@media (max-width: 768px) {
+  .backBtn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+}

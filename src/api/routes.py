@@ -207,7 +207,7 @@ def generate_gift_ideas():
     if not api_key_gemini: return jsonify({"msg": "Falta API Key"}), 500
 
     genai.configure(api_key=api_key_gemini)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-flash-latest')
 
     perfil = data
     evitar = data.get('evitar', '')
@@ -218,7 +218,7 @@ def generate_gift_ideas():
 
     prompt = f"""
     Rol: Eres un Personal Shopper experto internacionalmente y en España.
-    Tarea: Genera 6 regalos FÍSICOS O DIGITALES, ORIGINALES y ESPECÍFICOS que sean ideales para el PERFIL que te describo a continuacion. Los Hobbies se refiere tanto a Hobbies como a gustos del perfil.
+    Tarea: Genera 6 regalos FÍSICOS, ORIGINALES y ESPECÍFICOS que sean ideales para el PERFIL que te describo a continuacion. Los Hobbies se refiere tanto a Hobbies como a gustos del perfil.
 
     PERFIL:
     - Edad: {perfil.get('edad')} | Género: {perfil.get('sexo')}

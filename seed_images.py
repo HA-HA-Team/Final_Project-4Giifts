@@ -12,8 +12,8 @@ from api.models import db, ImagenProducto
 
 # --- LISTA DE REGALOS ---
 COMMON_GIFTS = {
-    "nintendo switch oled": "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?q=80&w=500",
-    "playstation 5 slim": "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80&w=500"
+    "iphone 17 pro max": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR2iJQyuZuTI2vUKQjCSNKgvLojokhwcw0Bw&s",
+    "risk juego de mesa": "https://m.media-amazon.com/images/I/71246wfaHjL.jpg"
 }
 
 def seed_images():
