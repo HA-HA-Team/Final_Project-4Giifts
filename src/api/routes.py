@@ -249,8 +249,8 @@ def generate_gift_ideas():
             term = idea.get('termino_busqueda', idea.get('nombre_regalo'))
             search_url = term.replace(" ", "+")
 
-            # Enlace Amazon
-            idea['link_compra'] = f"https://www.amazon.es/s?k={search_url}&tag=4giifts-21"
+            # Enlace Amazon, podremos añadir la busqueda en otras plataformas
+            idea['link_compra'] = f"https://www.amazon.es/s?k={search_url}&tag=4giifts-21" # El tag=xxxxxx seria el codigo de afiliados que tenemos que crear 
 
             # Búsqueda de Imagen (Cascada + Caché DB)
             img_url = google_search_api(f"{term} producto", search_type="image")
