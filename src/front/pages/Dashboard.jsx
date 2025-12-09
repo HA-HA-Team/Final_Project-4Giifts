@@ -195,10 +195,10 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-        sessionStorage.removeItem("token");
+    sessionStorage.removeItem("token");
 
-        navigate("/");
-    };
+    navigate("/");
+  };
 
   return (
     <div className={`${styles["dashboard-wrapper"]} container-fluid p-0`}>
@@ -215,6 +215,7 @@ const Dashboard = () => {
 
               <div className="mt-4">
                 <label className="text-white mb-2 small">Regalos guardados</label>
+
                 <select
                   className={`form-select ${styles["custom-select"]}`}
                   value={selectedContactId}
@@ -229,11 +230,18 @@ const Dashboard = () => {
                 </select>
               </div>
               <button
-                         className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`}
-                        onClick={handleLogout}
-                    >
-                        Cerrar Sesión
-                    </button>
+                className={`btn ${styles["btn-ideas"]} mt-3 mx-auto`}
+                onClick={() => navigate("/profile/edit")}
+              >
+                Editar Perfil
+              </button>
+
+              <button
+                className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`}
+                onClick={handleLogout}
+              >
+                Cerrar Sesión
+              </button>
             </nav>
           </div>
         </aside>

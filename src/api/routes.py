@@ -10,9 +10,11 @@ from flask_bcrypt import Bcrypt
 from api.models import bcrypt
 from flask_mail import Message
 from datetime import timedelta
-from app import mail
-import os
 
+# importación corregida para evitar circular import
+from api.extensions import mail
+
+import os
 
 api = Blueprint('api', __name__)
 
@@ -111,8 +113,7 @@ def get_user(user_id):
 
 # AGREGADOS 29-30/11
 
-
-# modificar user
+# modificar user Actualizados el 09/
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user(user_id):
@@ -126,20 +127,26 @@ def update_user(user_id):
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    # campos a cambiar
     fields = [
-        "email", "first_name", "last_name", "profile_pic",
-        "fecha_nacimiento", "hobbies", "ocupacion", "tipo_personalidad"
+        "email",
+        "first_name",
+        "last_name",
+        "profile_pic",
+        "birth_date",
+        "hobbies",
+        "ocupacion",
+        "tipo_personalidad"
     ]
 
     for field in fields:
-        if data.get(field):
+        if field in data and data[field] is not None:
             setattr(user, field, data[field])
 
-    # contraseña aparte
+    # Contraseña aparte
     if data.get("password"):
         hashed = bcrypt.generate_password_hash(
-            data["password"]).decode("utf-8")
+            data["password"]
+        ).decode("utf-8")
         user.password = hashed
 
     db.session.commit()
@@ -165,8 +172,8 @@ def delete_user(user_id):
 
     return jsonify({"msg": "Cuenta eliminada"}), 200
 
-# get all users endpoint agregado 01/12
 
+# get all users endpoint agregado 01/12
 
 @api.route('/users/', methods=['GET'])
 def get_all_users():
@@ -176,6 +183,7 @@ def get_all_users():
 
     return jsonify(result), 200
 
+
 @api.route("/recover/request", methods=["POST"])
 def request_recover():
     data = request.get_json()
@@ -184,7 +192,8 @@ def request_recover():
     user = User.find_by_email(email)
 
     # Siempre devolvemos lo mismo para no revelar si el email existe
-    msg_ok = {"msg": "Si el correo existe, recibirás un email para restablecer tu contraseña"}
+    msg_ok = {
+        "msg": "Si el correo existe, recibirás un email para restablecer tu contraseña"}
 
     if not user:
         return jsonify(msg_ok), 200
@@ -215,6 +224,7 @@ Este enlace expira en 15 minutos.
 
     return jsonify(msg_ok), 200
 
+
 @api.route("/recover/reset", methods=["POST"])
 @jwt_required()
 def reset_password():
@@ -227,7 +237,6 @@ def reset_password():
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    # Encriptar nueva contraseña
     user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
     db.session.commit()
 
