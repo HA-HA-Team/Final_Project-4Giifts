@@ -265,3 +265,12 @@ def generate_gift_ideas():
     except Exception as e:
         print(f"Error IA: {e}")
         return jsonify({"msg": "Error generando ideas"}), 500
+    
+
+
+@api.route('/getdata', methods=['GET'])
+def get_data():
+    result= db.session.query(ImagenProducto).all()
+    result= [product.to_dict() for product in result]
+    print(result)
+    return jsonify(result)

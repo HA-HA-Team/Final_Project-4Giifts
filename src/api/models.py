@@ -194,5 +194,14 @@ class ImagenProducto(db.Model):
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "termino_busqueda": self.termino_busqueda,
+            "img_url": self.img_url,
+            "updated_at": self.updated_at
+        }
+
+    
     def __repr__(self):
         return f"<Imagen {self.termino_busqueda}>"
