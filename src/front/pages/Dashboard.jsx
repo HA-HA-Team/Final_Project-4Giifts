@@ -1,425 +1,447 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
-import { getPrivateData } from '../services';
+import { getPrivateData, getUserContacts, createContact, updateContact } from '../services';
 
 const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const giftsSectionRef = useRef(null);
-  const intervalRef = useRef(null);
   const trackRef = useRef(null);
+  const intervalRef = useRef(null);
 
-  // --- Verificación Token y recogida datos---
-  useEffect(() => {
-    const verifyToken = async () => {
-      const token = sessionStorage.getItem("token");
+  const [contacts, setContacts] = useState([]);
 
-      if (!token) {
-        alert("No tienes acceso, inicia sesión!");
-        //Quitar este comentario para que redirija a login
-        //navigate("/login");
-        return;
-      }
 
-      // --- Peticiones fetch y almacenamiento datos---
-      try {
-        const resp = await getPrivateData();
-        if (resp.ok) {
-          const data = await resp.json();
-          setUserInfo(data);
-          setLoading(false);
-        } else {
-          sessionStorage.removeItem("token");
-          navigate("/login");
-        }
-      } catch (error) {
-        console.error(error);
-        sessionStorage.removeItem("token");
-        navigate("/login");
-      }
-    };
+  const initialFormState = {
+    name: '',
+    relation: '',
+    birth_date: '',
+    gender: '',
+    hobbies: '',
+    ocupacion: '',
+    tipo_personalidad: '',
+    url_img: ''
+  };
 
-    verifyToken();
-  }, []);
+  const [formData, setFormData] = useState(initialFormState);
+  const [editingContactId, setEditingContactId] = useState(null);
 
-  // --- DATOS PROVISIONALES ---
-  const initialContacts = [
-    { id: 1, name: 'María', relation: 'Mamá', img: 'https://i.pravatar.cc/150?img=1' },
-    { id: 2, name: 'Juan', relation: 'Papá', img: 'https://i.pravatar.cc/150?img=11' },
-    { id: 3, name: 'Ana', relation: 'Novi@', img: 'https://i.pravatar.cc/150?img=5' },
-    { id: 4, name: 'Chirla', relation: 'Amig@', img: 'https://i.pravatar.cc/150?img=9' },
-    { id: 5, name: 'Ella', relation: 'Amig@', img: 'https://i.pravatar.cc/150?img=20' },
-    { id: 6, name: 'Carlos', relation: 'Hermano', img: 'https://i.pravatar.cc/150?img=13' },
-    { id: 7, name: 'María', relation: 'Mamá', img: 'https://i.pravatar.cc/150?img=1' },
-    { id: 8, name: 'Juan', relation: 'Papá', img: 'https://i.pravatar.cc/150?img=11' },
-    { id: 9, name: 'Ana', relation: 'Novi@', img: 'https://i.pravatar.cc/150?img=5' },
+  const initialGifts = [
+    { id: 101, name: 'Cartera de Cuero', price: '170 €', img: 'https://images.unsplash.com/photo-1627123424574-181ce5171c98?w=300', link: '#' },
+    { id: 102, name: 'Set de Café', price: '100 €', img: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=300', link: '#' },
+    { id: 103, name: 'Navaja Suiza', price: '250 €', img: 'https://images.unsplash.com/photo-1589311204213-9114f4e3c79c?w=300', link: '#' },
   ];
+  const [gifts, setGifts] = useState(initialGifts);
 
-  const initialReminders = [
-    { id: 1, title: 'Cumpleaños de Laura', subtitle: '(Pronto)', icon: '🎂' },
+  const [reminders] = useState([
+    { id: 1, title: 'Cumpleaños', subtitle: '(Pronto)', icon: '🎂' },
     { id: 2, title: 'Navidad', subtitle: '(Se acerca)', icon: '🎄' },
     { id: 3, title: 'San Valentín', subtitle: '(Próximo)', icon: '❤️' },
-    { id: 4, title: 'Día de la Madre', subtitle: 'Mayo 5', icon: '👩' },
-    { id: 5, title: 'Aniversario', subtitle: 'Julio 20', icon: '💍' },
-    { id: 6, title: 'Cumpleaños de Pedro', subtitle: 'Agosto 15', icon: '🎁' },
-  ];
+  ]);
 
-  const initialGiftIdeasData = [
-    { id: 101, name: 'Cartera de Cuero', price: '170 €', img: 'https://images.unsplash.com/photo-1627123424574-181ce5171c98?auto=format&fit=crop&w=300&q=80', link: '#' },
-    { id: 102, name: 'Set de Café', price: '100 €', img: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=300&q=80', link: '#' },
-    { id: 103, name: 'Navaja Suiza', price: '250 €', img: 'https://images.unsplash.com/photo-1589311204213-9114f4e3c79c?auto=format&fit=crop&w=300&q=80', link: '#' },
-    { id: 104, name: 'Paquete Regalo', price: '150 €', img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=300&q=80', link: '#' },
-  ];
-
-  // --- ESTADOS ---
-  const [contacts, setContacts] = useState(initialContacts);
-  const [reminders] = useState(initialReminders);
-  const [gifts, setGifts] = useState(initialGiftIdeasData);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedContactId, setSelectedContactId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Drag & Drop
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [dragTranslate, setDragTranslate] = useState(0);
 
-  // Estados de Modales
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [contactToDelete, setContactToDelete] = useState(null);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
-  // --- LÓGICA CARRUSEL AUTOMÁTICO ---
-  const startAutoPlay = () => {
-    stopAutoPlay();
-    intervalRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % reminders.length);
-    }, 3000);
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      const token = sessionStorage.getItem("token");
+      if (!token) { navigate("/login"); return; }
+      try {
+        const userResp = await getPrivateData();
+        if (!userResp.ok) throw new Error("Auth failed");
 
-  const stopAutoPlay = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  };
+        const contactsResp = await getUserContacts();
+        if (contactsResp.ok) {
+          setContacts(await contactsResp.json());
+        }
+      } catch (e) {
+        sessionStorage.removeItem("token");
+        navigate("/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, [navigate]);
 
   useEffect(() => {
-    startAutoPlay();
-    return () => stopAutoPlay();
+    const start = () => { intervalRef.current = setInterval(() => setCurrentSlide(p => (p + 1) % reminders.length), 3000); };
+    start();
+    return () => clearInterval(intervalRef.current);
   }, [reminders.length]);
 
-  // --- LÓGICA DE ARRASTRE (DRAG) ---
-  const handleDragStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.clientX || e.touches[0].clientX);
-    stopAutoPlay();
-  };
+  const stopAuto = () => clearInterval(intervalRef.current);
 
+  const handleDragStart = (e) => { setIsDragging(true); setStartX(e.clientX || e.touches[0].clientX); stopAuto(); };
   const handleDragMove = (e) => {
     if (!isDragging) return;
-    const currentX = e.clientX || e.touches[0].clientX;
-    const diff = currentX - startX;
-    if (trackRef.current) {
-      const width = trackRef.current.offsetWidth;
-      const movePercent = (diff / width) * 100;
-      setDragTranslate(movePercent);
-    }
+    const x = e.clientX || e.touches[0].clientX;
+    if (trackRef.current) setDragTranslate(((x - startX) / trackRef.current.offsetWidth) * 100);
   };
-
   const handleDragEnd = () => {
     setIsDragging(false);
-    const threshold = 5;
-    if (dragTranslate < -threshold) {
-      setCurrentSlide(prev => (prev + 1) % reminders.length);
-    } else if (dragTranslate > threshold) {
-      setCurrentSlide(prev => (prev - 1 + reminders.length) % reminders.length);
-    }
+    if (dragTranslate < -5) setCurrentSlide(p => (p + 1) % reminders.length);
+    else if (dragTranslate > 5) setCurrentSlide(p => (p - 1 + reminders.length) % reminders.length);
     setDragTranslate(0);
-    startAutoPlay();
   };
 
-  // --- BÚSQUEDA DEL CONTACTO ACTIVO ---
   const activeContact = contacts.find(c => c.id.toString() === selectedContactId.toString());
 
-  // --- AUTO SCROLL ---
   useEffect(() => {
     if (activeContact && giftsSectionRef.current) {
-      setTimeout(() => {
-        giftsSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100);
+      setTimeout(() => giftsSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
     }
   }, [activeContact]);
 
-  // --- FILTRADO NORMALIZADO ---
-  const normalizeText = (text) => {
-    return text
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-  };
-
-  const filteredContacts = contacts.filter(contact =>
-    normalizeText(contact.name).includes(normalizeText(searchTerm)) ||
-    normalizeText(contact.relation).includes(normalizeText(searchTerm))
+  const normalize = (t) => t ? t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
+  const filteredContacts = contacts.filter(c =>
+    normalize(c.name).includes(normalize(searchTerm)) || normalize(c.relation).includes(normalize(searchTerm))
   );
 
-  // --- MANEJADORES DE EVENTOS ---
-  const handleContactSelect = (e) => {
-    setSelectedContactId(e.target.value);
-  };
-
-  const handleCardClick = (id) => {
-    setSelectedContactId(id.toString());
-  };
-
-  const handleDeleteClick = (contact) => {
-    setContactToDelete(contact);
-    setDeleteConfirmed(false);
-    setShowDeleteModal(true);
-  };
-
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (contactToDelete) {
-      setContacts(contacts.filter(c => c.id !== contactToDelete.id));
-      if (selectedContactId.toString() === contactToDelete.id.toString()) {
-        setSelectedContactId('');
-      }
+      try {
+        const token = sessionStorage.getItem("token");
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contacto/${contactToDelete.id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          setContacts(contacts.filter(c => c.id !== contactToDelete.id));
+          if (selectedContactId === contactToDelete.id.toString()) setSelectedContactId('');
+        }
+      } catch (e) { console.error(e); }
     }
     setShowDeleteModal(false);
     setContactToDelete(null);
   };
 
-  const handleDeleteGift = (giftId) => {
-    setGifts(gifts.filter(gift => gift.id !== giftId));
+  const handleLogout = () => { sessionStorage.removeItem("token"); navigate("/"); };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleLogout = () => {
-        sessionStorage.removeItem("token");
+  const resetModal = () => {
+    setShowAddModal(false);
+    setFormData(initialFormState);
+    setEditingContactId(null);
+  };
 
-        navigate("/");
-    };
+  const handleEditClick = (e, contact) => {
+    e.stopPropagation();
+    setEditingContactId(contact.id);
+    setFormData({
+      name: contact.name || '',
+      relation: contact.relation || '',
+      birth_date: contact.birth_date || '',
+      gender: contact.gender || '',
+      hobbies: contact.hobbies || '',
+      ocupacion: contact.ocupacion || '',
+      tipo_personalidad: contact.tipo_personalidad || '',
+      url_img: contact.img || ''
+    });
+    setShowAddModal(true);
+  };
+
+  const handleSaveContact = async () => {
+    if (!formData.name) return alert("El nombre es obligatorio");
+
+    try {
+      let res;
+      if (editingContactId) {
+        res = await updateContact(editingContactId, formData);
+      } else {
+        res = await createContact(formData);
+      }
+
+      if (res.ok) {
+        const savedContact = await res.json();
+
+        if (editingContactId) {
+          setContacts(contacts.map(c => c.id === editingContactId ? savedContact : c));
+        } else {
+          setContacts([...contacts, savedContact]);
+        }
+        resetModal();
+      } else {
+        alert("Error al guardar contacto");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  if (loading) return <div className="text-center p-5">Cargando...</div>;
 
   return (
     <div className={`${styles["dashboard-wrapper"]} container-fluid p-0`}>
       <div className="row g-0">
-
-        {/* --- SIDEBAR IZQUIERDA --- */}
         <aside className={`col-md-3 col-lg-2 ${styles["sidebar-wrapper"]}`}>
           <div className={`${styles["sidebar-custom"]} d-flex flex-column`}>
             <nav className="flex-grow-1">
-              <a href="#contactos-section" className={styles["sidebar-link"]}>Contactos</a>
-              <a href="/ideas" className={styles["sidebar-link"]}>Generar ideas para mí</a>
+              <a href="#contactos" className={styles["sidebar-link"]}>Contactos</a>
+              <div
+                className={styles["sidebar-link"]}
+                onClick={() => navigate('/generar-ideas/user')}
+                style={{ cursor: 'pointer' }}
+              >
+                Generar ideas para mí
+              </div>
               <a href="/favoritos" className={styles["sidebar-link"]}>Mis favoritos</a>
-              <a href="#recordatorios-section" className={styles["sidebar-link"]}>Recordatorios</a>
-
+              <a href="#recordatorios" className={styles["sidebar-link"]}>Recordatorios</a>
               <div className="mt-4">
                 <label className="text-white mb-2 small">Regalos guardados</label>
-                <select
-                  className={`form-select ${styles["custom-select"]}`}
-                  value={selectedContactId}
-                  onChange={handleContactSelect}
-                >
+                <select className={`form-select ${styles["custom-select"]}`} value={selectedContactId} onChange={(e) => setSelectedContactId(e.target.value)}>
                   <option value="">Selecciona contacto...</option>
-                  {contacts.map(contact => (
-                    <option key={contact.id} value={contact.id}>
-                      {contact.name} ({contact.relation})
-                    </option>
-                  ))}
+                  {contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
-              <button
-                         className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`}
-                        onClick={handleLogout}
-                    >
-                        Cerrar Sesión
-                    </button>
+              <button className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`} onClick={handleLogout}>Salir</button>
             </nav>
           </div>
         </aside>
 
-        {/* --- CONTENIDO PRINCIPAL --- */}
         <main className="col-md-9 col-lg-10 p-4 p-md-5">
-
-          {/* SECCIÓN CONTACTOS Y BUSCADOR */}
-          <div id="contactos-section" className="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 pt-3">
-            <div className="d-flex align-items-center mb-3 mb-md-0">
+          <div id="contactos" className="d-flex justify-content-between align-items-center mb-4 pt-3">
+            <div className="d-flex align-items-center">
               <h2 className={`${styles["section-title"]} mb-0 me-3`}>CONTACTOS</h2>
-              <button className={`${styles["btn-add-contact"]} shadow-sm`} onClick={() => setShowAddModal(true)}>+</button>
+              <button className={styles["btn-add-contact"]} onClick={() => setShowAddModal(true)}>+</button>
             </div>
-
-            <div className={`${styles["search-input-container"]} w-100 w-md-auto`}>
-              <input
-                type="text"
-                className={`form-control form-control-plaintext ${styles["search-input"]}`}
-                placeholder="Buscar por nombre o parentesco..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+            <div className={styles["search-input-container"]}>
+              <input className={`form-control form-control-plaintext ${styles["search-input"]}`} placeholder="Buscar..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
 
           <div className="row g-4 mb-5">
             {filteredContacts.length > 0 ? (
-              filteredContacts.map((contact) => (
-                <div key={contact.id} className="col-12 col-sm-6 col-lg-4">
-                  <div
-                    className={`card ${styles["contact-card"]} h-100 text-center p-3`}
-                    onClick={() => handleCardClick(contact.id)}
-                  >
+              filteredContacts.map(c => (
+                <div key={c.id} className="col-12 col-sm-6 col-lg-4">
+                  <div className={`card ${styles["contact-card"]} h-100 text-center p-3`} onClick={() => setSelectedContactId(c.id.toString())}>
                     <button
-                      className={`${styles["btn-delete-contact"]} shadow-sm`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick(contact);
-                      }}
+                      className={styles["btn-edit-contact"]}
+                      onClick={(e) => handleEditClick(e, c)}
                     >
-                      X
+                      ✎
                     </button>
-
+                    <button className={styles["btn-delete-contact"]} onClick={(e) => { e.stopPropagation(); setContactToDelete(c); setShowDeleteModal(true); }}>X</button>
                     <div className="card-body d-flex flex-column align-items-center">
-                      <img src={contact.img} alt={contact.name} className={`${styles["contact-img"]} mb-3 shadow-sm`} />
-                      <h5 className="fw-bold mb-0">{contact.name}</h5>
-                      <small className="text-muted mb-2">{contact.relation}</small>
-
-                      <a
-                        href={`/generar-ideas/${contact.id}`}
-                        className={`btn ${styles["btn-ideas"]} mt-auto`}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Generar ideas
-                      </a>
+                      <img src={c.img || "https://i.pravatar.cc/150"} className={`${styles["contact-img"]} mb-3`} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt={c.name} />
+                      <h5 className="fw-bold">{c.name}</h5>
+                      <small className="text-muted mb-2">{c.relation}</small>
+                      <button className={`btn ${styles["btn-ideas"]} mt-auto`} onClick={(e) => { e.stopPropagation(); navigate(`/generar-ideas/${c.id}`); }}>Generar ideas</button>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-center text-muted">No se encontraron contactos.</p>
+              <div className="col-12 col-sm-6 col-lg-4">
+                <div className={`card h-100 d-flex flex-column align-items-center justify-content-center p-4`} style={{ border: '2px dashed #ccc', borderRadius: '20px', minHeight: '250px' }}>
+                  <h5 className="text-muted mb-3">Crea tu primer contacto</h5>
+                  <button className={styles["btn-add-contact"]} style={{ width: '60px', height: '60px', fontSize: '2rem' }} onClick={() => setShowAddModal(true)}>+</button>
+                </div>
+              </div>
             )}
           </div>
 
-          {/* SECCIÓN RECORDATORIOS */}
-          <div id="recordatorios-section" className="mb-2 pt-3">
+          <div id="recordatorios" className="mb-2 pt-3">
             <h5 className={`${styles["section-title"]} text-center mb-4`}>RECORDATORIOS</h5>
-
-            <div
-              className={styles["reminder-viewport"]}
-              ref={trackRef}
-              onMouseDown={handleDragStart}
-              onMouseMove={handleDragMove}
-              onMouseUp={handleDragEnd}
-              onMouseLeave={handleDragEnd}
-              onTouchStart={handleDragStart}
-              onTouchMove={handleDragMove}
-              onTouchEnd={handleDragEnd}
-            >
-              <div
-                className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`}
-                style={{
-                  transform: `translateX(calc(-${currentSlide * (100 / 3)}% + ${dragTranslate}%))`
-                }}
-              >
-                {reminders.concat(reminders).map((reminder, index) => (
-                  <div key={`${reminder.id}-${index}`} className={styles["reminder-card"]}>
-                    <div className="display-4 mb-2">{reminder.icon}</div>
-                    <h6 className="fw-bold">{reminder.title}</h6>
-                    <small>{reminder.subtitle}</small>
+            <div className={styles["reminder-viewport"]} ref={trackRef} onMouseDown={handleDragStart} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={handleDragEnd}>
+              <div className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`} style={{ transform: `translateX(calc(-${currentSlide * 33.33}% + ${dragTranslate}%))` }}>
+                {reminders.concat(reminders).map((r, i) => (
+                  <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
+                    <div className="display-4">{r.icon}</div>
+                    <h6 className="fw-bold">{r.title}</h6>
+                    <small>{r.subtitle}</small>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* SECCIÓN REGALOS GUARDADOS */}
           {activeContact && (
             <div ref={giftsSectionRef} className={`${styles["saved-gifts-section"]} shadow`}>
-              <button
-                className={`${styles["btn-close-gifts"]} shadow-sm`}
-                onClick={() => setSelectedContactId('')}
-              >
-                X
-              </button>
-
+              <button className={styles["btn-close-gifts"]} onClick={() => setSelectedContactId('')}>X</button>
               <div className={styles["saved-gifts-inner"]}>
                 <div className="row mb-4 align-items-center">
-                  <div className="col-auto">
-                    <img src={activeContact.img} alt={activeContact.name} className={styles["contact-img"]} style={{ width: '60px', height: '60px' }} />
-                  </div>
+                  <div className="col-auto"><img src={activeContact.img || "https://i.pravatar.cc/150"} className={styles["contact-img"]} style={{ width: 60, height: 60 }} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt="" /></div>
                   <div className="col">
-                    <h4 className="fw-bold mb-0 text-dark">Regalos guardados de {activeContact.name}</h4>
+                    <h4 className="fw-bold text-dark">Regalos de {activeContact.name}</h4>
                     <small className="text-muted d-block mb-2">Relación: {activeContact.relation}</small>
-                    <a
-                      href={`/generar-ideas/${activeContact.id}`}
+                    <button
                       className={`btn ${styles["btn-ideas"]} btn-sm`}
                       style={{ marginTop: '0' }}
+                      onClick={() => navigate(`/generar-ideas/${activeContact.id}`)}
                     >
                       Generar ideas
-                    </a>
+                    </button>
                   </div>
                 </div>
-
                 <div className="row g-3">
-                  {gifts.length > 0 ? (
-                    gifts.map((gift) => (
-                      <div key={gift.id} className="col-12 col-sm-6 col-lg-3">
-                        <div className={`${styles["gift-item-card"]} d-flex flex-column h-100`}>
-                          <button
-                            className={`${styles["btn-delete-gift"]} shadow-sm`}
-                            onClick={() => handleDeleteGift(gift.id)}
-                            title="Eliminar regalo"
-                          >
-                            X
-                          </button>
-
-                          <img src={gift.img} alt={gift.name} className={styles["gift-img"]} />
-                          <div className="p-3 d-flex flex-column flex-grow-1">
-                            <h6 className="small fw-bold mb-1 text-truncate text-dark">{gift.name}</h6>
-                            <p className="small mb-3 fw-bold text-muted">{gift.price}</p>
-                            <a href={gift.link} className={`btn ${styles["btn-buy"]} mt-auto`}>
-                              Comprar
-                            </a>
-                          </div>
+                  {gifts.map(g => (
+                    <div key={g.id} className="col-12 col-sm-6 col-lg-3">
+                      <div className={`${styles["gift-item-card"]} h-100 d-flex flex-column`}>
+                        <button className={styles["btn-delete-gift"]} onClick={() => setGifts(gifts.filter(x => x.id !== g.id))}>X</button>
+                        <img src={g.img} className={styles["gift-img"]} alt="" />
+                        <div className="p-3 flex-grow-1 d-flex flex-column">
+                          <h6 className="small fw-bold">{g.name}</h6>
+                          <p className="small mb-2 fw-bold text-muted">{g.price}</p>
+                          <a href={g.link} className={`btn ${styles["btn-buy"]} mt-auto`}>Comprar</a>
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-center text-muted w-100">No hay regalos guardados para este contacto.</p>
-                  )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           )}
-
         </main>
       </div>
 
-      {/* --- MODAL: AÑADIR CONTACTO (Usa Clases de Bootstrap, no Modules, excepto si personalizas) --- */}
       {showAddModal && (
         <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Nuevo Contacto</h5>
-                <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
+                <h5 className="modal-title">{editingContactId ? "Editar Contacto" : "Nuevo Contacto"}</h5>
+                <button type="button" className="btn-close" onClick={resetModal}></button>
               </div>
               <div className="modal-body">
                 <form>
-                  <div className="mb-3"><label className="form-label">Nombre</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Apellidos</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Parentesco</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Fecha Nacimiento</label><input type="date" className="form-control" /></div>
+
+                  <div className="mb-3">
+                    <label className="form-label">Nombre Completo</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      placeholder="Nombre y Apellidos"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+
+                  <div className="row">
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Parentesco</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="relation"
+                        placeholder="Ej: Amiga, Padre, Primo..."
+                        value={formData.relation}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Fecha Nacimiento</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="birth_date"
+                        value={formData.birth_date}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="row">
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Género</label>
+                      <select
+                        className="form-select"
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Masculino/Femenino/Otro</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Ocupación</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="ocupacion"
+                        placeholder="Ej: Arquitecto, Estudiante..."
+                        value={formData.ocupacion}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">Personalidad</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="tipo_personalidad"
+                      placeholder="Ej: Extrovertido, Friki, Serio..."
+                      value={formData.tipo_personalidad}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">Hobbies e Intereses</label>
+                    <textarea
+                      className="form-control"
+                      rows="2"
+                      name="hobbies"
+                      placeholder="Ej: Tenis, Videojuegos, Lectura..."
+                      value={formData.hobbies}
+                      onChange={handleInputChange}
+                    ></textarea>
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">URL Imagen de perfil</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="url_img"
+                      placeholder="https://..."
+                      value={formData.url_img}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancelar</button>
-                <button type="button" className="btn btn-primary" style={{ backgroundColor: 'var(--color-rose)', border: 'none' }}>Guardar</button>
+                <button type="button" className="btn btn-secondary" onClick={resetModal}>Cancelar</button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{ backgroundColor: 'var(--color-rose)', border: 'none' }}
+                  onClick={handleSaveContact}
+                >
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* --- MODAL: ELIMINAR CONTACTO --- */}
       {showDeleteModal && (
         <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
@@ -443,7 +465,6 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

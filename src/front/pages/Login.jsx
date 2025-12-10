@@ -60,11 +60,12 @@ export const Login = () => {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label fw-semibold" style={{ color: "#DC143C" }}>
+              <label htmlFor="email_login" className="form-label fw-semibold" style={{ color: "#DC143C" }}>
                 Correo
               </label>
               <input
                 type="email"
+                id="email_login"
                 name="email"
                 className="form-control"
                 placeholder="tucorreo@ejemplo.com"
@@ -73,11 +74,12 @@ export const Login = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label fw-semibold" style={{ color: "#DC143C" }}>
+              <label htmlFor="passw_login" className="form-label fw-semibold" style={{ color: "#DC143C" }}>
                 Contraseña
               </label>
               <input
                 type="password"
+                id="passw_login"
                 name="password"
                 className="form-control"
                 placeholder="••••••••"
