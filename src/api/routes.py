@@ -166,7 +166,10 @@ def get_user_contacts():
             "relation": c.relation,
             "img": c.url_img,
             "birth_date": c.birth_date,
-            "hobbies": c.hobbies
+            "hobbies": c.hobbies,
+            "gender": c.gender,
+            "ocupacion": c.ocupacion,
+            "tipo_personalidad": c.tipo_personalidad
         })
     return jsonify(result), 200
 
@@ -209,6 +212,38 @@ def create_contact():
         db.session.rollback()
         return jsonify({"msg": "Error al crear el contacto: " + str(e)}), 500
 
+@api.route('/contacto/<int:contact_id>', methods=['PUT'])
+@jwt_required()
+def update_contact(contact_id):
+    current_user_id = int(get_jwt_identity())
+    c = db.session.execute(db.select(Contactos).where(Contactos.contactos_id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
+    
+    if not c: return jsonify({"msg": "No encontrado"}), 404
+    
+    data = request.get_json()
+    
+    if "name" in data: c.name = data["name"]
+    if "relation" in data: c.relation = data["relation"]
+    if "birth_date" in data: c.birth_date = data["birth_date"]
+    if "gender" in data: c.gender = data["gender"]
+    if "hobbies" in data: c.hobbies = data["hobbies"]
+    if "ocupacion" in data: c.ocupacion = data["ocupacion"]
+    if "tipo_personalidad" in data: c.tipo_personalidad = data["tipo_personalidad"]
+    if "url_img" in data: c.url_img = data["url_img"]
+
+    db.session.commit()
+    
+    return jsonify({
+        "id": c.contactos_id,
+        "name": c.name,
+        "relation": c.relation,
+        "img": c.url_img,
+        "birth_date": c.birth_date,
+        "hobbies": c.hobbies,
+        "gender": c.gender,
+        "ocupacion": c.ocupacion,
+        "tipo_personalidad": c.tipo_personalidad
+    }), 200
 
 @api.route('/contacto/<int:contact_id>', methods=['GET'])
 @jwt_required()

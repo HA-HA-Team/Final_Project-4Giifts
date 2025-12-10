@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
-import { getPrivateData, getUserContacts, createContact } from '../services';
+import { getPrivateData, getUserContacts, createContact, updateContact } from '../services';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const Dashboard = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [editingContactId, setEditingContactId] = useState(null);
 
   const initialGifts = [
     { id: 101, name: 'Cartera de Cuero', price: '170 €', img: 'https://images.unsplash.com/photo-1627123424574-181ce5171c98?w=300', link: '#' },
@@ -132,17 +133,48 @@ const Dashboard = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSaveContact = async () => {
+  const resetModal = () => {
+    setShowAddModal(false);
+    setFormData(initialFormState);
+    setEditingContactId(null);
+  };
 
+  const handleEditClick = (e, contact) => {
+    e.stopPropagation();
+    setEditingContactId(contact.id);
+    setFormData({
+      name: contact.name || '',
+      relation: contact.relation || '',
+      birth_date: contact.birth_date || '',
+      gender: contact.gender || '',
+      hobbies: contact.hobbies || '',
+      ocupacion: contact.ocupacion || '',
+      tipo_personalidad: contact.tipo_personalidad || '',
+      url_img: contact.img || ''
+    });
+    setShowAddModal(true);
+  };
+
+  const handleSaveContact = async () => {
     if (!formData.name) return alert("El nombre es obligatorio");
 
     try {
-      const res = await createContact(formData);
+      let res;
+      if (editingContactId) {
+        res = await updateContact(editingContactId, formData);
+      } else {
+        res = await createContact(formData);
+      }
+
       if (res.ok) {
-        const newContact = await res.json();
-        setContacts([...contacts, newContact]);
-        setShowAddModal(false);
-        setFormData(initialFormState);
+        const savedContact = await res.json();
+
+        if (editingContactId) {
+          setContacts(contacts.map(c => c.id === editingContactId ? savedContact : c));
+        } else {
+          setContacts([...contacts, savedContact]);
+        }
+        resetModal();
       } else {
         alert("Error al guardar contacto");
       }
@@ -197,6 +229,12 @@ const Dashboard = () => {
               filteredContacts.map(c => (
                 <div key={c.id} className="col-12 col-sm-6 col-lg-4">
                   <div className={`card ${styles["contact-card"]} h-100 text-center p-3`} onClick={() => setSelectedContactId(c.id.toString())}>
+                    <button
+                      className={styles["btn-edit-contact"]}
+                      onClick={(e) => handleEditClick(e, c)}
+                    >
+                      ✎
+                    </button>
                     <button className={styles["btn-delete-contact"]} onClick={(e) => { e.stopPropagation(); setContactToDelete(c); setShowDeleteModal(true); }}>X</button>
                     <div className="card-body d-flex flex-column align-items-center">
                       <img src={c.img || "https://i.pravatar.cc/150"} className={`${styles["contact-img"]} mb-3`} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt={c.name} />
@@ -276,8 +314,8 @@ const Dashboard = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Nuevo Contacto</h5>
-                <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
+                <h5 className="modal-title">{editingContactId ? "Editar Contacto" : "Nuevo Contacto"}</h5>
+                <button type="button" className="btn-close" onClick={resetModal}></button>
               </div>
               <div className="modal-body">
                 <form>
@@ -389,7 +427,7 @@ const Dashboard = () => {
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancelar</button>
+                <button type="button" className="btn btn-secondary" onClick={resetModal}>Cancelar</button>
                 <button
                   type="button"
                   className="btn btn-primary"
