@@ -210,7 +210,7 @@ export const GiftIdeas = () => {
             </div>
 
             <div className="mb-3">
-                <label className={styles.label}>Hobbies</label>
+                <label className={styles.label}>Hobbies y gustos</label>
                 <input name="hobbies" className={`form-control ${styles.inputCustom}`} value={formData.hobbies} onChange={(e)=>setFormData({...formData, hobbies: e.target.value})} placeholder="Ej: Tenis, Videojuegos, Lectura..." style={!formData.hobbies ? emptyStyle : filledStyle}/>
             </div>
 

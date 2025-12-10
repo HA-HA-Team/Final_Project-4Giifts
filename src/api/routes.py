@@ -170,6 +170,46 @@ def get_user_contacts():
         })
     return jsonify(result), 200
 
+@api.route('/contacts', methods=['POST'])
+@jwt_required()
+def create_contact():
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json()
+
+    if not data.get("name"):
+        return jsonify({"msg": "El nombre es obligatorio"}), 400
+
+    new_contact = Contactos(
+        user_id=current_user_id,
+        name=data.get("name"),
+        relation=data.get("relation"),
+        birth_date=data.get("birth_date"),
+        gender=data.get("gender"),
+        hobbies=data.get("hobbies"),
+        ocupacion=data.get("ocupacion"),
+        tipo_personalidad=data.get("tipo_personalidad"),
+        url_img=data.get("url_img")
+    )
+
+    try:
+        db.session.add(new_contact)
+        db.session.commit()
+        return jsonify({
+            "id": new_contact.contactos_id,
+            "name": new_contact.name,
+            "relation": new_contact.relation,
+            "img": new_contact.url_img,
+            "birth_date": new_contact.birth_date,
+            "hobbies": new_contact.hobbies,
+            "gender": new_contact.gender,
+            "ocupacion": new_contact.ocupacion,
+            "tipo_personalidad": new_contact.tipo_personalidad
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error al crear el contacto: " + str(e)}), 500
+
+
 @api.route('/contacto/<int:contact_id>', methods=['GET'])
 @jwt_required()
 def get_single_contact(contact_id):

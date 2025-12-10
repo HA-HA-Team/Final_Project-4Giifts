@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
-import { getPrivateData, getUserContacts } from '../services';
+import { getPrivateData, getUserContacts, createContact } from '../services';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -247,6 +247,7 @@ const Dashboard = () => {
                   <div className="mb-3"><label className="form-label">Apellidos</label><input type="text" className="form-control" /></div>
                   <div className="mb-3"><label className="form-label">Parentesco</label><input type="text" className="form-control" /></div>
                   <div className="mb-3"><label className="form-label">Fecha Nacimiento</label><input type="date" className="form-control" /></div>
+                  
                 </form>
               </div>
               <div className="modal-footer">
