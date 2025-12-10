@@ -23,6 +23,7 @@ flask-bcrypt = "*"
 flask-jwt-extended = "*"
 requests = "*"
 google-generativeai = "*"
+flask-mail = "*"
 
 [requires]
 python_version = "3.13"

@@ -204,7 +204,7 @@ def generate_gift_ideas():
         return jsonify({"msg": "Falta API Key"}), 500
 
     genai.configure(api_key=api_key_gemini)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-flash-latest')
 
     perfil = data
     evitar = data.get('evitar', '')
@@ -262,4 +262,4 @@ def generate_gift_ideas():
 
     except Exception as e:
         print(f"Error IA: {e}")
-        return jsonify({"msg": "Error generando ideas"}), 500
+        return jsonify({"msg": "Error generando ideas"+str(e)}), 500
