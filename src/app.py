@@ -29,7 +29,8 @@ static_file_dir = os.path.join(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-frontend_url = os.getenv("FRONTEND_URL")
+frontend_url = os.getenv("FRONTEND_URL").rstrip("/")
+
 
 # -----------------------------
 # CORS CONFIG
