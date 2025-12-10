@@ -14,30 +14,17 @@ export const createUser = async (newUser) => {
       throw new Error(errorData.detail);
     }
 
-    return request;
-  } catch (error) {
-    throw error;
-  }
+  return request;
 };
 
 export const checkLogin = async (user) => {
-  try {
-    const response = await fetch(`${base_url}/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.detail);
-    }
-    console.log(response);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  const response = await fetch(`${base_url}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
+
+  return response;
 };
 
 export const getPrivateData = async () => {

@@ -208,7 +208,19 @@ const Dashboard = () => {
                   {contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
-              <button className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`} onClick={handleLogout}>Salir</button>
+              <button
+                className={`btn ${styles["btn-ideas"]} mt-3 mx-auto`}
+                onClick={() => navigate("/profile/edit")}
+              >
+                Editar Perfil
+              </button>
+
+              <button
+                className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`}
+                onClick={handleLogout}
+              >
+                Cerrar Sesión
+              </button>
             </nav>
           </div>
         </aside>

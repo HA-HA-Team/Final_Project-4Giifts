@@ -1,0 +1,88 @@
+.wrapper {
+  background: linear-gradient(135deg, #DC143C, #F75270);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.card {
+  background: white;
+  width: 450px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  color: #b14466;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: 600;
+  color: #b14466;
+}
+
+.input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #e5b4c3;
+  padding: 10px;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+
+.input:focus {
+  border-color: #b14466;
+  box-shadow: 0 0 6px rgba(177, 68, 102, 0.4);
+}
+
+.saveBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #b14466;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.saveBtn:hover {
+  background-color: #8f2f4c;
+}
+
+.checkboxContainer {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deleteBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #c30000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.deleteBtn:disabled {
+  background-color: #ffb3b3;
+  cursor: not-allowed;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  background-color: #8b0000;
+}

@@ -9,8 +9,9 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timezone, timedelta
 from api.models import db, User, Contactos, ImagenProducto, bcrypt
 from flask_mail import Message
-from app import mail
+from api.extensions import mail
 
+import os
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -124,6 +125,10 @@ def get_user(user_id):
     user = db.session.get(User, user_id)
     return jsonify(user.to_dict()), 200
 
+
+# AGREGADOS 29-30/11
+
+# modificar user Actualizados el 09/
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user(user_id):
@@ -148,6 +153,9 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({"msg": "Cuenta eliminada"}), 200
+
+
+# get all users endpoint agregado 01/12
 
 @api.route('/users/', methods=['GET'])
 def get_all_users():
@@ -360,7 +368,8 @@ def request_recover():
     user = User.find_by_email(email)
 
     # Siempre devolvemos lo mismo para no revelar si el email existe
-    msg_ok = {"msg": "Si el correo existe, recibirás un email para restablecer tu contraseña"}
+    msg_ok = {
+        "msg": "Si el correo existe, recibirás un email para restablecer tu contraseña"}
 
     if not user:
         return jsonify(msg_ok), 200
@@ -391,6 +400,7 @@ Este enlace expira en 15 minutos.
 
     return jsonify(msg_ok), 200
 
+
 @api.route("/recover/reset", methods=["POST"])
 @jwt_required()
 def reset_password():
@@ -403,7 +413,6 @@ def reset_password():
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    # Encriptar nueva contraseña
     user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
     db.session.commit()
 

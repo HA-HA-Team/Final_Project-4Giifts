@@ -1,3 +1,4 @@
+# This file includes global variables that will be available inside your project
 from api.utils import APIException  # para evitar import circular
 import os
 from flask import Flask, jsonify, send_from_directory
@@ -9,13 +10,15 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
-from flask_mail import Mail
+
+# importación corregida para evitar import circular
+from api.extensions import mail
+
+from flask_cors import CORS
 
 # -----------------------------
 # CONFIGURACIÓN GLOBAL DE MAIL
 # -----------------------------
-
-mail = Mail()
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 
@@ -25,6 +28,30 @@ static_file_dir = os.path.join(
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+frontend_url = os.getenv("FRONTEND_URL")
+
+# -----------------------------
+# CORS CONFIG
+# -----------------------------
+CORS(app, resources={
+    r"/api/*": {
+        "origins": [frontend_url],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "expose_headers": ["Authorization"],
+        "supports_credentials": True
+    }
+})
+
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = frontend_url
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
+
 
 # -----------------------------
 # CONFIGURACIÓN EMAIL

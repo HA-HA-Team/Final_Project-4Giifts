@@ -13,6 +13,7 @@ import { GiftIdeas } from "./pages/GiftIdeas";
 import { RecoverRequest } from "./pages/RecoverRequest";
 import { ResetPassword } from "./pages/ResetPassword";
 import { Private } from "./pages/Private";
+import { ProfileEdit } from "./pages/ProfileEdit";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ export const router = createBrowserRouter(
        
       <Route path="/recover/request" element={<RecoverRequest />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/profile/edit" element={<ProfileEdit />} />
 
       {/* Private routes */}
       <Route path="/dashboard" element={<Dashboard />} />
