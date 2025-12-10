@@ -6,8 +6,11 @@ from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import Bcrypt
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from api.models import db, User, Contactos, ImagenProducto, bcrypt
+from flask_mail import Message
+from app import mail
+
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -349,3 +352,59 @@ def get_data():
     result= [product.to_dict() for product in result]
     print(result)
     return jsonify(result)
+@api.route("/recover/request", methods=["POST"])
+def request_recover():
+    data = request.get_json()
+    email = data.get("email")
+
+    user = User.find_by_email(email)
+
+    # Siempre devolvemos lo mismo para no revelar si el email existe
+    msg_ok = {"msg": "Si el correo existe, recibirás un email para restablecer tu contraseña"}
+
+    if not user:
+        return jsonify(msg_ok), 200
+
+    # Crear token temporal (15 min)
+    token = create_access_token(
+        identity=str(user.user_id),
+        expires_delta=timedelta(minutes=15)
+    )
+
+    reset_link = f"{os.getenv('FRONTEND_URL')}/reset-password?token={token}"
+
+    # Enviar correo
+    msg = Message(
+        subject="Recuperación de contraseña",
+        recipients=[email],
+    )
+    msg.body = f"""
+Hola, has solicitado restablecer tu contraseña.
+
+Haz clic en el siguiente enlace para continuar:
+
+{reset_link}
+
+Este enlace expira en 15 minutos.
+"""
+    mail.send(msg)
+
+    return jsonify(msg_ok), 200
+
+@api.route("/recover/reset", methods=["POST"])
+@jwt_required()
+def reset_password():
+    user_id = int(get_jwt_identity())
+    data = request.get_json()
+    new_password = data.get("password")
+
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    # Encriptar nueva contraseña
+    user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+    db.session.commit()
+
+    return jsonify({"msg": "Contraseña actualizada con éxito"}), 200

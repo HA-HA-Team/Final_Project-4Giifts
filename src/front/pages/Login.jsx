@@ -106,6 +106,11 @@ export const Login = () => {
             <Link to="/signup" className="text-decoration-none" style={{ color: "#F75270" }}>
               ¿Primera vez? Crea tu cuenta
             </Link>
+            <div><small>
+              ¿Olvidaste tu contraseña?
+              <a href="/recover/request">Recuperar acceso</a>
+            </small>
+            </div>
           </div>
         </div>
       </div>
