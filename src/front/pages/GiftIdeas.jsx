@@ -232,10 +232,10 @@ export const GiftIdeas = () => {
               {generating ? <span><i className="fas fa-spinner fa-spin me-2"></i> Pensando...</span> : "Generar otras 6 ideas"}
             </button>
 
-            {/* CLAVE: Reemplazamos styles.resultsGrid con la clase 'row' de Bootstrap */}
+            
             <div className="row justify-content-center d-flex flex-wrap align-items-stretch"> 
               {giftIdeas.map((idea, i) => (
-                /* CLAVE: Envolvemos cada artículo en una columna. col-md-4 asegura 3 por fila. mb-4 añade margen inferior. */
+                
                 <div key={i} className="col-md-4 mb-4 h-100">
                   <article className={styles.ideaCard}>
                     <div className={styles.cardImgContainer}>

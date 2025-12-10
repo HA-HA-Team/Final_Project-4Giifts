@@ -111,19 +111,19 @@
 }
 
 .generateBtn {
-  border: 2px solid var(--color-crimson); /* Borde más oscuro */
+  border: 2px solid var(--color-crimson); 
   border-radius: 30px;
   background: var(--color-rose);
-  color: white; /* Color de texto blanco para contraste */
+  color: white; 
   font-weight: bold;
   font-size: 1.1rem;
-  /* Sombra impactante */
+  
   box-shadow: 5px 5px 0px var(--color-crimson); 
   margin-top: 15px;
   transition: 0.2s;
 }
 .generateBtn:hover:not(:disabled) {
-  background: var(--color-crimson); /* El hover usa el color más fuerte */
+  background: var(--color-crimson); 
   transform: translate(-3px, -3px);
   box-shadow: 8px 8px 0px var(--color-crimson);
 }
@@ -139,7 +139,7 @@
   color: white;
   padding: 10px 30px;
   font-weight: 600;
-  box-shadow: 3px 3px 0px var(--color-crimson); /* Sombra fuerte */
+  box-shadow: 3px 3px 0px var(--color-crimson);
 }
 .secondaryBtn:hover {
   background: var(--color-crimson);
@@ -150,9 +150,9 @@
   margin: 40px 0;
 }
 
-/* --- RESULTADOS DE REGALO --- */
 
-/* La clase principal de la tarjeta de regalo (antes .resultCard) */
+
+
 .ideaCard {
   border: 2px solid var(--color-rose); 
   border-radius: 20px;
@@ -165,15 +165,15 @@
 
 .ideaCard:hover {
   transform: translateY(-5px);
-  /* Sombra en hover más impactante */
+ 
   box-shadow: 8px 8px 0px var(--color-rose); 
 }
 
-/* --- NUEVA CLASE: Contenedor para el contenido de texto --- */
+
 .cardContent {
-  padding: 15px; /* Damos un padding uniforme al contenido */
+  padding: 15px; 
   flex-grow: 1px;
-  display: flex; /* Usamos flex para ordenar el contenido */
+  display: flex; 
   flex-direction: column;
   padding-bottom: 0;
   }
