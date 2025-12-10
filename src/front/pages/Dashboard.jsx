@@ -12,6 +12,20 @@ const Dashboard = () => {
 
   const [contacts, setContacts] = useState([]);
 
+
+  const initialFormState = {
+    name: '',
+    relation: '',
+    birth_date: '',
+    gender: '',
+    hobbies: '',
+    ocupacion: '',
+    tipo_personalidad: '',
+    url_img: ''
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
+
   const initialGifts = [
     { id: 101, name: 'Cartera de Cuero', price: '170 €', img: 'https://images.unsplash.com/photo-1627123424574-181ce5171c98?w=300', link: '#' },
     { id: 102, name: 'Set de Café', price: '100 €', img: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=300', link: '#' },
@@ -112,6 +126,30 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => { sessionStorage.removeItem("token"); navigate("/"); };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSaveContact = async () => {
+
+    if (!formData.name) return alert("El nombre es obligatorio");
+
+    try {
+      const res = await createContact(formData);
+      if (res.ok) {
+        const newContact = await res.json();
+        setContacts([...contacts, newContact]);
+        setShowAddModal(false);
+        setFormData(initialFormState);
+      } else {
+        alert("Error al guardar contacto");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   if (loading) return <div className="text-center p-5">Cargando...</div>;
 
@@ -243,16 +281,123 @@ const Dashboard = () => {
               </div>
               <div className="modal-body">
                 <form>
-                  <div className="mb-3"><label className="form-label">Nombre</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Apellidos</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Parentesco</label><input type="text" className="form-control" /></div>
-                  <div className="mb-3"><label className="form-label">Fecha Nacimiento</label><input type="date" className="form-control" /></div>
-                  
+
+                  <div className="mb-3">
+                    <label className="form-label">Nombre Completo</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      placeholder="Nombre y Apellidos"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+
+                  <div className="row">
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Parentesco</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="relation"
+                        placeholder="Ej: Amiga, Padre, Primo..."
+                        value={formData.relation}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Fecha Nacimiento</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="birth_date"
+                        value={formData.birth_date}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="row">
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Género</label>
+                      <select
+                        className="form-select"
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Masculino/Femenino/Otro</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                    <div className="col-6 mb-3">
+                      <label className="form-label">Ocupación</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="ocupacion"
+                        placeholder="Ej: Arquitecto, Estudiante..."
+                        value={formData.ocupacion}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">Personalidad</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="tipo_personalidad"
+                      placeholder="Ej: Extrovertido, Friki, Serio..."
+                      value={formData.tipo_personalidad}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">Hobbies e Intereses</label>
+                    <textarea
+                      className="form-control"
+                      rows="2"
+                      name="hobbies"
+                      placeholder="Ej: Tenis, Videojuegos, Lectura..."
+                      value={formData.hobbies}
+                      onChange={handleInputChange}
+                    ></textarea>
+                  </div>
+
+
+                  <div className="mb-3">
+                    <label className="form-label">URL Imagen de perfil</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="url_img"
+                      placeholder="https://..."
+                      value={formData.url_img}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </form>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancelar</button>
-                <button type="button" className="btn btn-primary" style={{ backgroundColor: 'var(--color-rose)', border: 'none' }}>Guardar</button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{ backgroundColor: 'var(--color-rose)', border: 'none' }}
+                  onClick={handleSaveContact}
+                >
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
