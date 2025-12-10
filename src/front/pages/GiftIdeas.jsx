@@ -118,7 +118,7 @@ export const GiftIdeas = () => {
           <h1 className={styles.pageTitle}>
             🎁 Ideas para <span className={styles.nameHighlight}>{formData.nombre}</span>
           </h1>
-          <button onClick={() => navigate("/dashboard")} className="btn btn-outline-secondary">Volver</button>
+          <button onClick={() => navigate("/dashboard")} className={`btn mb-5 ${styles.secondaryBtn}`}>Volver</button>
         </div>
 
         <div className={`card ${styles.mainCard} p-4`}>
