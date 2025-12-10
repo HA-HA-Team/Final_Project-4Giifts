@@ -19,9 +19,9 @@ class User(db.Model):
     profile_pic: Mapped[str] = mapped_column(String(255), nullable=True)
     first_name: Mapped[str] = mapped_column(String(80), nullable=True)
     last_name: Mapped[str] = mapped_column(String(80), nullable=True)
-    birth_date: Mapped[str] = mapped_column(String(10), nullable=True)
-
-    hobbies: Mapped[str] = mapped_column(String(255), nullable=True)
+    birth_date: Mapped[str] = mapped_column(String(10), nullable=True) 
+    gender: Mapped[str] = mapped_column(String(20), nullable=True)
+    hobbies: Mapped[str] = mapped_column(String(999), nullable=True)
     ocupacion: Mapped[str] = mapped_column(String(120), nullable=True)
     tipo_personalidad: Mapped[str] = mapped_column(String(120), nullable=True)
 
@@ -50,6 +50,10 @@ class User(db.Model):
         back_populates="user",
         cascade="all, delete-orphan"
     )
+
+    def __repr__(self):
+        return f"<User {self.email}>"
+# kwargs recibe todos los argumentos del endpoint- asi si añadimos algo mas no hay que modificar el metodo de clase
 
     @classmethod
     def create_new_user(self, **kwargs):
@@ -81,6 +85,7 @@ class User(db.Model):
             "profile_pic": self.profile_pic,
             "birth_date": self.birth_date,
             "hobbies": self.hobbies,
+            "gender":self.gender,
             "ocupacion": self.ocupacion,
             "tipo_personalidad": self.tipo_personalidad
         }
@@ -95,8 +100,10 @@ class Contactos(db.Model):
 
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     gender: Mapped[str] = mapped_column(String(20), nullable=True)
+    relation: Mapped[str] = mapped_column(String(20), nullable=True)
     birth_date: Mapped[str] = mapped_column(String(10), nullable=True)
-    hobbies: Mapped[str] = mapped_column(String(255), nullable=True)
+    hobbies: Mapped[str] = mapped_column(String(999), nullable=True)
+    url_img: Mapped[str] = mapped_column(String(899), nullable=True)
     ocupacion: Mapped[str] = mapped_column(String(120), nullable=True)
     tipo_personalidad: Mapped[str] = mapped_column(String(120), nullable=True)
 
@@ -181,3 +188,28 @@ class Favorite(db.Model):
 
     def __repr__(self):
         return f"<Favorite {self.favorite_id}>"
+    
+
+
+# almacenar la url de imagen para evitar consultas repetidas a api google search
+class ImagenProducto(db.Model):
+    __tablename__ = "imagen_producto"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    termino_busqueda: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    img_url: Mapped[str] = mapped_column(String(500), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "termino_busqueda": self.termino_busqueda,
+            "img_url": self.img_url,
+            "updated_at": self.updated_at
+        }
+
+    
+    def __repr__(self):
+        return f"<Imagen {self.termino_busqueda}>"

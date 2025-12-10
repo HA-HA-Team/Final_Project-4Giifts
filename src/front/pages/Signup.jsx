@@ -18,7 +18,9 @@ export const Signup = () => {
       birth_date: form.birthDate.value,
       hobbies: form.hobbies.value,
       ocupacion: form.ocupacion.value,
-      tipo_personalidad: form.tipoPersonalidad.value
+      tipo_personalidad: form.tipoPersonalidad.value,
+      profile_pic: form.profile_pic.value,
+      gender: form.gender.value
     };
 
     try {
@@ -47,29 +49,35 @@ export const Signup = () => {
 
         <form onSubmit={handleSubmit}>
 
-          <label className={styles.label}>Email</label>
+          <label htmlFor="inputEmail" className={styles.label}>Email</label>
           <input type="email" id="inputEmail" className={`form-control mb-3 ${styles.input}`} required />
 
-          <label className={styles.label}>Contraseña</label>
+          <label htmlFor="inputPassword" className={styles.label}>Contraseña</label>
           <input type="password" id="inputPassword" className={`form-control mb-3 ${styles.input}`} required />
 
-          <label className={styles.label}>Nombre</label>
+          <label htmlFor="firstName" className={styles.label}>Nombre</label>
           <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Apellidos</label>
+          <label htmlFor="lastName" className={styles.label}>Apellidos</label>
           <input type="text" id="lastName" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Fecha de nacimiento</label>
+          <label htmlFor="gender" className={styles.label}>Género</label>
+          <input type="text" id="gender" className={`form-control mb-3 ${styles.input}`} />
+
+          <label htmlFor="birthDate" className={styles.label}>Fecha de nacimiento</label>
           <input type="date" id="birthDate" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Hobbies</label>
+          <label htmlFor="hobbies" className={styles.label}>Hobbies y Gustos Personales</label>
           <input type="text" id="hobbies" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Ocupación</label>
+          <label htmlFor="ocupacion" className={styles.label}>Ocupación</label>
           <input type="text" id="ocupacion" className={`form-control mb-3 ${styles.input}`} />
 
-          <label className={styles.label}>Tipo de personalidad</label>
+          <label htmlFor="tipoPersonalidad" className={styles.label}>Tipo de personalidad</label>
           <input type="text" id="tipoPersonalidad" className={`form-control mb-4 ${styles.input}`} />
+
+          <label htmlFor="profile_pic" className={styles.label}>Link para imagen de perfil</label>
+          <input type="text" id="profile_pic" className={`form-control mb-4 ${styles.input}`} />
 
           <button type="submit" className={styles.submitBtn}>
             Crear Cuenta

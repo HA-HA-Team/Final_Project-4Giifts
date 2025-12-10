@@ -361,3 +361,26 @@ body {
     border-radius: 0 0 20px 20px;
   }
 }
+
+.btn-edit-contact {
+  position: absolute;
+  top: 10px;
+  right: 40px; 
+  background-color: #6c757d; 
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-edit-contact:hover {
+  background-color: #495057; 
+}
