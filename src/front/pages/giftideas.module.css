@@ -154,18 +154,21 @@
 
 
 .ideaCard {
+  height: 100%;
+  
+  flex-direction: column;
   border: 2px solid var(--color-rose); 
   border-radius: 20px;
   overflow: hidden;
   transition: 0.2s;
   box-shadow: 5px 5px 0px var(--color-pink);
-  display: flex;
-  flex-direction: column;
+  padding: 15px;
+  text-align: center;
 }
 
 .ideaCard:hover {
+  
   transform: translateY(-5px);
- 
   box-shadow: 8px 8px 0px var(--color-rose); 
 }
 
