@@ -245,7 +245,7 @@ export const GiftIdeas = () => {
                     </div>
                     <h5 className={styles.cardTitle}>{idea.nombre_regalo}</h5>
                     <p className="small text-muted">{idea.descripcion}</p>
-                    <p className={styles.price}>💶 {idea.precio_estimado}</p>
+                    <p className={styles.price}>Precio estimado {idea.precio_estimado}</p>
                     <a href={idea.link_compra} target="_blank" rel="noreferrer" className={styles.buyBtn}>
                       Ver en Amazon
                     </a>

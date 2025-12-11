@@ -20,7 +20,7 @@
 }
 
 .mainCard {
-  border: 2px solid var(--color-rose); 
+  border: 2px solid var(--color-pink); 
   border-radius: 25px;
   background-color: white;
   box-shadow: 8px 8px 0px var(--color-pink); 
@@ -31,7 +31,7 @@
   width: 180px; 
   height: 180px;
   border-radius: 50%;
-  border: 4px solid var(--color-rose); 
+  border: 4px solid var(--color-pink); 
   overflow: hidden;
   margin-bottom: 10px;
   background-color: var(--color-beige);
@@ -54,7 +54,7 @@
   z-index: initial; 
   font-weight: 700;
   margin-bottom: -2px; 
-  background-color: var(--color-rose); 
+  background-color: var(--color-pink); 
   color: white;
   border: 2px solid var(--color-crimson); 
   border-radius: 10px 10px 0 0; 
@@ -95,7 +95,7 @@
   width: 35px;
   height: 35px;
   background: white;
-  border: 2px solid var(--color-rose);
+  border: 2px solid var(--color-pink);
   font-weight: bold;
   border-radius: 5px;
   display: flex;
@@ -113,7 +113,7 @@
 .generateBtn {
   border: 2px solid var(--color-crimson); 
   border-radius: 30px;
-  background: var(--color-rose);
+  background: var(--color-pink);
   color: white; 
   font-weight: bold;
   font-size: 1.1rem;
@@ -128,14 +128,14 @@
   box-shadow: 8px 8px 0px var(--color-crimson);
 }
 .generateBtn:disabled {
-  background: var(--color-rose);
+  background: var(--color-pink);
   cursor: wait;
 }
 
 .secondaryBtn {
-  border: 2px solid var(--color-rose);
+  border: 2px solid var(--color-pink);
   border-radius: 20px;
-  background: var(--color-rose);
+  background: var(--color-pink);
   color: white;
   padding: 10px 30px;
   font-weight: 600;
@@ -154,37 +154,45 @@
 
 
 .ideaCard {
-  height: 100%;
-  
+  height: 100;
+  display: flex;
   flex-direction: column;
-  border: 2px solid var(--color-rose); 
-  border-radius: 20px;
+  border: 1px solid #ccc; 
+  border-radius: 10px;
   overflow: hidden;
   transition: 0.2s;
-  box-shadow: 5px 5px 0px var(--color-pink);
+  box-shadow: 0px 4px 6px var(--color-pink);
   padding: 15px;
   text-align: center;
 }
 
 .ideaCard:hover {
   
-  transform: translateY(-5px);
-  box-shadow: 8px 8px 0px var(--color-rose); 
+  transform: translateY(-3px);
+  box-shadow: 0px 6px 10px var(--color-pink); 
+  border-color: var(--color-rose);
 }
 
 
-.cardContent {
-  padding: 15px; 
+.cardContent{
+  
   flex-grow: 1px;
   display: flex; 
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 15px;
   flex-direction: column;
-  padding-bottom: 0;
+  text-align: center;
+  }
+  .cardContent p.small{
+    flex-grow: 1;
+    margin-bottom: 15px;
   }
 
 .cardImgContainer {
   width: 100%;
   height: 220px; 
-  border-bottom: 2px solid var(--color-rose); 
+  border-bottom: 1px solid #eee; 
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -198,16 +206,24 @@
   padding: 10px;
 }
 .cardTitle {
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-crimson);
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
+  min-height: 40px; /* Asegura un espacio mínimo para 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limita el título a 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Oculta el exceso si hay más de 2 líneas */
+  line-height: 1.2; /* Ajusta si es necesario */ 
 }
 
 
 .price {
-  font-weight: 700;
-  color: var(--color-rose);
-  margin-top: 10px;
+  font-weight: 500;
+  color: var(--color-crimson);
+  margin-top: auto;
+  margin-bottom: 15px;
+  font-size: 1.1rem
 }
 
 .buyBtn {
@@ -215,7 +231,7 @@
   color: white;
   border: none;
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 400;
   width: 100%;
   padding: 8px;
   margin-top: auto;
