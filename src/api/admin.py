@@ -14,6 +14,6 @@ def setup_admin(app):
 
     # Dynamically add all models to the admin interface
     for name, obj in inspect.getmembers(models):
-        # Verify that the object is a SQLAlchemy model before adding it to the admin.
+        # Verify that the object is a SQLAlchemy model before adding it to the admin. 
         if inspect.isclass(obj) and issubclass(obj, db.Model):
             admin.add_view(ModelView(obj, db.session))

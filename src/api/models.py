@@ -1,8 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer, DateTime, ForeignKey
 from flask_bcrypt import Bcrypt
-from datetime import datetime, timezone
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -39,18 +38,20 @@ class User(db.Model):
         db.session.add(user)
         db.session.commit()
         return user
-
+    
     @classmethod
     def find_by_email(self, email):
         email = email.strip().lower()
         return db.session.execute(db.select(self).where(self.email == email)).scalar_one_or_none()
 
     def check_psw(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+        if bcrypt.check_password_hash(self.password, password):
+            return True
+        return False
 
     def to_dict(self):
         return {
-            "user_id": self.user_id,
+            "id": self.id,
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
