@@ -77,6 +77,7 @@ def handle_hello():
 def create_user():
     data = request.get_json()
     user = User.create_new_user(
+        # aqui se harian validaciones
         email=data.get("email"),
         password=data.get("password"),
         first_name=data.get("first_name"),
@@ -100,7 +101,7 @@ def login():
         return jsonify({"user": user.to_dict(), "token": token}), 200
     return jsonify({"message": "Datos incorrectos"}), 400
 
-@api.route('/private', methods=['GET'])
+@api.route('/private', methods=['POST', 'GET'])
 @jwt_required()
 def msg_privado():
     user_id = int(get_jwt_identity())
