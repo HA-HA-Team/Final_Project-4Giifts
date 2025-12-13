@@ -13,7 +13,7 @@ import { json } from "react-router-dom";
 
 
 const imageUrl1 = "src/front/assets/img/regalo.jpg";
-const button = "Ingresar";
+const button = "Comprar";
 
 export const Home = () => {
 
@@ -102,7 +102,7 @@ export const Home = () => {
 										title={fav.name}
 										description={`Precio: ${fav.price}`}
 										button={button}
-										linkButton={"Login"}
+										linkButton= {fav.link}
 									/>
 								</SwiperSlide>
 							))
