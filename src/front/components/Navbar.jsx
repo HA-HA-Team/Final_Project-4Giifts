@@ -2,23 +2,23 @@
 
 export const Navbar = () => {
 
-	return (
-		<nav className="navbar pers-bg-color">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1"><img src="public/Logo_solo_4giifts-removebg-preview (1).png" width="10%" height="10%" alt="" /></span>
-				</Link>
-				<div className="ml-auto d-flex gap-2">
-					<Link to="/signup">
-						<button className="btn btn-secondary pers-secondary-btn-color border-0">Registrar</button>
-					</Link>
-					<Link to="/login">
-						<button className="btn btn-primary pers-primary-btn-color border-0">Login</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+    return (
+        <nav className="navbar pers-bg-color">
+            <div className="container">
+                <Link to="/">
+                    <span className="navbar-brand mb-0 h1"><img src="public/Logo_solo_4giifts-removebg-preview (1).png" width="10%" height="10%" alt="" /></span>
+                </Link>
+                <div className="ml-auto d-flex gap-2">
+                    <Link to="/signup">
+                        <button className="btn btn-secondary pers-secondary-btn-color border-0">Registrar</button>
+                    </Link>
+                    <Link to="/login">
+                        <button className="btn btn-primary pers-primary-btn-color border-0">Login</button>
+                    </Link>
+                </div>
+            </div>
+        </nav>
+    );
 };
 */
 
@@ -28,7 +28,7 @@ import { useState, useEffect } from "react";
 export const Navbar = () => {
     const [isLogged, setIsLogged] = useState(false);
     const [open, setOpen] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkLogin = () => {
@@ -38,11 +38,11 @@ export const Navbar = () => {
 
         checkLogin();
 
-        
+
         window.addEventListener("storage", checkLogin);
 
-        return () => window.removeEventListener("storage", checkLogin); 
-    }, []); 
+        return () => window.removeEventListener("storage", checkLogin);
+    }, []);
 
     const handleLogout = () => {
         sessionStorage.removeItem("token");
@@ -61,10 +61,10 @@ export const Navbar = () => {
 
                 <Link to="/">
                     <span className="navbar-brand mb-0 h1">
-                        <img 
-                            src="public/Logo_solo_4giifts-removebg-preview (1).png" 
-                            width="10%" 
-                            height="10%" 
+                        <img
+                            src="public/Logo_solo_4giifts-removebg-preview (1).png"
+                            width="10%"
+                            height="10%"
                             alt=""
                         />
                     </span>
@@ -116,14 +116,22 @@ export const Navbar = () => {
                                         top: "45px",
                                         borderRadius: "6px",
                                         cursor: "pointer",
-                                        minWidth: "120px"
+                                        minWidth: "150px"
                                     }}
                                 >
+                                    <div
+                                        className="dropdown-item mb-1"
+                                        onClick={() => navigate("/Gestion")}
+                                    >
+                                        Gestión de usuario
+                                    </div>
+
                                     <div className="dropdown-item" onClick={handleLogout}>
                                         Cerrar sesión
                                     </div>
                                 </div>
                             )}
+
                         </div>
                     )}
 
