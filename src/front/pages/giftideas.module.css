@@ -94,8 +94,8 @@
   top: 35px;
   width: 35px;
   height: 35px;
-  background: white;
-  border: 2px solid var(--color-pink);
+  background: var(--color-pink);
+  border: 2px solid var(--color-crimson);
   font-weight: bold;
   border-radius: 5px;
   display: flex;
@@ -104,36 +104,34 @@
   cursor: pointer;
   box-shadow: 4px 4px 0px var(--color-pink);
 }
-@media (max-width: 900px) {
-  .plusBtn {
-    display: none;
-  }
-}
 
 .generateBtn {
   border: 2px solid var(--color-crimson); 
   border-radius: 30px;
-  background: var(--color-pink);
+  background: var(--color-rose);
   color: white; 
   font-weight: bold;
   font-size: 1.1rem;
-  
-  box-shadow: 5px 5px 0px var(--color-crimson); 
+  box-shadow: 5px 5px 0px var(--color-pink); 
   margin-top: 15px;
   transition: 0.2s;
 }
 .generateBtn:hover:not(:disabled) {
+  color: white;
   background: var(--color-crimson); 
   transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px var(--color-crimson);
+  box-shadow: 8px 8px 0px var(--color-pink);
+  transition: 0.2s;
 }
 .generateBtn:disabled {
+  border: 2px solid var(--color-pink);
   background: var(--color-pink);
+  box-shadow: 8px 8px 0px var(--color-rose);
   cursor: wait;
 }
 
 .secondaryBtn {
-  border: 2px solid var(--color-pink);
+  border: 2px solid var(--color-rose);
   border-radius: 20px;
   background: var(--color-pink);
   color: white;
@@ -142,7 +140,8 @@
   box-shadow: 3px 3px 0px var(--color-crimson);
 }
 .secondaryBtn:hover {
-  background: var(--color-crimson);
+  border: 2px solid var(--color-crimson);
+  background: var(--color-pink);
 }
 
 .divider {
@@ -240,5 +239,6 @@
 }
 
 .buyBtn:hover {
+  border: 2px solid var(--color-crimson);
   background: var(--color-rose);
 }
