@@ -1,7 +1,9 @@
 .pers-primary-btn-color {
     background: #DC143C;
 }
-
+.pers-primary-btn-color:hover {
+    background: #F75270;
+}
 .pers-secondary-btn-color {
     background: #F75270;;
 }

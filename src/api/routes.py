@@ -432,3 +432,23 @@ def reset_password():
     user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
     db.session.commit()
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
+
+#Vista dinamica - extre favoritos reales de los usarios# 
+
+@api.route('/get_favorite_user', methods=['GET'])
+def handle_get_favorite_user():
+    favs = db.session.execute(db.select(Favorite)).scalars().all()
+    
+    result = []
+    for f in favs:
+        p = f.producto
+        result.append({
+            "favorite_id": f.favorite_id,
+            "product_id": p.id,
+            "name": p.nombre,
+            "img": p.img_url,
+            "price": p.precio,
+            "link": p.link_compra
+        })
+    return jsonify(result), 200
+    
