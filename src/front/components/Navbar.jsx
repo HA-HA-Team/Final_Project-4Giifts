@@ -116,9 +116,16 @@ export const Navbar = () => {
                                         top: "45px",
                                         borderRadius: "6px",
                                         cursor: "pointer",
-                                        minWidth: "150px"
+                                        minWidth: "160px"
                                     }}
                                 >
+                                    <div
+                                        className="dropdown-item mb-1"
+                                        onClick={() => navigate("/dashboard")}
+                                    >
+                                        Dashboard
+                                    </div>
+
                                     <div
                                         className="dropdown-item mb-1"
                                         onClick={() => navigate("/Gestion")}
@@ -131,6 +138,7 @@ export const Navbar = () => {
                                     </div>
                                 </div>
                             )}
+
 
                         </div>
                     )}
