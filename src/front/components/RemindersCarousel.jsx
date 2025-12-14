@@ -201,20 +201,51 @@ const RemindersCarousel = ({
                                 transform: `translateX(-${currentSlide * (100 / infiniteReminders.length)}%)`,
                             }}
                         >
-                            {infiniteReminders.map((r, i) => (
-                                <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
-                                    <div className="display-4">{ICONS[r.title] || "⏰"}</div>
-                                    <h6 className="fw-bold">{r.title}</h6>
-                                    <small>{r.reminder_date}</small>
+                            {infiniteReminders.map((r, i) => {
+                                const contact = contacts.find(c => c.id === r.contact_id);
 
-                                    <button
-                                        className="btn btn-sm btn-outline-danger mt-2"
-                                        onClick={() => onDeleteReminder(r.id)}
-                                    >
-                                        Eliminar
-                                    </button>
-                                </div>
-                            ))}
+                                return (
+                                    <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
+
+
+                                        {contact && (
+                                            <div className="d-flex align-items-center gap-2 mb-2">
+                                                <img
+                                                    src={contact.img || "https://i.pravatar.cc/100"}
+                                                    alt={contact.name}
+                                                    style={{
+                                                        width: 40,
+                                                        height: 40,
+                                                        borderRadius: "50%",
+                                                        objectFit: "cover",
+                                                    }}
+                                                />
+                                                <strong className="small">{contact.name}</strong>
+                                            </div>
+                                        )}
+
+
+                                        <div className="display-4">
+                                            {ICONS[r.title] || "⏰"}
+                                        </div>
+
+
+                                        <h6 className="fw-bold">{r.title}</h6>
+
+
+                                        <small>{r.reminder_date}</small>
+
+                                        <div>
+                                            <button
+                                                className="btn btn-sm btn-outline-danger mt-2"
+                                                onClick={() => onDeleteReminder(r.id)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </>
