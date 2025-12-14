@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
@@ -9,16 +9,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
+import { json } from "react-router-dom";
 
 
 const imageUrl1 = "src/front/assets/img/regalo.jpg";
-const button = "¡Ver producto!";
+const button = "Comprar";
 
 export const Home = () => {
 
 	// --- LÓGICA Y ESTADO ---
 	const { store, dispatch } = useGlobalReducer();
-
+	const [favoriteUser, setFavoriteUser] = useState([]);
 	const loadMessage = async () => {
 		try {
 			const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -42,7 +43,26 @@ export const Home = () => {
 
 	useEffect(() => {
 		loadMessage();
+		loadFavoriteUser();
 	}, []);
+
+	const loadFavoriteUser = async () => {
+		try {
+			const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
+
+			const response = await fetch(backendUrl + "/api/get_favorite_user");
+			const data = await response.json();
+
+			console.log("DATA FAVORITE USER:", typeof data);
+
+			setFavoriteUser(data);
+
+		} catch (error) {
+
+		}
+	};
 
 	return (
 		<div className="w-100">
@@ -57,9 +77,9 @@ export const Home = () => {
 				<h3 className="text-center fw-bold mb-4">
 					Otros usuarios han seleccionado estos regalos como favorito...
 				</h3>
-
-				{/* Configuración del Swiper */}
+				
 				<Swiper
+
 					modules={[Autoplay]}
 					autoplay={{ delay: 3000, disableOnInteraction: false }}
 					spaceBetween={30}
@@ -69,46 +89,33 @@ export const Home = () => {
 						768: { slidesPerView: 2 },
 						1024: { slidesPerView: 3 }
 					}}
-					className="mySwiper px-2"
-				>
+					className="mySwiper px-2">
 
 					{/* --- SLIDES INDIVIDUALES --- */}
 
-					<SwiperSlide className="d-flex justify-content-center">
-						<Card
-							imageUrl={imageUrl1}
-							title="Título imagen"
-							description="Descripción del producto..."
-							button={button}
-						/>
-					</SwiperSlide>
+					{
+						favoriteUser.length > 0 ? (
+							favoriteUser.map((fav, index) => (
+								<SwiperSlide key={index} className="d-flex justify-content-center h-auto my-1">
+									<Card
+										imageUrl={fav.img}
+										title={fav.name}
+										description={`Precio: ${fav.price}`}
+										button={button}
+										linkButton= {fav.link}
+									/>
+								</SwiperSlide>
+							))
 
-					<SwiperSlide className="d-flex justify-content-center">
-						<Card
-							imageUrl={imageUrl1}
-							title="Título imagen"
-							description="Descripción del producto..."
-							button={button}
-						/>
-					</SwiperSlide>
-
-					<SwiperSlide className="d-flex justify-content-center">
-						<Card
-							imageUrl={imageUrl1}
-							title="Título imagen"
-							description="Descripción del producto..."
-							button={button}
-						/>
-					</SwiperSlide>
-
-					<SwiperSlide className="d-flex justify-content-center">
-						<Card
-							imageUrl={imageUrl1}
-							title="Título imagen"
-							description="Descripción del producto..."
-							button={button}
-						/>
-					</SwiperSlide>
+						) : <SwiperSlide className="d-flex justify-content-center h-auto my-1">
+									<Card
+										imageUrl='https://images.unsplash.com/photo-1599623560574-39d485900c95?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dG95c3xlbnwwfHwwfHx8MA%3D%3D'
+										title='Los mejores juguetes'
+										description='€€€'
+										button={button}
+									/>
+								</SwiperSlide>
+					}
 
 				</Swiper>
 			</div>
