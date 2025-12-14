@@ -19,8 +19,7 @@ export const Footer = () => {
 				{/* Centro */}
 				<div className="footer-center">
 					<p>
-						¿Necesitas ayuda? Contáctanos:{" "}
-						<a href="mailto:4giifts@gmail.com">4giifts@gmail.com</a>
+						¿Necesitas ayuda? Contáctanos:{" "}<a href="mailto:hahateam.devs@gmail.com">hahateam.devs@gmail.com</a>
 					</p>
 				</div>
 

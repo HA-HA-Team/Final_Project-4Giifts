@@ -8,6 +8,23 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const user = {
+        email: e.target.elements.email.value,
+        password: e.target.elements.password.value
+      }
+      const checkUser = await checkLogin(user)
+      const data = await checkUser.json()
+      console.log(data);
+      if (checkUser.ok) {
+        const token = data.token;
+        sessionStorage.setItem("token", token);
+        window.dispatchEvent(new Event("auth-change")); // añado esto para que funcione la parte del navbar.
+        navigate("/dashboard")
+      }
+      else {
+        alert("Error en el login: " + data.message);
+      }
 
     const user = {
       email: e.target.elements.email.value,
