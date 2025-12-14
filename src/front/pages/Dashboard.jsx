@@ -2,14 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
 import { getPrivateData, getUserContacts, createContact, updateContact, getContactFavorites, deleteFavorite } from '../services';
+import RemindersCarousel from "../components/RemindersCarousel";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const giftsSectionRef = useRef(null);
-  const trackRef = useRef(null);
-  const intervalRef = useRef(null);
 
+  const reminders = [
+    { id: 1, title: "Cumpleaños", subtitle: "(Pronto)", icon: "🎂" },
+    { id: 2, title: "Navidad", subtitle: "(Se acerca)", icon: "🎄" },
+    { id: 3, title: "San Valentín", subtitle: "(Próximo)", icon: "❤️" },
+  ];
+  const [userReminders, setUserReminders] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [activeFavorites, setActiveFavorites] = useState([]);
 
@@ -20,18 +25,8 @@ const Dashboard = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [editingContactId, setEditingContactId] = useState(null);
 
-  const [reminders] = useState([
-    { id: 1, title: 'Cumpleaños', subtitle: '(Pronto)', icon: '🎂' },
-    { id: 2, title: 'Navidad', subtitle: '(Se acerca)', icon: '🎄' },
-    { id: 3, title: 'San Valentín', subtitle: '(Próximo)', icon: '❤️' },
-  ]);
-
   const [selectedContactId, setSelectedContactId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [dragTranslate, setDragTranslate] = useState(0);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,25 +50,7 @@ const Dashboard = () => {
     loadData();
   }, [navigate]);
 
-  useEffect(() => {
-    const start = () => { intervalRef.current = setInterval(() => setCurrentSlide(p => (p + 1) % reminders.length), 3000); };
-    start();
-    return () => clearInterval(intervalRef.current);
-  }, [reminders.length]);
 
-  const stopAuto = () => clearInterval(intervalRef.current);
-  const handleDragStart = (e) => { setIsDragging(true); setStartX(e.clientX || e.touches[0].clientX); stopAuto(); };
-  const handleDragMove = (e) => {
-    if (!isDragging) return;
-    const x = e.clientX || e.touches[0].clientX;
-    if (trackRef.current) setDragTranslate(((x - startX) / trackRef.current.offsetWidth) * 100);
-  };
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    if (dragTranslate < -5) setCurrentSlide(p => (p + 1) % reminders.length);
-    else if (dragTranslate > 5) setCurrentSlide(p => (p - 1 + reminders.length) % reminders.length);
-    setDragTranslate(0);
-  };
 
   const activeContact = contacts.find(c => c.id.toString() === selectedContactId.toString());
 
@@ -212,20 +189,26 @@ const Dashboard = () => {
             )}
           </div>
 
-          <div id="recordatorios" className="mb-2 pt-3">
-            <h5 className={`${styles["section-title"]} text-center mb-4`}>RECORDATORIOS</h5>
-            <div className={styles["reminder-viewport"]} ref={trackRef} onMouseDown={handleDragStart} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={handleDragEnd}>
-              <div className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`} style={{ transform: `translateX(calc(-${currentSlide * 33.33}% + ${dragTranslate}%))` }}>
-                {reminders.concat(reminders).map((r, i) => (
-                  <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
-                    <div className="display-4">{r.icon}</div>
-                    <h6 className="fw-bold">{r.title}</h6>
-                    <small>{r.subtitle}</small>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <RemindersCarousel
+            reminders={reminders}
+            contacts={contacts}
+            userReminders={userReminders}
+            onCreateReminder={async (data) => {
+              const res = await createReminder(data);
+              if (res.ok) {
+                const saved = await res.json();
+                setUserReminders((prev) => [...prev, saved]);
+              }
+            }}
+            onDeleteReminder={async (id) => {
+              const res = await deleteReminder(id);
+              if (res.ok) {
+                setUserReminders((prev) =>
+                  prev.filter((r) => r.id !== id)
+                );
+              }
+            }}
+          />
 
           {activeContact && (
             <div ref={giftsSectionRef} className={`${styles["saved-gifts-section"]} shadow`}>
