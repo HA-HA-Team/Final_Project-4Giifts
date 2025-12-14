@@ -123,3 +123,30 @@ export const deleteFavorite = async (favId) => {
     });
     return response;
 };
+
+
+export const getUserFavorites = async () => {
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/user/favorites`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
+};
+
+export const generateShareLink = async () => {
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/user/share_link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
+};
+
+export const getSharedFavorites = async (token) => {
+    const response = await fetch(`${base_url}/api/shared/favorites/${token}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    });
+    return response;
+};

@@ -161,6 +161,7 @@ const Dashboard = () => {
             <nav className="flex-grow-1">
               <a href="#contactos" className={styles["sidebar-link"]}>Contactos</a>
               <div className={styles["sidebar-link"]} onClick={() => navigate('/generar-ideas/user')} style={{ cursor: 'pointer' }}>Generar ideas para mí</div>
+              <div className={styles["sidebar-link"]} onClick={() => navigate('/misfavoritos')} style={{ cursor: 'pointer' }}>Mis Favoritos</div>
               <a href="#recordatorios" className={styles["sidebar-link"]}>Recordatorios</a>
               <div className="mt-4">
                 <label className="text-white mb-2 small">Regalos guardados</label>
@@ -194,7 +195,12 @@ const Dashboard = () => {
                     <button className={styles["btn-edit-contact"]} onClick={(e) => handleEditClick(e, c)}>✎</button>
                     <button className={styles["btn-delete-contact"]} onClick={(e) => { e.stopPropagation(); setContactToDelete(c); setShowDeleteModal(true); }}>X</button>
                     <div className="card-body d-flex flex-column align-items-center">
-                      <img src={c.img || "https://i.pravatar.cc/150"} className={`${styles["contact-img"]} mb-3`} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt={c.name} />
+                      <img
+                        src={c.img || `https://api.dicebear.com/9.x/avataaars/svg?seed=${c.name}`}
+                        className={`${styles["contact-img"]} mb-3`}
+                        onError={(e) => e.target.src = `https://api.dicebear.com/9.x/avataaars/svg?seed=${c.name}`}
+                        alt={c.name}
+                      />
                       <h5 className="fw-bold">{c.name}</h5>
                       <small className="text-muted mb-2">{c.relation}</small>
                       <button className={`btn ${styles["btn-ideas"]} mt-auto`} onClick={(e) => { e.stopPropagation(); navigate(`/generar-ideas/${c.id}`); }}>Generar ideas</button>
@@ -232,7 +238,15 @@ const Dashboard = () => {
               <button className={styles["btn-close-gifts"]} onClick={() => setSelectedContactId('')}>X</button>
               <div className={styles["saved-gifts-inner"]}>
                 <div className="row mb-4 align-items-center">
-                  <div className="col-auto"><img src={activeContact.img || "https://i.pravatar.cc/150"} className={styles["contact-img"]} style={{ width: 60, height: 60 }} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt="" /></div>
+                  <div className="col-auto">
+                    <img
+                      src={activeContact.img || `https://api.dicebear.com/9.x/avataaars/svg?seed=${activeContact.name}`}
+                      className={styles["contact-img"]}
+                      style={{ width: 60, height: 60 }}
+                      onError={(e) => e.target.src = `https://api.dicebear.com/9.x/avataaars/svg?seed=${activeContact.name}`}
+                      alt=""
+                    />
+                  </div>
                   <div className="col">
                     <h4 className="fw-bold text-dark">Favoritos de {activeContact.name}</h4>
                     <small className="text-muted d-block mb-2">Relación: {activeContact.relation}</small>
