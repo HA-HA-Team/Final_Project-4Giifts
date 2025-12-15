@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
 import { getPrivateData, getUserContacts, createContact, updateContact, getContactFavorites, deleteFavorite } from '../services';
+import RemindersCarousel from "../components/RemindersCarousel";
+import {
+  getReminders,
+  createReminder,
+  deleteReminder,
+} from "../services";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -20,11 +26,54 @@ const Dashboard = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [editingContactId, setEditingContactId] = useState(null);
 
-  const [reminders] = useState([
-    { id: 1, title: 'Cumpleaños', subtitle: '(Pronto)', icon: '🎂' },
-    { id: 2, title: 'Navidad', subtitle: '(Se acerca)', icon: '🎄' },
-    { id: 3, title: 'San Valentín', subtitle: '(Próximo)', icon: '❤️' },
-  ]);
+  const [reminders, setReminders] = useState([]);
+
+
+
+
+
+  const loadReminders = async () => {
+    try {
+      const res = await getReminders();
+      if (res.ok) {
+        const data = await res.json();
+        setReminders(data);
+      }
+    } catch (err) {
+      console.error("Error cargando recordatorios", err);
+    }
+  };
+
+  useEffect(() => {
+    loadReminders();
+  }, []);
+
+
+  const handleCreateReminder = async (data) => {
+    try {
+      const res = await createReminder(data);
+      if (!res.ok) return;
+
+
+      await loadReminders();
+    } catch (err) {
+      console.error("Error creando recordatorio", err);
+    }
+  };
+
+
+  const handleDeleteReminder = async (id) => {
+    try {
+      await deleteReminder(id);
+
+
+      await loadReminders();
+    } catch (err) {
+      console.error("Error eliminando recordatorio", err);
+    }
+  };
+
+
 
   const [selectedContactId, setSelectedContactId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,6 +81,7 @@ const Dashboard = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [dragTranslate, setDragTranslate] = useState(0);
+
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,11 +105,7 @@ const Dashboard = () => {
     loadData();
   }, [navigate]);
 
-  useEffect(() => {
-    const start = () => { intervalRef.current = setInterval(() => setCurrentSlide(p => (p + 1) % reminders.length), 3000); };
-    start();
-    return () => clearInterval(intervalRef.current);
-  }, [reminders.length]);
+ 
 
   const stopAuto = () => clearInterval(intervalRef.current);
   const handleDragStart = (e) => { setIsDragging(true); setStartX(e.clientX || e.touches[0].clientX); stopAuto(); };
@@ -219,18 +265,12 @@ const Dashboard = () => {
           </div>
 
           <div id="recordatorios" className="mb-2 pt-3">
-            <h5 className={`${styles["section-title"]} text-center mb-4`}>RECORDATORIOS</h5>
-            <div className={styles["reminder-viewport"]} ref={trackRef} onMouseDown={handleDragStart} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={handleDragEnd}>
-              <div className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`} style={{ transform: `translateX(calc(-${currentSlide * 33.33}% + ${dragTranslate}%))` }}>
-                {reminders.concat(reminders).map((r, i) => (
-                  <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
-                    <div className="display-4">{r.icon}</div>
-                    <h6 className="fw-bold">{r.title}</h6>
-                    <small>{r.subtitle}</small>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <RemindersCarousel
+              reminders={reminders}
+              contacts={contacts}
+              onCreateReminder={handleCreateReminder}
+              onDeleteReminder={handleDeleteReminder}
+            />
           </div>
 
           {activeContact && (

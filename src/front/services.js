@@ -150,3 +150,41 @@ export const getSharedFavorites = async (token) => {
     });
     return response;
 };
+
+
+const authHeaders = () => {
+  const token = sessionStorage.getItem("token");
+
+  return {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+};
+
+export const getReminders = async () => {
+  return fetch(`${base_url}/api/reminders`, {
+    headers: authHeaders(),
+  });
+};
+
+export const createReminder = async (data) => {
+  return fetch(`${base_url}/api/reminders`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+};
+
+export const deleteReminder = async (id) => {
+  const res = await fetch(`${base_url}/api/reminders/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+
+  if (!res.ok) {
+    throw new Error("Error eliminando reminder");
+  }
+
+  return res;
+};
+ /* a ver si con este comentario solucionamos el problema */

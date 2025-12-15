@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timezone, timedelta
-from api.models import db, User, Contactos, Producto, Historial, Favorite, bcrypt
+from api.models import db, User, Contactos, Producto, Historial, Favorite, bcrypt, Reminder
 from flask_mail import Message
 from api.extensions import mail
 from itsdangerous import URLSafeTimedSerializer
@@ -508,3 +508,47 @@ def get_shared_favorites(token):
         "user_img": user.profile_pic,
         "products": products
     }), 200
+
+
+
+
+
+@api.route('/reminders', methods=['GET'])
+@jwt_required()
+def get_reminders():
+    user_id = int(get_jwt_identity())
+    reminders = db.session.execute(
+        db.select(Reminder).where(Reminder.user_id == user_id)
+    ).scalars().all()
+    return jsonify([r.to_dict() for r in reminders]), 200
+
+
+@api.route('/reminders', methods=['POST'])
+@jwt_required()
+def create_reminder():
+    user_id = int(get_jwt_identity())
+    data = request.get_json()
+
+    reminder = Reminder(
+        user_id=user_id,
+        contact_id=data.get("contact_id"),
+        title=data.get("title"),
+        reminder_date=data.get("reminder_date")
+    )
+    db.session.add(reminder)
+    db.session.commit()
+    return jsonify(reminder.to_dict()), 201
+
+
+
+@api.route('/reminders/<int:reminder_id>', methods=['DELETE'])
+@jwt_required()
+def delete_reminder(reminder_id):
+    user_id = int(get_jwt_identity())
+    reminder = db.session.get(Reminder, reminder_id)
+    if not reminder or reminder.user_id != user_id:
+        return jsonify({"msg": "No encontrado"}), 404
+    db.session.delete(reminder)
+    db.session.commit()
+    return jsonify({"msg": "Recordatorio eliminado"}), 200
+ # a ver si con este comentario solucionamos el problema 

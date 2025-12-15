@@ -26,6 +26,7 @@ class User(db.Model):
     contactos = db.relationship("Contactos", back_populates="user", cascade="all, delete-orphan")
     favoritos = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
     historial = db.relationship("Historial", back_populates="user", cascade="all, delete-orphan")
+    reminders = db.relationship("Reminder", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -80,6 +81,7 @@ class Contactos(db.Model):
     user = db.relationship("User", back_populates="contactos")
     favoritos = db.relationship("Favorite", back_populates="contacto", cascade="all, delete-orphan")
     historial = db.relationship("Historial", back_populates="contacto", cascade="all, delete-orphan")
+    reminders = db.relationship("Reminder", back_populates="contacto", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Contacto {self.name}>"
@@ -145,4 +147,33 @@ class Favorite(db.Model):
             "id": self.favorite_id,
             "contact_id": self.contact_id,
             "producto": self.producto.to_dict()
+        }
+
+class Reminder(db.Model):
+    __tablename__ = "reminder"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("user.user_id"), nullable=False)
+    contact_id: Mapped[int] = mapped_column(
+        ForeignKey("contactos.contactos_id"), nullable=True)
+
+    title: Mapped[str] = mapped_column(String(120), nullable=False)
+    reminder_date: Mapped[str] = mapped_column(String(10), nullable=False)
+    notify_days_before: Mapped[int] = mapped_column(Integer, default=30)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    user = db.relationship("User", back_populates="reminders")
+    contacto = db.relationship("Contactos", back_populates="reminders")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "contact_id": self.contact_id,
+            "title": self.title,
+            "reminder_date": self.reminder_date
         }
