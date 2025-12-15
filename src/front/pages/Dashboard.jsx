@@ -13,8 +13,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const giftsSectionRef = useRef(null);
-  const trackRef = useRef(null);
-  const intervalRef = useRef(null);
+ 
 
   const [contacts, setContacts] = useState([]);
   const [activeFavorites, setActiveFavorites] = useState([]);
