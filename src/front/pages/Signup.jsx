@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../services";
 import styles from "./Signup.module.css";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -38,6 +41,9 @@ export const Signup = () => {
     }
   };
 
+
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className={styles.signupWrapper}>
       <div className={styles.card}>
@@ -52,8 +58,26 @@ export const Signup = () => {
           <label htmlFor="inputEmail" className={styles.label}>Email</label>
           <input type="email" id="inputEmail" className={`form-control mb-3 ${styles.input}`} required />
 
-          <label htmlFor="inputPassword" className={styles.label}>Contraseña</label>
-          <input type="password" id="inputPassword" className={`form-control mb-3 ${styles.input}`} required />
+          <label htmlFor="inputPassword" className={styles.label}>
+            Contraseña
+          </label>
+
+          <div className="input-group mb-3">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="inputPassword"
+              className={`form-control ${styles.input}`}
+              required
+            />
+
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </button>
+          </div>
 
           <label htmlFor="firstName" className={styles.label}>Nombre</label>
           <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} />
