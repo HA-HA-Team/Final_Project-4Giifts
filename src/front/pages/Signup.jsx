@@ -55,7 +55,7 @@ export const Signup = () => {
 
         <form onSubmit={handleSubmit}>
 
-          <label htmlFor="inputEmail" className={styles.label}>Email</label>
+          <label htmlFor="inputEmail" className={styles.label}>Email*</label>
           <input type="email" id="inputEmail" className={`form-control mb-3 ${styles.input}`} required />
 
           <label htmlFor="inputPassword" className={styles.label}>
@@ -79,8 +79,8 @@ export const Signup = () => {
             </button>
           </div>
 
-          <label htmlFor="firstName" className={styles.label}>Nombre</label>
-          <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} />
+          <label htmlFor="firstName" className={styles.label}>Nombre*</label>
+          <input type="text" id="firstName" className={`form-control mb-3 ${styles.input}`} required />
 
           <label htmlFor="lastName" className={styles.label}>Apellidos</label>
           <input type="text" id="lastName" className={`form-control mb-3 ${styles.input}`} />

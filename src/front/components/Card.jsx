@@ -10,7 +10,7 @@ function Card ({imageUrl, title, description, button, linkButton}) {
                 <p className="card-text flex-grow-1">{description}</p>
                 </div>
                 <div className="mt-5">
-                    <a href={linkButton} className="btn btn-primary d-flex justify-content-center pers-primary-btn-color border-0">{button}</a>
+                    <a href={linkButton} target="_blank" className="btn btn-primary d-flex justify-content-center pers-primary-btn-color border-0">{button}</a>
                 </div>
             </div>
         </div>

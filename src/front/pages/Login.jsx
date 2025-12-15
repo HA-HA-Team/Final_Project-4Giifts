@@ -21,16 +21,21 @@ export const Login = () => {
       const resp = await checkLogin(user);
       const data = await resp.json();
 
-      if (!resp.ok) {
-        alert(data.message);
-        return;
+      if (resp.ok) {
+        sessionStorage.setItem("token", data.token);
+
+        if (data.user) {
+            dispatch({ type: "setUser", payload: data.user });
+        }
+        
+        window.dispatchEvent(new Event("auth-change")); // añado esto para que funcione la parte del navbar.
+        
+        navigate("/dashboard");
+      } else {
+        alert("Error en el login: " + (data.message || "Credenciales incorrectas"));
       }
-
-      sessionStorage.setItem("token", data.token);
-      dispatch({ type: "setUser", payload: data.user });
-
-      navigate("/dashboard");
     } catch (err) {
+      console.error(err);
       alert("Error de conexión");
     }
   };
@@ -44,7 +49,7 @@ export const Login = () => {
         <div className="card-body p-4">
 
           <div className="text-center mb-3">
-            <img src="/Logo4giift.jpeg" width="90" />
+            <img src="/Logo4giift.jpeg" width="90" alt="Logo" />
             <h5 className="mt-2" style={{ color: "#DC143C" }}>Nunca olvides un regalo importante</h5>
           </div>
 

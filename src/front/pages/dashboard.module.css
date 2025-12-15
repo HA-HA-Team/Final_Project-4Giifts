@@ -5,7 +5,6 @@
   --color-beige: #FDEBD0;
 }
 
-/* APLICAR AL BODY PARA EVITAR SCROLL HORIZONTAL SIN ROMPER STICKY */
 body {
   overflow-x: hidden;
 }
@@ -14,7 +13,7 @@ body {
   background-color: #fff;
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* IMPORTANTE: Eliminado overflow-x: hidden de aquí */
+  
 }
 
 /* --- SIDEBAR STICKY CENTRADO --- */
@@ -22,10 +21,10 @@ body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  height: 100vh; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra verticalmente */
+  justify-content: center; 
   z-index: 10;
   padding: 1rem 0;
 }
@@ -38,7 +37,7 @@ body {
   width: 90%;
   margin: 0 auto;
   box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
-  max-height: 90vh; /* Evita que se salga en pantallas pequeñas */
+  max-height: 90vh; 
   overflow-y: auto; 
 }
 
@@ -90,9 +89,10 @@ body {
   border-bottom: 2px solid var(--color-pink);
   border-radius: 0;
   padding: 0.5rem 0;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   color: #555;
   transition: border-color 0.3s;
+  
 }
 
 .search-input:focus {

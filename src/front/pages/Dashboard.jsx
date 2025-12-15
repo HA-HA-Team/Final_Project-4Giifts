@@ -2,19 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
 import { getPrivateData, getUserContacts, createContact, updateContact, getContactFavorites, deleteFavorite } from '../services';
-import RemindersCarousel from "../components/RemindersCarousel";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const giftsSectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const intervalRef = useRef(null);
 
-  const reminders = [
-    { id: 1, title: "Cumpleaños", subtitle: "(Pronto)", icon: "🎂" },
-    { id: 2, title: "Navidad", subtitle: "(Se acerca)", icon: "🎄" },
-    { id: 3, title: "San Valentín", subtitle: "(Próximo)", icon: "❤️" },
-  ];
-  const [userReminders, setUserReminders] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [activeFavorites, setActiveFavorites] = useState([]);
 
@@ -25,8 +20,18 @@ const Dashboard = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [editingContactId, setEditingContactId] = useState(null);
 
+  const [reminders] = useState([
+    { id: 1, title: 'Cumpleaños', subtitle: '(Pronto)', icon: '🎂' },
+    { id: 2, title: 'Navidad', subtitle: '(Se acerca)', icon: '🎄' },
+    { id: 3, title: 'San Valentín', subtitle: '(Próximo)', icon: '❤️' },
+  ]);
+
   const [selectedContactId, setSelectedContactId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragTranslate, setDragTranslate] = useState(0);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -50,7 +55,25 @@ const Dashboard = () => {
     loadData();
   }, [navigate]);
 
+  useEffect(() => {
+    const start = () => { intervalRef.current = setInterval(() => setCurrentSlide(p => (p + 1) % reminders.length), 3000); };
+    start();
+    return () => clearInterval(intervalRef.current);
+  }, [reminders.length]);
 
+  const stopAuto = () => clearInterval(intervalRef.current);
+  const handleDragStart = (e) => { setIsDragging(true); setStartX(e.clientX || e.touches[0].clientX); stopAuto(); };
+  const handleDragMove = (e) => {
+    if (!isDragging) return;
+    const x = e.clientX || e.touches[0].clientX;
+    if (trackRef.current) setDragTranslate(((x - startX) / trackRef.current.offsetWidth) * 100);
+  };
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    if (dragTranslate < -5) setCurrentSlide(p => (p + 1) % reminders.length);
+    else if (dragTranslate > 5) setCurrentSlide(p => (p - 1 + reminders.length) % reminders.length);
+    setDragTranslate(0);
+  };
 
   const activeContact = contacts.find(c => c.id.toString() === selectedContactId.toString());
 
@@ -138,6 +161,7 @@ const Dashboard = () => {
             <nav className="flex-grow-1">
               <a href="#contactos" className={styles["sidebar-link"]}>Contactos</a>
               <div className={styles["sidebar-link"]} onClick={() => navigate('/generar-ideas/user')} style={{ cursor: 'pointer' }}>Generar ideas para mí</div>
+              <div className={styles["sidebar-link"]} onClick={() => navigate('/misfavoritos')} style={{ cursor: 'pointer' }}>Mis Favoritos</div>
               <a href="#recordatorios" className={styles["sidebar-link"]}>Recordatorios</a>
               <div className="mt-4">
                 <label className="text-white mb-2 small">Regalos guardados</label>
@@ -159,7 +183,7 @@ const Dashboard = () => {
               <button className={styles["btn-add-contact"]} onClick={() => setShowAddModal(true)}>+</button>
             </div>
             <div className={styles["search-input-container"]}>
-              <input className={`form-control form-control-plaintext ${styles["search-input"]}`} placeholder="Buscar..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+              <input className={`form-control form-control-plaintext ${styles["search-input"]}`} placeholder="Buscar contactos..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
 
@@ -171,7 +195,12 @@ const Dashboard = () => {
                     <button className={styles["btn-edit-contact"]} onClick={(e) => handleEditClick(e, c)}>✎</button>
                     <button className={styles["btn-delete-contact"]} onClick={(e) => { e.stopPropagation(); setContactToDelete(c); setShowDeleteModal(true); }}>X</button>
                     <div className="card-body d-flex flex-column align-items-center">
-                      <img src={c.img || "https://i.pravatar.cc/150"} className={`${styles["contact-img"]} mb-3`} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt={c.name} />
+                      <img
+                        src={c.img || `https://api.dicebear.com/9.x/avataaars/svg?seed=${c.name}`}
+                        className={`${styles["contact-img"]} mb-3`}
+                        onError={(e) => e.target.src = `https://api.dicebear.com/9.x/avataaars/svg?seed=${c.name}`}
+                        alt={c.name}
+                      />
                       <h5 className="fw-bold">{c.name}</h5>
                       <small className="text-muted mb-2">{c.relation}</small>
                       <button className={`btn ${styles["btn-ideas"]} mt-auto`} onClick={(e) => { e.stopPropagation(); navigate(`/generar-ideas/${c.id}`); }}>Generar ideas</button>
@@ -189,33 +218,35 @@ const Dashboard = () => {
             )}
           </div>
 
-          <RemindersCarousel
-            reminders={reminders}
-            contacts={contacts}
-            userReminders={userReminders}
-            onCreateReminder={async (data) => {
-              const res = await createReminder(data);
-              if (res.ok) {
-                const saved = await res.json();
-                setUserReminders((prev) => [...prev, saved]);
-              }
-            }}
-            onDeleteReminder={async (id) => {
-              const res = await deleteReminder(id);
-              if (res.ok) {
-                setUserReminders((prev) =>
-                  prev.filter((r) => r.id !== id)
-                );
-              }
-            }}
-          />
+          <div id="recordatorios" className="mb-2 pt-3">
+            <h5 className={`${styles["section-title"]} text-center mb-4`}>RECORDATORIOS</h5>
+            <div className={styles["reminder-viewport"]} ref={trackRef} onMouseDown={handleDragStart} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={handleDragEnd}>
+              <div className={`${styles["reminder-track"]} ${isDragging ? styles.dragging : ''}`} style={{ transform: `translateX(calc(-${currentSlide * 33.33}% + ${dragTranslate}%))` }}>
+                {reminders.concat(reminders).map((r, i) => (
+                  <div key={`${r.id}-${i}`} className={styles["reminder-card"]}>
+                    <div className="display-4">{r.icon}</div>
+                    <h6 className="fw-bold">{r.title}</h6>
+                    <small>{r.subtitle}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {activeContact && (
             <div ref={giftsSectionRef} className={`${styles["saved-gifts-section"]} shadow`}>
               <button className={styles["btn-close-gifts"]} onClick={() => setSelectedContactId('')}>X</button>
               <div className={styles["saved-gifts-inner"]}>
                 <div className="row mb-4 align-items-center">
-                  <div className="col-auto"><img src={activeContact.img || "https://i.pravatar.cc/150"} className={styles["contact-img"]} style={{ width: 60, height: 60 }} onError={(e) => e.target.src = "https://i.pravatar.cc/150"} alt="" /></div>
+                  <div className="col-auto">
+                    <img
+                      src={activeContact.img || `https://api.dicebear.com/9.x/avataaars/svg?seed=${activeContact.name}`}
+                      className={styles["contact-img"]}
+                      style={{ width: 60, height: 60 }}
+                      onError={(e) => e.target.src = `https://api.dicebear.com/9.x/avataaars/svg?seed=${activeContact.name}`}
+                      alt=""
+                    />
+                  </div>
                   <div className="col">
                     <h4 className="fw-bold text-dark">Favoritos de {activeContact.name}</h4>
                     <small className="text-muted d-block mb-2">Relación: {activeContact.relation}</small>
