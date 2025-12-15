@@ -1,9 +1,11 @@
 .pers-primary-btn-color {
     background: #DC143C;
 }
-
+.pers-primary-btn-color:hover {
+    background: #F75270;
+}
 .pers-secondary-btn-color {
-    background: #F75270;;
+    background: #F75270;
 }
 
 .pers-tertiary-btn-color {
@@ -40,4 +42,56 @@
     width: 100%;
     top: 0;
     z-index: 20;
+}
+
+.instruction-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.instruction-card:hover {
+    background-color: #DC143C;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.instruction-card:hover,
+.instruction-card:hover h5,
+.instruction-card:hover p,
+.instruction-card:hover i {
+    color: #ffffff;
+}
+
+
+.nav-link-custom {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.15rem;
+    color: #F75270;              
+    margin-right: 16px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-link-custom:hover {
+    transform: scale(1.12);
+    color: #DC143C;          
+}
+
+
+.dropdown-user {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-user:hover {
+    background-color: #DC143C;
+    color: #ffffff;
+}
+
+.avatar-clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.avatar-clickable:hover {
+    transform: scale(1.12);
 }

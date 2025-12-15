@@ -1,17 +1,17 @@
 const base_url = import.meta.env.VITE_BACKEND_URL;
 
 export const createUser = async (newUser) => {
-  const request = await fetch(`${base_url}/api/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newUser),
-  });
-  if (!request.ok) {
-    const errorData = await request.json();
-    throw new Error(errorData.detail);
-  }
+    const request = await fetch(`${base_url}/api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+    if (!request.ok) {
+      const errorData = await request.json();
+      throw new Error(errorData.detail);
+    }
 
   return request;
 };
@@ -77,65 +77,78 @@ export const getUserContacts = async () => {
   return response;
 };
 
+
 export const getGiftHistory = async (contactId) => {
-  const token = sessionStorage.getItem("token");
-  const response = await fetch(`${base_url}/api/history/${contactId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response;
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/history/${contactId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
 };
 
 export const clearGiftHistory = async (contactId) => {
-  const token = sessionStorage.getItem("token");
-  const response = await fetch(`${base_url}/api/history/${contactId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response;
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/history/${contactId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
 };
 
 export const toggleFavorite = async (productId, contactId) => {
-  const token = sessionStorage.getItem("token");
-  const response = await fetch(`${base_url}/api/favorites`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ product_id: productId, contact_id: contactId }),
-  });
-  return response;
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/favorites`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ product_id: productId, contact_id: contactId })
+    });
+    return response;
 };
 
 export const getContactFavorites = async (contactId) => {
-  const token = sessionStorage.getItem("token");
-  const response = await fetch(`${base_url}/api/favorites/${contactId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response;
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/favorites/${contactId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
 };
 
 export const deleteFavorite = async (favId) => {
-  const token = sessionStorage.getItem("token");
-  const response = await fetch(`${base_url}/api/favorite/${favId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response;
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/favorite/${favId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
+};
+
+
+export const getUserFavorites = async () => {
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/user/favorites`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
+};
+
+export const generateShareLink = async () => {
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`${base_url}/api/user/share_link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }
+    });
+    return response;
+};
+
+export const getSharedFavorites = async (token) => {
+    const response = await fetch(`${base_url}/api/shared/favorites/${token}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    });
+    return response;
 };
 
 const authHeaders = () => {

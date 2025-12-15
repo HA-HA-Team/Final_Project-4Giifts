@@ -14,6 +14,8 @@ import { RecoverRequest } from "./pages/RecoverRequest";
 import { ResetPassword } from "./pages/ResetPassword";
 import { Private } from "./pages/Private";
 import { ProfileEdit } from "./pages/ProfileEdit";
+import { MyFavorites } from "./pages/MyFavorites";
+import { SharedFavorites } from "./pages/SharedFavorites";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +26,7 @@ export const router = createBrowserRouter(
        <Route path="/" element={<Home />} />
        <Route path="/login" element={<Login />} />
        <Route path="/signup" element={<Signup />} />
+       <Route path="/share/:token" element={<SharedFavorites />} />
        
       <Route path="/recover/request" element={<RecoverRequest />} />
       <Route path="/reset-password" element={<ResetPassword />} />
@@ -33,6 +36,7 @@ export const router = createBrowserRouter(
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/private" element={<Private />} />
       <Route path="/generar-ideas/:contactId" element={<GiftIdeas />} />
+      <Route path="/misfavoritos" element={<MyFavorites />} />
 
     </Route>
   )
