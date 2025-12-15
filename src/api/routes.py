@@ -534,3 +534,4 @@ def delete_reminder(reminder_id):
     db.session.delete(reminder)
     db.session.commit()
     return jsonify({"msg": "Recordatorio eliminado"}), 200
+ # a ver si con este comentario solucionamos el problema 
