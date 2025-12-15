@@ -8,7 +8,7 @@ export const Jumbotron = () => (
         <hr className="my-4" />
         <p>Cuando las palabras no bastan, un regalo lo dice todo!</p>
         <p className="lead d-flex justify-content-center mt-5 pers-shadow-none">
-          <Link to="/login">
+          <Link to="/dashboard">
           <button className="btn btn-primary btn-lg pers-secondary-btn-color border-0">¡Regalar!</button>
         </Link>
         </p>

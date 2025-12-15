@@ -183,7 +183,7 @@ const Dashboard = () => {
               <button className={styles["btn-add-contact"]} onClick={() => setShowAddModal(true)}>+</button>
             </div>
             <div className={styles["search-input-container"]}>
-              <input className={`form-control form-control-plaintext ${styles["search-input"]}`} placeholder="Buscar..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+              <input className={`form-control form-control-plaintext ${styles["search-input"]}`} placeholder="Buscar contactos..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
 

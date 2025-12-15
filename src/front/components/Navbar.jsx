@@ -42,7 +42,7 @@ export const Navbar = () => {
                 {/* Logo */}
                 <Link to="/" className="d-flex align-items-center gap-2">
                     <img
-                        src="public/Logo_solo_4giifts-removebg-preview (1).png"
+                        src="/Logo_solo_4giifts-removebg-preview (1).png"
                         height="40"
                         alt="Logo"
                     />

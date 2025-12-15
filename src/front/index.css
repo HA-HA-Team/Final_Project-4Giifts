@@ -25,7 +25,7 @@
 }
 
 .pers-bg-img-jumbotron {
-  background-image: url('src/front/assets/img/imagen-fondo-jumbotron1.jpg');
+  background-image: url('/imagen-fondo-jumbotron1.jpg');
   background-size: cover;
   background-position: center;
   color: white;
