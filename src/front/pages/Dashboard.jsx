@@ -210,14 +210,27 @@ const Dashboard = () => {
               <div className={styles["sidebar-link"]} onClick={() => navigate('/misfavoritos')} style={{ cursor: 'pointer' }}>Mis Favoritos</div>
               <a href="#recordatorios" className={styles["sidebar-link"]}>Recordatorios</a>
               <div className="mt-4">
-                <label className="text-white mb-2 small">Regalos guardados</label>
+                <label className={styles["sidebar-link"]}>Regalos guardados</label>
                 <select className={`form-select ${styles["custom-select"]}`} value={selectedContactId} onChange={(e) => setSelectedContactId(e.target.value)}>
                   <option value="">Selecciona contacto...</option>
                   {contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
-              <button className={`btn ${styles["btn-ideas"]} mt-3 mx-auto`} onClick={() => navigate("/profile/edit")}>Editar Perfil</button>
-              <button className={`btn ${styles["btn-ideas"]} mt-5 mx-auto`} onClick={handleLogout}>Cerrar Sesión</button>
+              <div className="mt-5 d-flex justify-content-center gap-3">
+                <button
+                  className={`btn ${styles["btn-ideas"]}`}
+                  onClick={() => navigate("/profile/edit")}
+                >
+                  Editar Perfil
+                </button>
+
+                <button
+                  className={`btn ${styles["btn-ideas"]}`}
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
             </nav>
           </div>
         </aside>
@@ -334,7 +347,7 @@ const Dashboard = () => {
               </div>
               <div className="modal-body">
                 <form>
-                  <div className="mb-3"><label className="form-label">Nombre Completo</label><input type="text" className="form-control" name="name" placeholder="Nombre y Apellidos" value={formData.name} onChange={handleInputChange} /></div>
+                  <div className="mb-3"><label className="form-label">Nombre*</label><input type="text" className="form-control" name="name" placeholder="Nombre" value={formData.name} required onChange={handleInputChange} /></div>
                   <div className="row">
                     <div className="col-6 mb-3"><label className="form-label">Parentesco</label><input type="text" className="form-control" name="relation" placeholder="Ej: Amiga, Padre, Primo..." value={formData.relation} onChange={handleInputChange} /></div>
                     <div className="col-6 mb-3"><label className="form-label">Fecha Nacimiento</label><input type="date" className="form-control" name="birth_date" value={formData.birth_date} onChange={handleInputChange} /></div>
