@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { checkLogin } from "../services";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = () => {
   const { dispatch } = useGlobalReducer();
@@ -37,6 +40,8 @@ export const Login = () => {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center"
       style={{ background: "linear-gradient(135deg, #FDEBD0 0%, #F7CAC9 100%)" }}>
@@ -67,14 +72,25 @@ export const Login = () => {
               <label htmlFor="passw_login" className="form-label fw-semibold" style={{ color: "#DC143C" }}>
                 Contraseña
               </label>
-              <input
-                type="password"
-                id="passw_login"
-                name="password"
-                className="form-control"
-                placeholder="••••••••"
-                required
-              />
+
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="passw_login"
+                  name="password"
+                  className="form-control"
+                  placeholder="••••••••"
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
+              </div>
             </div>
 
             <div className="d-grid">
