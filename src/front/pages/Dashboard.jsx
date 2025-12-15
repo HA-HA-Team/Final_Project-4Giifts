@@ -166,7 +166,7 @@ const Dashboard = () => {
     setContactToDelete(null);
   };
 
-  const handleLogout = () => { sessionStorage.removeItem("token"); navigate("/"); };
+  const handleLogout = () => { sessionStorage.removeItem("token"); navigate("/"); window.dispatchEvent(new Event("auth-change")); };
   const handleInputChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
   const resetModal = () => { setShowAddModal(false); setFormData(initialFormState); setEditingContactId(null); };
 
