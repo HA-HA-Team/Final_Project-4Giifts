@@ -101,13 +101,7 @@ const Dashboard = () => {
     loadData();
   }, [navigate]);
 
-  useEffect(() => {
-    const start = () => { intervalRef.current = setInterval(() => setCurrentSlide(p => (p + 1) % reminders.length), 3000); };
-    start();
-    return () => clearInterval(intervalRef.current);
-  }, [reminders.length]);
-
-  const stopAuto = () => clearInterval(intervalRef.current);
+ 
 
 
   const activeContact = contacts.find(c => c.id.toString() === selectedContactId.toString());
