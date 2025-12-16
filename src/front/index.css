@@ -1,11 +1,17 @@
 .pers-primary-btn-color {
     background: #DC143C;
 }
+
 .pers-primary-btn-color:hover {
     background: #F75270;
 }
+
 .pers-secondary-btn-color {
     background: #F75270;
+}
+
+.pers-secondary-btn-color:hover {
+    background: #DC143C;
 }
 
 .pers-tertiary-btn-color {
@@ -25,19 +31,19 @@
 }
 
 .pers-bg-img-jumbotron {
-  background-image: url('/imagen-fondo-jumbotron1.jpg');
-  background-size: cover;
-  background-position: center;
-  color: white;
-  box-shadow: #6C757D 0px 4px 8px;
-  text-shadow: 1px 1px 3px black
+    background-image: url('/imagen-fondo-jumbotron1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    box-shadow: #6C757D 0px 4px 8px;
+    text-shadow: 1px 1px 3px black;
 }
 
 .pers-shadow {
     box-shadow: #6C757D 0px 4px 8px;
 }
 
-.navbar{
+.navbar {
     position: sticky;
     width: 100%;
     top: 0;
@@ -62,21 +68,19 @@
     color: #ffffff;
 }
 
-
 .nav-link-custom {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.15rem;
-    color: #F75270;              
+    color: #F75270;
     margin-right: 16px;
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .nav-link-custom:hover {
     transform: scale(1.12);
-    color: #DC143C;          
+    color: #DC143C;
 }
-
 
 .dropdown-user {
     transition: background-color 0.2s ease, color 0.2s ease;
