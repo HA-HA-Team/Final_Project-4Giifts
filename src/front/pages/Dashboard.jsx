@@ -37,7 +37,14 @@ const Dashboard = () => {
       const res = await getReminders();
       if (res.ok) {
         const data = await res.json();
-        setReminders(data);
+        const sortedReminders = data.sort((a, b) => {
+          const dateA = new Date(a.reminder_date);
+          const dateB = new Date(b.reminder_date);
+
+          return dateA - dateB;
+        });
+
+        setReminders(sortedReminders);
       }
     } catch (err) {
       console.error("Error cargando recordatorios", err);
@@ -105,7 +112,7 @@ const Dashboard = () => {
     loadData();
   }, [navigate]);
 
- 
+
 
   const stopAuto = () => clearInterval(intervalRef.current);
   const handleDragStart = (e) => { setIsDragging(true); setStartX(e.clientX || e.touches[0].clientX); stopAuto(); };
