@@ -12,7 +12,7 @@ export const Instrucciones = () => {
 
                 <div  onClick={()=>navigate("/signup")} className="card instruction-card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
                     <div className="ratio ratio-21x9">
-                        <i className="fa-solid fa-file-pen display-5 d-flex justify-content-center align-items-center"></i>
+                        <img src="public/registro.png" alt="Registro" className="w-100 h-100 object-fit-cover object-fit-top" />
                     </div>
                     <div  className="card-body text-center d-flex justify-content-between flex-column">
                         <div>

@@ -1,6 +1,6 @@
 /* Fondo general SOLO para esta vista */
 .signupWrapper {
-  background: linear-gradient(135deg, #DC143C, #F75270);
+  background: linear-gradient(135deg, #FDEBD0, #F7CAC9);
   min-height: 100vh;
   display: flex;
   justify-content: center;

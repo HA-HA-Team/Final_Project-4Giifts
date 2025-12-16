@@ -99,3 +99,7 @@
 .avatar-clickable:hover {
     transform: scale(1.12);
 }
+
+.object-fit-top {
+  object-position: top;
+}
