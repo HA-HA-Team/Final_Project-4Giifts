@@ -118,7 +118,7 @@ export const Instrucciones = () => {
 
                     <div className="instruction-content">
                         <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
-                            1. Regístrate
+                            5. Añade recordatorios
                         </h5>
 
                         <p className="instruction-text mb-0">
@@ -141,7 +141,7 @@ export const Instrucciones = () => {
 
                     <div className="instruction-content">
                         <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
-                            1. Regístrate
+                            6. Comparte tus favoritos
                         </h5>
 
                         <p className="instruction-text mb-0">
