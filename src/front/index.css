@@ -136,21 +136,20 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 16px;
-    background: transparent;
+    padding: 0;
     color: white;
-    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .instruction-text {
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    background-color: #DC143C;  
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 8px;
-    transition: opacity 0.25s ease, max-height 0.25s ease;
+    padding: 0 16px;
+    background-color: #DC143C;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
 
@@ -158,6 +157,7 @@
 .instruction-card:hover .instruction-text {
     opacity: 1;
     max-height: 200px;
+    padding: 12px 16px;
 }
 
 .instruction-card {
@@ -174,26 +174,24 @@
 
 /* TÍTULO CON DIFUMINADO CENTRAL */
 .instruction-title {
-    display: inline-block;
     width: 100%;
+    padding: 16px 12px;
+    margin: 0;
     text-align: center;
-    padding: 6px 10px;
-    border-radius: 6px;
     color: #ffffff;
 
-    background: radial-gradient(
-        ellipse at center,
-        #DC143C 0%,
-        rgba(220, 20, 60, 0.75) 45%,
+    background: linear-gradient(
+        to top,
+        rgba(220, 20, 60, 0.95) 0%,
+        rgba(220, 20, 60, 0.75) 40%,
         rgba(220, 20, 60, 0.35) 70%,
         rgba(220, 20, 60, 0) 100%
     );
 
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 /* AL HACER HOVER: SE ELIMINA EL FONDO DEL H5 */
 .instruction-card:hover .instruction-title {
     background: transparent;
-    color: #ffffff;
 }
