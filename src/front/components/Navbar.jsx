@@ -39,7 +39,7 @@ export const Navbar = () => {
         <nav className="navbar pers-bg-color">
             <div className="container">
 
-                {/* Logo */}
+                
                 <Link to="/" className="d-flex align-items-center gap-2">
                     <img
                         src="/Logo_solo_4giifts-removebg-preview (1).png"
@@ -50,7 +50,7 @@ export const Navbar = () => {
 
                 <div className="ms-auto d-flex align-items-center gap-3">
 
-                    {/* NO LOGUEADO */}
+                    
                     {!isLogged && (
                         <>
                             <Link to="/signup">
@@ -66,7 +66,7 @@ export const Navbar = () => {
                         </>
                     )}
 
-                    {/* LOGUEADO */}
+                   
                     {isLogged && user && (
                         <div className="d-flex align-items-center gap-4">
 

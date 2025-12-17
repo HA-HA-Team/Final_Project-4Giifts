@@ -6,7 +6,7 @@ export const Jumbotron = () => (
         <h1 className="display-4 fw-bold">Regalos que hablan por ti</h1>
         <p className="lead fw-bold">Convierte tus recuerdos en el detalle perfecto.</p>
         <hr className="my-4" />
-        <p>Cuando las palabras no bastan, un regalo lo dice todo!</p>
+        <p className="fw-bold">Cuando las palabras no bastan, un regalo lo dice todo!</p>
         <p className="lead d-flex justify-content-center mt-5 pers-shadow-none">
           <Link to="/dashboard">
           <button className="btn btn-primary btn-lg pers-secondary-btn-color border-0">¡Regalar!</button>

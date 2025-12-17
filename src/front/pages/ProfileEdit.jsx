@@ -99,7 +99,7 @@ export const ProfileEdit = () => {
     if (loading) return <div className="text-center p-5">Cargando...</div>;
 
     return (
-        <div className="wrapper p-4" style={{ background: "linear-gradient(135deg, #FDEBD0 0%, #F7CAC9 100%)", minHeight: "100vh" }}>
+        <div className="container mt-5" style={{ minHeight: "100vh" }}>
             <button className="btn btn-outline-secondary mb-4" onClick={() => navigate('/dashboard')}>&larr; Volver</button>
             <div className="container mt-5" style={{ maxWidth: "500px" }}>
 
@@ -173,11 +173,10 @@ export const ProfileEdit = () => {
                     <button
                         className="btn w-100 mb-3"
                         style={{
-                            backgroundColor: "#f75270",
+                            backgroundColor: "#1E66FF",
                             color: "#fff",
                             borderRadius: "10px",
                             fontWeight: "bold",
-                            hover: { backgroundColor: "#dc143c" },
                         }}
                         onClick={saveChanges}
                     >
@@ -200,10 +199,10 @@ export const ProfileEdit = () => {
                     </div>
 
                     <button
-                        className="deleteBtn w-100"
+                        className="btn w-100"
                         disabled={!deleteCheck}
                         style={{
-                            backgroundColor: "#F75270",
+                            backgroundColor: "#ff5b5b",
                             color: "white",
                             borderRadius: "10px",
                             fontWeight: "bold",
