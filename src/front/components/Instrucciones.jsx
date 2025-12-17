@@ -11,20 +11,20 @@ export const Instrucciones = () => {
 
             <div className="ms-5 me-5 mb-5 mt-3 d-flex row gap-4 justify-content-center pers-shadow rounded-3">
 
-                {/* CARD 1 */}
+                
                 <div
                     onClick={() => navigate("/signup")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="public/registro.png"
+                        src="/registro.png"
                         alt="Registro"
                         className="instruction-img"
                     />
 
                     <div className="instruction-content">
-                        <h5 className="fw-bold mb-2 text-dark instruction-title">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
                             1. Regístrate
                         </h5>
 
@@ -35,20 +35,20 @@ export const Instrucciones = () => {
                     </div>
                 </div>
 
-                {/* CARD 2 */}
+                
                 <div
                     onClick={() => navigate("/login")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="public/login.png"
+                        src="/login.png"
                         alt="Login"
                         className="instruction-img"
                     />
 
                     <div className="instruction-content">
-                        <h5 className="fw-bold mb-2 text-dark instruction-title">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
                             2. Loguéate
                         </h5>
 
@@ -58,20 +58,20 @@ export const Instrucciones = () => {
                     </div>
                 </div>
 
-                {/* CARD 3 */}
+                
                 <div
                     onClick={() => navigate("/dashboard")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="public/generar ideas.png"
+                        src="/generar ideas.png"
                         alt="Dashboard"
                         className="instruction-img instruction-img-top-left"
                     />
 
                     <div className="instruction-content">
-                        <h5 className="fw-bold mb-2 text-dark instruction-title">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
                             3. Genera tus regalos
                         </h5>
 
@@ -86,3 +86,4 @@ export const Instrucciones = () => {
         </div>
     );
 };
+
