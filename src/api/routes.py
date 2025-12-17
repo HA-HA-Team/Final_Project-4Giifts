@@ -142,6 +142,17 @@ def update_user(user_id):
     db.session.commit()
     return jsonify({"msg": "Usuario actualizado", "user": user.to_dict()})
 
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    current_user = int(get_jwt_identity())
+    if current_user != user_id: return jsonify({"msg": "No autorizado"}), 403
+    user = db.session.get(User, user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({"msg": "Cuenta eliminada"}), 200
+
+
 
 @api.route('/contacts', methods=['GET'])
 @jwt_required()
