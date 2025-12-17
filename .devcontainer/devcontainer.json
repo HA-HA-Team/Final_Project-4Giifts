@@ -21,7 +21,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
-	"forwardPorts": [3000, 3001],
+	"forwardPorts": [3000, 3001, 3002],
 
 	"onCreateCommand": "(cp .env.example .env || echo \".env creation failed\"); (pipenv install || echo \"pipenv install failed\"); (bash database.sh || echo \"database.sh failed\");",
 	// Use 'postCreateCommand' to run commands after the container is created.
