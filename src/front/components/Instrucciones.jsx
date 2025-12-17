@@ -95,7 +95,7 @@ export const Instrucciones = () => {
 
                     <div className="instruction-content">
                         <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
-                            1. Regístrate
+                            4. Crea tu wishlist
                         </h5>
 
                         <p className="instruction-text mb-0">
