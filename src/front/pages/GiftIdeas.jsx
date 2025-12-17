@@ -18,7 +18,7 @@ export const GiftIdeas = () => {
   const [generating, setGenerating] = useState(false);
   const [giftIdeas, setGiftIdeas] = useState([]);
 
-  const emptyStyle = { backgroundColor: 'var(--color-pink)' };
+  const emptyStyle = { backgroundColor: 'var(--color-beige)' };
   const filledStyle = { backgroundColor: 'white' };
 
   const calculateAge = (d) => {
@@ -154,11 +154,11 @@ export const GiftIdeas = () => {
 
               <h4 className={styles.subsectionTitle}>Intereses y ocupación</h4>
               <div className="mb-3">
-                <label className={styles.label}>Ocasión</label>
-                <input list="occasions" name="ocasion" className={`form-control ${styles.inputCustom}`}
+                <label className={styles.label}>Ocasión*</label>
+                <input list="occasions" name="ocasion*" className={`form-control ${styles.inputCustom}`}
                   value={formData.ocasion}
                   onChange={(e) => setFormData({ ...formData, ocasion: e.target.value })}
-                  placeholder="Escribe o selecciona..." style={!formData.ocasion ? emptyStyle : filledStyle} />
+                  placeholder="Escribe o selecciona..." style={!formData.ocasion ? emptyStyle : filledStyle} required/>
                 <datalist id="occasions">
                   <option value="Cumpleaños" /><option value="Navidad" />
                   <option value="San Valentín" /><option value="Aniversario" />
@@ -166,10 +166,10 @@ export const GiftIdeas = () => {
               </div>
 
               <div className="mb-3">
-                <label className={styles.label}>Hobbies y Gustos Personales</label>
-                <input name="hobbies" className={`form-control ${styles.inputCustom}`}
+                <label className={styles.label}>Hobbies y Gustos Personales*</label>
+                <input name="hobbies*" className={`form-control ${styles.inputCustom}`}
                   value={formData.hobbies} onChange={(e) => setFormData({ ...formData, hobbies: e.target.value })}
-                  placeholder="Ej: Tenis, Videojuegos, Lectura..." style={!formData.hobbies ? emptyStyle : filledStyle} />
+                  placeholder="Ej: Tenis, Videojuegos, Lectura..." style={!formData.hobbies ? emptyStyle : filledStyle} required />
               </div>
 
               <div className="mb-3">
@@ -195,10 +195,10 @@ export const GiftIdeas = () => {
               </div>
 
               <div className="mb-3">
-                <label className={styles.label}>Presupuesto</label>
-                <input name="presupuesto" className={`form-control ${styles.inputCustom}`}
+                <label className={styles.label}>Presupuesto*</label>
+                <input name="presupuesto*" className={`form-control ${styles.inputCustom}`}
                   value={formData.presupuesto} onChange={(e) => setFormData({ ...formData, presupuesto: e.target.value })}
-                  placeholder="Ej: 50-100 €" style={!formData.presupuesto ? emptyStyle : filledStyle} />
+                  placeholder="Ej: 50-100 €" style={!formData.presupuesto ? emptyStyle : filledStyle} required/>
               </div>
 
               <div className="mb-3">
@@ -232,11 +232,11 @@ export const GiftIdeas = () => {
               {generating ? <span><i className="fas fa-spinner fa-spin me-2"></i> Pensando...</span> : "Generar otras 6 ideas"}
             </button>
 
-            
-            <div className="row justify-content-center d-flex flex-wrap align-items-stretch"> 
+
+            <div className="row justify-content-center g-4"> 
               {giftIdeas.map((idea, i) => (
                 
-                <div key={i} className="col-md-4 mb-4 h-100">
+                <div key={i} className="col-md-4 d-flex">
                   <article className={styles.ideaCard}>
                     <div className={styles.cardImgContainer}>
                       <img src={idea.imagen} alt={idea.nombre_regalo}
@@ -244,7 +244,7 @@ export const GiftIdeas = () => {
                         onError={(e) => e.target.src = "https://via.placeholder.com/400"} />
                     </div>
                     <h5 className={styles.cardTitle}>{idea.nombre_regalo}</h5>
-                    <p className="small text-muted">{idea.descripcion}</p>
+                    <p className="small text-muted flex-grow-1">{idea.descripcion}</p>
                     <p className={styles.price}>Precio estimado {idea.precio_estimado}</p>
                     <a href={idea.link_compra} target="_blank" rel="noreferrer" className={styles.buyBtn}>
                       Ver en Amazon

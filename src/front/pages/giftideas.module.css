@@ -2,7 +2,7 @@
   --color-crimson: #dc143c; /* Rojo Fuerte */
   --color-rose: #f75270;    /* Rosa Fuerte */
   --color-pink: #f7cac9;    /* Rosa Suave */
-  --color-beige: #fdebd0;   /* Beige/Crema */
+  --color-beige: #f6f4e0;   /* Beige/Crema */
 }
 
 .pageContainer {
@@ -20,25 +20,26 @@
 }
 
 .mainCard {
-  border: 2px solid var(--color-pink); 
+  border: 2px solid var(--bs-secondary); 
   border-radius: 25px;
   background-color: white;
-  box-shadow: 8px 8px 0px var(--color-pink); 
+  box-shadow: 8px 8px 0px var(--color-pink);
+  box-shadow: 0px 4px 6px; 
 }
 
 
 .imageContainer {
-  width: 180px; 
-  height: 180px;
+  width: 200px; 
+  height: 200px;
   border-radius: 50%;
-  border: 4px solid var(--color-pink); 
+  border: none; 
   overflow: hidden;
   margin-bottom: 10px;
-  background-color: var(--color-beige);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 4px 6px; 
 }
 .profileImage {
   width: 100%;
@@ -56,7 +57,7 @@
   margin-bottom: -2px; 
   background-color: var(--color-pink); 
   color: white;
-  border: 2px solid var(--color-crimson); 
+  border: 2px solid var(--bs-secondary); 
   border-radius: 10px 10px 0 0; 
   border-bottom: none; 
   padding: 5px 12px;
@@ -68,22 +69,35 @@
 
 .inputCustom {
   margin-top: 0; 
-  border: 2px solid var(--color-crimson);  
+  border: 2px solid var(--bs-secondary);  
   border-radius: 0 15px 15px 15px; 
   padding: 10px;
   transition: all 0.2s;
-  box-shadow: 2px 2px 0px var(--color-pink); 
   background-color: white; 
 }
+.inputCustom:valid {
+  border-color: var(--bs-secondary); 
+  background-image: none;
+}
+.inputCustom:required:valid:not(:placeholder-shown){
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center; /* Posición fija para que no se mueva */
+  background-size: 18px 18px;
+  padding-right: 40px; /* Espacio para que el texto no tape el check */
+  
+}
+
 .inputCustom:hover {
-  border-color: var(--color-crimson);
-  box-shadow: 3px 3px 0px var(--color-pink);
+  border-color: var(--bs-secondary);
+  box-shadow: 3px 3px 0px var(--bs-secondary);
 }
 .inputCustom:focus {
-  box-shadow: 5px 5px 0px var(--color-crimson);
-  border-color: var(--color-crimson);
+  box-shadow: 5px 5px 0px var(--bs-);
+  border-color: var(--bs-secondary);
   outline: none;
 }
+
 .textAreaBig {
   height: 100px;
 }
@@ -106,22 +120,22 @@
 }
 
 .generateBtn {
-  border: 2px solid var(--color-crimson); 
-  border-radius: 30px;
-  background: var(--color-rose);
-  color: white; 
-  font-weight: bold;
-  font-size: 1.1rem;
-  box-shadow: 5px 5px 0px var(--color-pink); 
+  background-color: var(--color-rose) !important;
+  color: white !important;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  padding: 8px 20px;
   margin-top: 15px;
-  transition: 0.2s;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  text-decoration: none;
+  display: inline-block;
 }
 .generateBtn:hover:not(:disabled) {
-  color: white;
-  background: var(--color-crimson); 
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px var(--color-pink);
-  transition: 0.2s;
+  background-color: var(--color-crimson) !important;
+  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  transform: translateY(-2px);
 }
 .generateBtn:disabled {
   border: 2px solid var(--color-pink);
@@ -131,17 +145,21 @@
 }
 
 .secondaryBtn {
-  border: 2px solid var(--color-rose);
+  background-color: var(--color-rose) !important;
+  color: white !important;
+  border: none;
   border-radius: 20px;
-  background: var(--color-pink);
-  color: white;
-  padding: 10px 30px;
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  margin-top: 15px;
   font-weight: 600;
-  box-shadow: 3px 3px 0px var(--color-crimson);
+  transition: background 0.3s, transform 0.2s;
+  text-decoration: none;
 }
 .secondaryBtn:hover {
-  border: 2px solid var(--color-crimson);
-  background: var(--color-pink);
+    background-color: var(--color-crimson) !important;
+  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  transform: translateY(-2px);
 }
 
 .divider {
@@ -153,23 +171,32 @@
 
 
 .ideaCard {
-  height: 100;
+  height: 100%;
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc; 
   border-radius: 10px;
   overflow: hidden;
   transition: 0.2s;
-  box-shadow: 0px 4px 6px var(--color-pink);
+  box-shadow: 0px 4px 6px;
   padding: 15px;
   text-align: center;
+}
+.ideaCard p.small {
+  flex-grow: 1; /* Esto empuja el precio y el botón hacia abajo */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Máximo 3 líneas de descripción */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 10px;
 }
 
 .ideaCard:hover {
   
   transform: translateY(-3px);
-  box-shadow: 0px 6px 10px var(--color-pink); 
-  border-color: var(--color-rose);
+  box-shadow: 0px 6px 10px;; 
+  border-color: none;
 }
 
 
@@ -190,7 +217,7 @@
 
 .cardImgContainer {
   width: 100%;
-  height: 220px; 
+  height: 200px; 
   border-bottom: 1px solid #eee; 
   overflow: hidden;
   display: flex;
@@ -205,40 +232,43 @@
   padding: 10px;
 }
 .cardTitle {
-  font-weight: 600;
-  color: var(--color-crimson);
-  margin-bottom: 5px;
-  min-height: 40px; /* Asegura un espacio mínimo para 2 líneas */
+  font-weight: 700; 
+  color: black;
+  margin-bottom: 10px;
+  height: 3rem; 
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limita el título a 2 líneas */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden; /* Oculta el exceso si hay más de 2 líneas */
-  line-height: 1.2; /* Ajusta si es necesario */ 
+  overflow: hidden;
+  line-height: 1.2;
+
 }
 
 
 .price {
-  font-weight: 500;
-  color: var(--color-crimson);
+  font-weight: 600;
+  color: var(--bs-);
   margin-top: auto;
   margin-bottom: 15px;
   font-size: 1.1rem
 }
 
 .buyBtn {
-  background: var(--color-crimson); 
-  color: white;
+  background-color: var(--color-rose) !important;
+  color: white !important;
   border: none;
-  border-radius: 10px;
-  font-weight: 400;
-  width: 100%;
-  padding: 8px;
-  margin-top: auto;
-  margin-bottom: 15px; 
-  transition: 0.3s;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .buyBtn:hover {
-  border: 2px solid var(--color-crimson);
-  background: var(--color-rose);
+  background-color: var(--color-crimson) !important;
+  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  transform: translateY(-2px);
 }
