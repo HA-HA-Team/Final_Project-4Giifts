@@ -82,6 +82,72 @@ export const Instrucciones = () => {
                     </div>
                 </div>
 
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/wishlist.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            4. Crea tu wishlist
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Guarda tus ideas favoritas y organiza los regalos que más te gustan. Mantén tus deseos en un solo lugar para consultarlos cuando llegue el momento especial.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/anadir recordatorio.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            5. Añade recordatorios
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            No vuelvas a olvidar un cumpleaños o aniversario. Configura alertas personalizadas para recibir notificaciones con tiempo suficiente para preparar el detalle perfecto.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/compartir favorito.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            6. Comparte tus favoritos
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Envía tus listas de deseos o sugerencias de regalos a amigos y familiares. Facilita que los demás acierten contigo o colabora en regalos grupales fácilmente.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

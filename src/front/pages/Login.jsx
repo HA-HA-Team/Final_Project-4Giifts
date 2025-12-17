@@ -49,7 +49,7 @@ export const Login = () => {
         <div className="card-body p-4">
 
           <div className="text-center mb-3">
-            <img src="/Logo4giift.jpeg" width="90" alt="Logo" />
+            <img src="/Logo_solo_4giifts-removebg-preview (1) - copia.png" width="90" alt="Logo" />
             <h5 className="mt-2" style={{ color: "#DC143C" }}>Your Perfect Gift</h5>
           </div>
 
