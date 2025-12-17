@@ -172,7 +172,7 @@
     object-position: top left;
 }
 
-/* TÍTULO CON DIFUMINADO CENTRAL */
+
 .instruction-title {
     width: 100%;
     padding: 16px 12px;
@@ -191,7 +191,8 @@
     transition: background 0.3s ease;
 }
 
-/* AL HACER HOVER: SE ELIMINA EL FONDO DEL H5 */
+
 .instruction-card:hover .instruction-title {
     background: transparent;
 }
+

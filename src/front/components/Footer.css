@@ -53,7 +53,7 @@
   background-color: #e48597;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
