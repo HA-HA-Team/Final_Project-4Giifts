@@ -82,6 +82,75 @@ export const Instrucciones = () => {
                     </div>
                 </div>
 
+                <div
+                    onClick={() => navigate("/signup")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/registro.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            1. Regístrate
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
+                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/signup")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/registro.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            1. Regístrate
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
+                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/signup")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/registro.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            1. Regístrate
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
+                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
