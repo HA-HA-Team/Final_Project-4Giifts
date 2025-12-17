@@ -1,6 +1,6 @@
 .footer-wrapper {
   width: 100%;
-  background-color: #f7eef1; /* fondo elegante */
+  background-color: #F7CAC9; 
   padding: 20px 0;
   border-top: 2px solid #e7a1b0;
 }
@@ -53,7 +53,7 @@
   background-color: #e48597;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;

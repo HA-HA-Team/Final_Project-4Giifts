@@ -410,3 +410,33 @@ body {
 .btn-edit-contact:hover {
   background-color: #495057;
 }
+/* --- DAY-LEFTS --- */
+.days-lefts {
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: inline-block;
+    width: 100%;
+}
+.emergencyLight {
+    animation: emergencyBlink 1s infinite alternate;
+    font-weight: 800;
+    border: 2px solid transparent;
+}
+@keyframes emergencyBlink {
+    0% {
+        /* Estado: Apagado */
+        background-color: #f8d7da; /* Rojo muy tenue */
+        color: #721c24;
+        box-shadow: 0 0 0px transparent;
+        transform: scale(1);
+    }
+    100% {
+        /* Estado: Encendido (Luz brillante) */
+        background-color: #f75270; /* Tu color principal */
+        color: #ffffff;
+        box-shadow: 0 0 15px #f75270, 0 0 30px #ff8a9e;
+        transform: scale(1.02); /* Pequeño pulso */
+    }
+}

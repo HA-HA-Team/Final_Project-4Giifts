@@ -100,120 +100,120 @@ export const ProfileEdit = () => {
 
     return (
         <div className="container mt-5" style={{ minHeight: "100vh" }}>
-           <button className="btn btn-outline-secondary mb-4" onClick={() => navigate('/dashboard')}>&larr; Volver</button> 
-        <div className="container mt-5" style={{ maxWidth: "500px" }}>
-            
-            <h2 className="text-center mb-4">Editar Perfil</h2>
+            <button className="btn btn-outline-secondary mb-4" onClick={() => navigate('/dashboard')}>&larr; Volver</button>
+            <div className="container mt-5" style={{ maxWidth: "500px" }}>
 
-            <div className="card p-4 shadow" style={{ borderRadius: "12px" }}>
+                <h2 className="text-center mb-4">Editar Perfil</h2>
 
-                <label className="form-label">Nombre</label>
-                <input
-                    type="text"
-                    name="first_name"
-                    className="form-control mb-3"
-                    value={form.first_name}
-                    onChange={handleChange}
-                />
+                <div className="card p-4 shadow" style={{ borderRadius: "12px" }}>
 
-                <label className="form-label">Apellidos</label>
-                <input
-                    type="text"
-                    name="last_name"
-                    className="form-control mb-3"
-                    value={form.last_name}
-                    onChange={handleChange}
-                />
-
-                <label className="form-label">Email</label>
-                <input
-                    type="email"
-                    name="email"
-                    className="form-control mb-3"
-                    value={form.email}
-                    onChange={handleChange}
-                />
-
-                <label className="form-label">Fecha de nacimiento</label>
-                <input
-                    type="date"
-                    name="birth_date"
-                    className="form-control mb-3"
-                    value={form.birth_date}
-                    onChange={handleChange}
-                />
-
-                <label className="form-label">Hobbies</label>
-                <input
-                    type="text"
-                    name="hobbies"
-                    className="form-control mb-3"
-                    value={form.hobbies}
-                    onChange={handleChange}
-                />
-
-                <label className="form-label">Ocupación</label>
-                <input
-                    type="text"
-                    name="ocupacion"
-                    className="form-control mb-3"
-                    value={form.ocupacion}
-                    onChange={handleChange}
-                />
-
-                <label className="form-label">Tipo de personalidad</label>
-                <input
-                    type="text"
-                    name="tipo_personalidad"
-                    className="form-control mb-3"
-                    value={form.tipo_personalidad}
-                    onChange={handleChange}
-                />
-
-                <button
-                    className="btn w-100 mb-3"
-                    style={{
-                        backgroundColor: "#1E66FF",
-                        color: "#fff",
-                        borderRadius: "10px",
-                        fontWeight: "bold",
-                    }}
-                    onClick={saveChanges}
-                >
-                    Guardar Cambios
-                </button>
-
-                <hr />
-
-                <div className="form-check mb-2">
+                    <label className="form-label">Nombre</label>
                     <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={deleteCheck}
-                        onChange={(e) => setDeleteCheck(e.target.checked)}
-                        id="deleteCheck"
+                        type="text"
+                        name="first_name"
+                        className="form-control mb-3"
+                        value={form.first_name}
+                        onChange={handleChange}
                     />
-                    <label className="form-check-label" htmlFor="deleteCheck">
-                        Seguro de eliminar mi cuenta
-                    </label>
-                </div>
 
-                <button
-                    className="btn w-100"
-                    disabled={!deleteCheck}
-                    style={{
-                        backgroundColor: "#ff5b5b",
-                        color: "white",
-                        borderRadius: "10px",
-                        fontWeight: "bold",
-                        opacity: deleteCheck ? 1 : 0.5,
-                    }}
-                    onClick={deleteAccount}
-                >
-                    Eliminar Cuenta
-                </button>
+                    <label className="form-label">Apellidos</label>
+                    <input
+                        type="text"
+                        name="last_name"
+                        className="form-control mb-3"
+                        value={form.last_name}
+                        onChange={handleChange}
+                    />
+
+                    <label className="form-label">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        className="form-control mb-3"
+                        value={form.email}
+                        onChange={handleChange}
+                    />
+
+                    <label className="form-label">Fecha de nacimiento</label>
+                    <input
+                        type="date"
+                        name="birth_date"
+                        className="form-control mb-3"
+                        value={form.birth_date}
+                        onChange={handleChange}
+                    />
+
+                    <label className="form-label">Hobbies</label>
+                    <input
+                        type="text"
+                        name="hobbies"
+                        className="form-control mb-3"
+                        value={form.hobbies}
+                        onChange={handleChange}
+                    />
+
+                    <label className="form-label">Ocupación</label>
+                    <input
+                        type="text"
+                        name="ocupacion"
+                        className="form-control mb-3"
+                        value={form.ocupacion}
+                        onChange={handleChange}
+                    />
+
+                    <label className="form-label">Tipo de personalidad</label>
+                    <input
+                        type="text"
+                        name="tipo_personalidad"
+                        className="form-control mb-3"
+                        value={form.tipo_personalidad}
+                        onChange={handleChange}
+                    />
+
+                    <button
+                        className="btn w-100 mb-3"
+                        style={{
+                            backgroundColor: "#1E66FF",
+                            color: "#fff",
+                            borderRadius: "10px",
+                            fontWeight: "bold",
+                        }}
+                        onClick={saveChanges}
+                    >
+                        Guardar Cambios
+                    </button>
+
+                    <hr />
+
+                    <div className="form-check mb-2">
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={deleteCheck}
+                            onChange={(e) => setDeleteCheck(e.target.checked)}
+                            id="deleteCheck"
+                        />
+                        <label className="form-check-label" htmlFor="deleteCheck">
+                            Seguro de eliminar mi cuenta
+                        </label>
+                    </div>
+
+                    <button
+                        className="btn w-100"
+                        disabled={!deleteCheck}
+                        style={{
+                            backgroundColor: "#ff5b5b",
+                            color: "white",
+                            borderRadius: "10px",
+                            fontWeight: "bold",
+                            opacity: deleteCheck ? 1 : 0.5,
+                        }}
+                        onClick={deleteAccount}
+                    >
+                        Eliminar Cuenta
+                    </button>
+                </div>
             </div>
-        </div>
         </div>
     );
 };

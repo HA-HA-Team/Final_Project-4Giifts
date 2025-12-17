@@ -41,21 +41,18 @@
   box-shadow: 0 0 6px rgba(177, 68, 102, 0.4);
 }
 
-.saveBtn {
-  width: 100%;
-  padding: 12px;
-  background-color: #b14466;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
+.btnGuardar {
+    background-color: #f75270;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none; /* Quita el borde por defecto si es necesario */
+    transition: background-color 0.2s ease-in-out; /* Suaviza el cambio de color */
 }
 
-.saveBtn:hover {
-  background-color: #8f2f4c;
+.btnGuardar:hover {
+    background-color: #dc143c !important; /* El color que querías */
+    color: #fff;
 }
 
 .checkboxContainer {

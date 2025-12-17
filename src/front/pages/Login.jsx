@@ -28,7 +28,7 @@ export const Login = () => {
             dispatch({ type: "setUser", payload: data.user });
         }
         
-        window.dispatchEvent(new Event("auth-change")); // añado esto para que funcione la parte del navbar.
+        window.dispatchEvent(new Event("auth-change"));
         
         navigate("/dashboard");
       } else {
@@ -50,7 +50,7 @@ export const Login = () => {
 
           <div className="text-center mb-3">
             <img src="/Logo4giift.jpeg" width="90" alt="Logo" />
-            <h5 className="mt-2" style={{ color: "#DC143C" }}>Nunca olvides un regalo importante</h5>
+            <h5 className="mt-2" style={{ color: "#DC143C" }}>Your Perfect Gift</h5>
           </div>
 
           <form onSubmit={handleSubmit}>
