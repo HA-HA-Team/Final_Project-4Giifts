@@ -24,6 +24,7 @@ flask-jwt-extended = "*"
 requests = "*"
 google-generativeai = "*"
 flask-mail = "*"
+resend = "*"
 
 [requires]
 python_version = "3.13"

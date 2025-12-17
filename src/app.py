@@ -10,6 +10,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from dotenv import load_dotenv
 
 # importación corregida para evitar import circular
 from api.extensions import mail
@@ -19,6 +20,8 @@ from flask_cors import CORS
 # -----------------------------
 # CONFIGURACIÓN GLOBAL DE MAIL
 # -----------------------------
+
+load_dotenv()
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 
