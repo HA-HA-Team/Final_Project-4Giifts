@@ -83,12 +83,12 @@ export const Instrucciones = () => {
                 </div>
 
                 <div
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/dashboard")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="/registro.png"
+                        src="/wishlist.png"
                         alt="Registro"
                         className="instruction-img"
                     />
@@ -99,19 +99,18 @@ export const Instrucciones = () => {
                         </h5>
 
                         <p className="instruction-text mb-0">
-                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
-                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                            Guarda tus ideas favoritas y organiza los regalos que más te gustan. Mantén tus deseos en un solo lugar para consultarlos cuando llegue el momento especial.
                         </p>
                     </div>
                 </div>
 
                 <div
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/dashboard")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="/registro.png"
+                        src="/anadir recordatorio.png"
                         alt="Registro"
                         className="instruction-img"
                     />
@@ -122,19 +121,18 @@ export const Instrucciones = () => {
                         </h5>
 
                         <p className="instruction-text mb-0">
-                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
-                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                            No vuelvas a olvidar un cumpleaños o aniversario. Configura alertas personalizadas para recibir notificaciones con tiempo suficiente para preparar el detalle perfecto.
                         </p>
                     </div>
                 </div>
 
                 <div
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/dashboard")}
                     className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
                     style={{ width: "18rem", height: "260px" }}
                 >
                     <img
-                        src="/registro.png"
+                        src="/compartir favorito.png"
                         alt="Registro"
                         className="instruction-img"
                     />
@@ -145,8 +143,7 @@ export const Instrucciones = () => {
                         </h5>
 
                         <p className="instruction-text mb-0">
-                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
-                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                            Envía tus listas de deseos o sugerencias de regalos a amigos y familiares. Facilita que los demás acierten contigo o colabora en regalos grupales fácilmente.
                         </p>
                     </div>
                 </div>
