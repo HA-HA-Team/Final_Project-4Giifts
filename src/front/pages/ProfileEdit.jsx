@@ -90,9 +90,9 @@ export const ProfileEdit = () => {
                 headers: { Authorization: `Bearer ${token}` },
             }
         );
-
         sessionStorage.removeItem("token");
         navigate("/");
+        window.dispatchEvent(new Event("auth-change"));
     };
 
 
