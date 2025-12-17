@@ -1,52 +1,155 @@
+import { useNavigate } from "react-router-dom";
+
 export const Instrucciones = () => {
+    const navigate = useNavigate();
+
     return (
         <div>
-            <h3 className="d-flex justify-content-center fw-bold">¿Cómo funciona?</h3>
-            <div className='ms-5 me-5 mb-5 mt-3 d-flex row gap-4 justify-content-center pers-shadow rounded-3'>
+            <h3 className="d-flex justify-content-center fw-bold">
+                ¿Cómo funciona?
+            </h3>
 
-                <div className="card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
-                    <div className="ratio ratio-21x9">
-                        <i className="fa-solid fa-file-pen display-5 d-flex justify-content-center align-items-center"></i>
-                    </div>
-                    <div className="card-body d-flex justify-content-between flex-column">
-                        <div>
-                            <h5 className="card-title">1. Regístrate</h5>
-                            <p className="card-text flex-grow-1">Description</p>
-                        </div>
+            <div className="ms-5 me-5 mb-5 mt-3 d-flex row gap-4 justify-content-center pers-shadow rounded-3">
 
-                    </div>
-                </div>
+                
+                <div
+                    onClick={() => navigate("/signup")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/registro.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
 
-                <div className="card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
-                    <div className="ratio ratio-21x9">
-                        <i class="fa-solid fa-door-open display-5 d-flex justify-content-center align-items-center"></i>
-                    </div>
-                    <div className="card-body d-flex justify-content-between flex-column">
-                        <div>
-                            <h5 className="card-title">2. Loguéate</h5>
-                            <p className="card-text flex-grow-1">Description</p>
-                        </div>
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            1. Regístrate
+                        </h5>
 
-                    </div>
-                </div>
-
-                <div className="card pers-shadow p-0 rounded-3 m-4" style={{ width: "18rem" }}>
-                    <div className="ratio ratio-21x9">
-                        <i class="fa-solid fa-wand-magic-sparkles display-5 d-flex justify-content-center align-items-center"></i>
-                    </div>
-                    <div className="card-body d-flex justify-content-between flex-column">
-                        <div>
-                            <h5 className="card-title">3. ¡Genera tus regalos!</h5>
-                            <p className="card-text flex-grow-1">Description</p>
-                        </div>
-
+                        <p className="instruction-text mb-0">
+                            Crea tu cuenta en pocos segundos para empezar a personalizar regalos únicos.
+                            Solo necesitas tus datos básicos y estarás listo para usar todas las funcionalidades de la plataforma.
+                        </p>
                     </div>
                 </div>
 
+                
+                <div
+                    onClick={() => navigate("/login")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/login.png"
+                        alt="Login"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            2. Loguéate
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Accede a tu cuenta de forma segura cuando quieras y continúa creando regalos personalizados sin perder tu progreso.
+                        </p>
+                    </div>
+                </div>
+
+                
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/generar ideas.png"
+                        alt="Dashboard"
+                        className="instruction-img instruction-img-top-left"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            3. Genera tus regalos
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Indica para quién es el regalo, la ocasión y los detalles importantes.
+                            La plataforma te propondrá ideas personalizadas para acertar siempre.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/wishlist.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            4. Crea tu wishlist
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Guarda tus ideas favoritas y organiza los regalos que más te gustan. Mantén tus deseos en un solo lugar para consultarlos cuando llegue el momento especial.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/anadir recordatorio.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            5. Añade recordatorios
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            No vuelvas a olvidar un cumpleaños o aniversario. Configura alertas personalizadas para recibir notificaciones con tiempo suficiente para preparar el detalle perfecto.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    onClick={() => navigate("/dashboard")}
+                    className="card instruction-card instruction-overlay pers-shadow p-0 rounded-3 m-4"
+                    style={{ width: "18rem", height: "260px" }}
+                >
+                    <img
+                        src="/compartir favorito.png"
+                        alt="Registro"
+                        className="instruction-img"
+                    />
+
+                    <div className="instruction-content">
+                        <h5 className="fw-bold mb-2 text-dark instruction-title pers-shadow">
+                            6. Comparte tus favoritos
+                        </h5>
+
+                        <p className="instruction-text mb-0">
+                            Envía tus listas de deseos o sugerencias de regalos a amigos y familiares. Facilita que los demás acierten contigo o colabora en regalos grupales fácilmente.
+                        </p>
+                    </div>
+                </div>
 
             </div>
-
-
         </div>
     );
-}
+};
+
